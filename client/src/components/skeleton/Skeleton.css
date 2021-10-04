@@ -1,0 +1,236 @@
+/* basic styles */
+.skeleton {
+  background: rgb(247, 247, 247) !important;
+  /* background: blue !important; */
+  border-radius: 4px;
+}
+.skeleton-wrapper {
+  margin: 0 auto;
+  border-radius: 1em;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+}
+/* post item */
+.skeleton-postItem-inner {
+  width: 100%;
+  padding: 0.5em 1em 1em 1em;
+}
+.skeleton-postItem {
+  width: 100%;
+  max-width: 50rem;
+  margin-bottom: 2em;
+}
+.skel-post-top {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.skel-post-info {
+  width: 100%;
+}
+.skel-post-content {
+  padding: 0.5em 0 0 0;
+}
+@media only screen and (min-width: 900px) {
+  .skeleton-postItem {
+    max-width: 40rem;
+  }
+}
+/* profile top */
+.skeleton-profile-top {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: fit-content;
+}
+.skeleton.bigavatar {
+  width: 10em;
+  height: 10em;
+  margin: auto;
+  background-color: white;
+  border-radius: 5rem;
+  flex-shrink: 0;
+  margin-bottom: 1em;
+}
+.skeleton.gray {
+  background-color: rgb(230, 230, 230) !important;
+}
+
+/* profile bottom */
+.skeleton-bottom {
+  margin-top: 2.5em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1em;
+}
+@media only screen and (min-width: 900px) {
+  .skeleton-bottom {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+}
+
+/* profile intro */
+.skeleton-intro {
+  width: 100%;
+  max-width: 50rem;
+  margin-bottom: 1em;
+}
+@media only screen and (min-width: 900px) {
+  .skeleton-intro {
+    max-width: 30rem;
+  }
+}
+/* profile intro */
+.skeleton.author {
+  width: 30%;
+  height: 1em;
+  margin: 0.5em 0;
+}
+.skeleton.timestamp {
+  width: 20%;
+  height: 1em;
+  margin: 0.5em 0;
+}
+.skeleton.text {
+  width: 100%;
+  height: 1em;
+  margin: 0.5em 0 0 0;
+}
+.skeleton.text.short {
+  width: 70%;
+  height: 1em;
+  margin: 0.5em 0 0 0;
+}
+.skeleton.text.xshort {
+  width: 10rem;
+  height: 1em;
+  margin: 1em 0 0 0;
+}
+.skeleton.interactions {
+  width: 100%;
+  height: 1.8em;
+  border-radius: 2rem;
+  margin: 1em 0 0 0;
+}
+.skeleton.avatar {
+  width: 2.25em;
+  height: 2.25em;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.skeleton.subTitle {
+  width: 20%;
+  height: 1rem;
+  margin-top: 2em;
+}
+.skeleton.title {
+  width: 15rem;
+  height: 1.8rem;
+}
+.skeleton.title.short {
+  width: 7.5rem;
+  height: 1.8rem;
+}
+.skeleton.price {
+  width: 40%;
+  height: 1.8rem;
+  margin: 0.75em 0 2em 0;
+}
+.skeleton.image {
+  width: 100%;
+  height: 50em;
+  border-radius: 4px;
+  margin: 0 0 2em 0;
+}
+.skeleton.bigImage {
+  width: 100%;
+  height: 60vh;
+  border-radius: 4px;
+  margin: 0 0 2em 0;
+}
+.skeleton.thumbnail {
+  width: 15%;
+  height: 70px;
+  margin: 0 2em 0 0;
+}
+.skeleton.button {
+  margin: 1em 0 0 0;
+  height: 1.8rem;
+  width: 100%;
+}
+/* skeleton shopOpen */
+.skeleton-shopOpen {
+  padding-top: 6em;
+}
+.skeleton-shopOpen .thumbs {
+  display: flex;
+  flex-direction: row;
+}
+.skeleton-shopOpen .buttons {
+  padding-top: 5em;
+}
+
+/* themes */
+.skeleton-wrapper.light {
+  /* background: #f2f2f2; */
+  background: white;
+}
+.skeleton-wrapper.dark {
+  background: #444;
+}
+.skeleton-wrapper.dark .skeleton {
+  background: #777;
+}
+.skeleton-wrapper.skeleton-gray {
+  background-color: rgb(240, 240, 240);
+}
+
+/* animation effect */
+.shimmer-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  animation: loading 2.5s infinite;
+}
+.shimmer {
+  width: 50%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.2);
+  transform: skew(-20deg);
+  box-shadow: 0 0 30px 30px rgba(255, 255, 255, 0.05);
+}
+.dark .shimmer {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+@keyframes loading {
+  0% {
+    transform: translateX(-150%);
+  }
+  50% {
+    transform: translateX(-60%);
+  }
+  100% {
+    transform: translateX(150%);
+  }
+}
+
+@media only screen and (min-width: 696px) {
+}
+
+@media only screen and (min-width: 879px) {
+}
+
+@media only screen and (min-width: 1199px) {
+}
+
+@media only screen and (min-width: 1499px) {
+}

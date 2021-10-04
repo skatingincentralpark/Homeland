@@ -1,0 +1,4 @@
+{
+    "mongoURI": "mongodb+srv://charles:V3jVyIZOh1ZeCMn2@cluster0.cjl4j.mongodb.net/homeland?retryWrites=true&w=majority",
+    "jwtSecret": "mysecrettoken"
+}
