@@ -7,11 +7,7 @@ export const getNotifications = () => async (dispatch) => {
   try {
     const res = await axios.get("/api/notification");
 
-    dispatch(
-      notificationActions.getNotifications({
-        payload: res.data,
-      })
-    );
+    dispatch(notificationActions.getNotifications(res.data));
   } catch (error) {
     dispatch(notificationActions.notificationError());
   }
@@ -22,11 +18,7 @@ export const readNotifications = () => async (dispatch) => {
   try {
     const res = await axios.put("/api/notification");
 
-    dispatch(
-      notificationActions.readNotifications({
-        payload: res.data,
-      })
-    );
+    dispatch(notificationActions.readNotifications(res.data));
   } catch (error) {
     dispatch(notificationActions.notificationError());
   }

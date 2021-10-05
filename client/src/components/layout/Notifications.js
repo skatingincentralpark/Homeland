@@ -11,9 +11,9 @@ const Notifications = (props) => {
         <div className="nav-top notification-title">Notifications</div>
         {!notification || notification.loading ? (
           <div className="no-notifications p-1">Loading</div>
-        ) : !!notification.notifications.payload &&
-          notification.notifications.payload.length ? (
-          notification.notifications.payload.map((notification) => (
+        ) : !!notification.notifications &&
+          notification.notifications.length ? (
+          notification.notifications.map((notification) => (
             <div key={notification._id}>
               <Link
                 to={`/newsfeed/${notification.id}`}
@@ -30,6 +30,9 @@ const Notifications = (props) => {
                   </span>
                 </div>
               </Link>
+              <div className="notification-btn-container">
+                <button className="link-button addFriend">Add Friend</button>
+              </div>
             </div>
           ))
         ) : (

@@ -77,6 +77,13 @@ function removeComment(state, action) {
     loading: false,
   });
 }
+function clearPosts(state, action) {
+  Object.assign(state, {
+    posts: [],
+    post: null,
+    loading: true,
+  });
+}
 function clearPost(state, action) {
   Object.assign(state, {
     post: null,
@@ -99,6 +106,7 @@ const postSlice = createSlice({
     addComment,
     removeComment,
     clearPost,
+    clearPosts,
   },
 });
 

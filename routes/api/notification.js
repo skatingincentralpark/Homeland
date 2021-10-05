@@ -29,7 +29,7 @@ router.put("/", auth, async (req, res) => {
   try {
     const notifications = await Notification.find({
       receivedby: req.user.id,
-    });
+    }).sort({ date: -1 });
 
     if (!notifications)
       return res.status(400).json({ error: "No notifications" });

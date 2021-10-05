@@ -4,6 +4,7 @@ import { setAlert } from "../alert/alert-actions";
 import { authActions } from "./auth-slice";
 import { profileActions } from "../profile/profile-slice";
 import { notificationActions } from "../notification/notification-slice";
+import { postActions } from "../post/post-slice";
 
 import setAuthToken from "../../utils/setAuthToken";
 
@@ -152,5 +153,6 @@ export const logout = () => {
     dispatch(authActions.logout());
     dispatch(profileActions.clearProfile());
     dispatch(notificationActions.clearNotifications());
+    dispatch(postActions.clearPosts());
   };
 };

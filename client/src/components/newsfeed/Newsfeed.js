@@ -65,7 +65,6 @@ const Newsfeed = () => {
   return (
     <main className="newsfeed">
       {/* New User Module */}
-      <button onClick={getNextBatch}>next</button>
       {!profileExists && (
         <div className="post mb-1 mt-1 px-1 bg-gradient">
           <div className="post-inner">

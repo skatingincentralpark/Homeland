@@ -17,7 +17,7 @@ function getNotifications(state, action) {
 }
 function notificationError(state, action) {
   Object.assign(state, {
-    notifications: null,
+    notifications: [],
     loading: true,
   });
 }

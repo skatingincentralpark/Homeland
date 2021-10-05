@@ -114,7 +114,14 @@ const Profile = ({ match }) => {
             <span className="item-header-title">
               <b>{profile.user.name}</b>
             </span>
-            <span className="item-header-location">{profile.location}</span>
+            {profile.location && (
+              <span className="item-header-location">{profile.location}</span>
+            )}
+            {auth.isAuthenticated &&
+              auth.loading === false &&
+              auth.user.payload._id !== profile.user._id && (
+                <button>Add Friend</button>
+              )}
           </div>
 
           <div className="profile-bottom">
