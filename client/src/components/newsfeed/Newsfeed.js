@@ -19,7 +19,6 @@ const Newsfeed = () => {
 
   useEffect(() => {
     dispatch(getPosts());
-    console.log(posts);
   }, [dispatch]);
 
   useEffect(() => {

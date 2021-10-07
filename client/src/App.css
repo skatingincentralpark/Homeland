@@ -105,6 +105,12 @@ CONTAINERS
   padding: 0.5em 1em;
   margin-top: 0.5em;
 }
+.link-button.acceptDecline {
+  padding: 0.5em 1em;
+  margin: 0em 0.5em 0 0.5em;
+  width: 100%;
+  background-color: var(--gray1);
+}
 .link-button:hover {
   filter: brightness(0.95);
   text-decoration: none;
@@ -640,6 +646,24 @@ PROFILE
   box-shadow: 0 0.1rem 0.2rem var(--box-shadow);
   padding: 1em;
 }
+.profile-request-container {
+  margin: 0.5em;
+  background-color: white;
+  border-radius: 1rem;
+  box-shadow: 0 0.1rem 0.2rem var(--box-shadow);
+  padding: 1em;
+  max-width: 20rem;
+  width: 100%;
+}
+.profile-request-container span {
+  padding-bottom: 1em;
+  display: flex;
+  justify-content: center;
+  font-weight: 600;
+}
+.profile-request-container div {
+  display: flex;
+}
 .profile-item-header {
   display: flex;
   justify-content: space-between;
@@ -719,6 +743,10 @@ FRIENDS ITEM
   .name-container {
     display: block;
   }
+}
+
+.grid-6 {
+  grid-template-columns: repeat(6, 1fr);
 }
 
 /*------------------------------------------------------
@@ -887,6 +915,8 @@ nav div {
 }
 .notification-btn-container {
   display: flex;
+  /* gap: 0.5em; */
+  padding: 0.5em 1em 1em 0.5em;
 }
 .nav-top.notification-title {
   font-weight: 600;
@@ -1082,6 +1112,9 @@ SPACING
 }
 .bg-black {
   background: black;
+}
+.bg-white {
+  background: white;
 }
 .bg-gradient {
   background: linear-gradient(270deg, #b7f226, #0ac62a);

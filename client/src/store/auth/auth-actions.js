@@ -5,6 +5,7 @@ import { authActions } from "./auth-slice";
 import { profileActions } from "../profile/profile-slice";
 import { notificationActions } from "../notification/notification-slice";
 import { postActions } from "../post/post-slice";
+import { friendRequestActions } from "../friendRequest/friendRequest-slice";
 
 import setAuthToken from "../../utils/setAuthToken";
 
@@ -69,7 +70,6 @@ export const edit = ({ name, email, password, image }) => {
       if (errors) {
         errors.forEach((error) => dispatch(setAlert(error.msg, "danger")));
       }
-      // dispatch(authActions.loginFail());
     }
   };
 };
@@ -154,5 +154,6 @@ export const logout = () => {
     dispatch(profileActions.clearProfile());
     dispatch(notificationActions.clearNotifications());
     dispatch(postActions.clearPosts());
+    dispatch(friendRequestActions.clearFriendRequests());
   };
 };

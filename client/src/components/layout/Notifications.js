@@ -1,9 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import Moment from "react-moment";
 
+import { useDispatch, useSelector } from "react-redux";
+import {
+  declineFriendRequest,
+  acceptFriendRequest,
+} from "../../store/friendRequest/friendRequest-actions";
+
 const Notifications = (props) => {
   const { notification, closeHandler } = props;
+
+  const dispatch = useDispatch();
 
   return (
     <div className="header-popup">
@@ -15,24 +23,64 @@ const Notifications = (props) => {
           notification.notifications.length ? (
           notification.notifications.map((notification) => (
             <div key={notification._id}>
-              <Link
-                to={`/newsfeed/${notification.id}`}
-                className="notification-item"
-                onClick={closeHandler}
-              >
-                <div className="post-avatar">
-                  <img src={notification.profilepicture} alt="" />
+              {notification.status === "GENERAL" ||
+              notification.status === "FRIEND" ? (
+                <Link
+                  to={`/profile/${notification.sender}`}
+                  className="notification-item"
+                  onClick={closeHandler}
+                >
+                  <div className="post-avatar">
+                    <img src={notification.profilepicture} alt="" />
+                  </div>
+                  <div>
+                    <span>{notification.body}</span>
+                    <span className="notification-timestamp">
+                      <Moment format="MMMM DD, YYYY">
+                        {notification.date}
+                      </Moment>
+                    </span>
+                  </div>
+                </Link>
+              ) : (
+                <Link
+                  to={`/newsfeed/${notification.id}`}
+                  className="notification-item"
+                  onClick={closeHandler}
+                >
+                  <div className="post-avatar">
+                    <img src={notification.profilepicture} alt="" />
+                  </div>
+                  <div>
+                    <span>{notification.body}</span>
+                    <span className="notification-timestamp">
+                      <Moment format="MMMM DD, YYYY">
+                        {notification.date}
+                      </Moment>
+                    </span>
+                  </div>
+                </Link>
+              )}
+              {notification.status === "FRIEND" && (
+                <div className="notification-btn-container">
+                  <button
+                    onClick={() => {
+                      dispatch(acceptFriendRequest(notification.id));
+                    }}
+                    className="link-button acceptDecline"
+                  >
+                    Confirm
+                  </button>
+                  <button
+                    onClick={() => {
+                      dispatch(declineFriendRequest(notification.id));
+                    }}
+                    className="link-button acceptDecline"
+                  >
+                    Decline
+                  </button>
                 </div>
-                <div>
-                  <span>{notification.body}</span>
-                  <span className="notification-timestamp">
-                    <Moment format="MMMM DD, YYYY">{notification.date}</Moment>
-                  </span>
-                </div>
-              </Link>
-              <div className="notification-btn-container">
-                <button className="link-button addFriend">Add Friend</button>
-              </div>
+              )}
             </div>
           ))
         ) : (

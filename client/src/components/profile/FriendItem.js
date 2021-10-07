@@ -1,13 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Image from "react-graceful-image";
 
-const FriendItem = () => {
+const FriendItem = ({ friend }) => {
   return (
-    <div className="profile-friends-item">
-      <div className="profile-friends-item-image"></div>
-      <div className="name-container">
-        <Link to="/profile/charlie">Charles Zhao</Link>
-      </div>
+    <div className="profile-friends-item" key={friend._id}>
+      <Link to={`/profile/${friend.user}`}>
+        <Image src={friend.profilepicture} />
+        <div className="name-container">{friend.name}</div>
+      </Link>
     </div>
   );
 };

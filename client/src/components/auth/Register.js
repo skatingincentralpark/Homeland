@@ -1,9 +1,9 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { setAlert } from "../../store/alert/alert-actions";
-import { register } from "../../store/auth/auth-actions";
+import { register, logout } from "../../store/auth/auth-actions";
 
 const Register = () => {
   const [image, setImage] = useState("");
@@ -16,6 +16,10 @@ const Register = () => {
   const dispatch = useDispatch();
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   // const loading = useSelector((state) => state.auth.loading);
+
+  useEffect(() => {
+    dispatch(logout());
+  }, [dispatch]);
 
   const onSubmit = async (e) => {
     e.preventDefault();

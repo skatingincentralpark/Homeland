@@ -6,6 +6,7 @@ const jwt = require("jsonwebtoken");
 const config = require("config");
 const { body, validationResult } = require("express-validator");
 const User = require("../../models/User");
+const checkObjectId = require("../../middleware/checkObjectId");
 
 // @route   GET api/auth
 // @desc    Get current user
@@ -14,6 +15,19 @@ router.get("/", auth, async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select("-password");
     res.json(user);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server error");
+  }
+});
+
+// @route   GET api/auth/:id
+// @desc    Get a user's friends
+// @access  Public
+router.get("/:id", [auth, checkObjectId("id")], async (req, res) => {
+  try {
+    const friendsForUser = await User.findById(req.params.id, { friends: 1 });
+    res.json(friendsForUser);
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server error");

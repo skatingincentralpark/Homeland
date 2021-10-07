@@ -5,6 +5,13 @@ import Image from "react-graceful-image";
 import { useDispatch, useSelector } from "react-redux";
 import { getProfileById, notFound } from "../../store/profile/profile-actions";
 import {
+  getFriendRequests,
+  sendFriendRequest,
+  cancelFriendRequest,
+  declineFriendRequest,
+  acceptFriendRequest,
+} from "../../store/friendRequest/friendRequest-actions";
+import {
   getPostsByUser,
   getPostsByUserNext,
 } from "../../store/post/post-actions";
@@ -20,6 +27,7 @@ const Profile = ({ match }) => {
   const { profile, loading } = useSelector((state) => state.profile);
   const { posts } = useSelector((state) => state.post);
   const auth = useSelector((state) => state.auth);
+  const friendRequest = useSelector((state) => state.friendRequest);
 
   useEffect(() => {
     dispatch(postActions.clearPost());
@@ -27,10 +35,8 @@ const Profile = ({ match }) => {
 
   useEffect(() => {
     dispatch(getProfileById(match.params.id));
-  }, [dispatch, match.params.id]);
-
-  useEffect(() => {
     dispatch(getPostsByUser(match.params.id));
+    dispatch(getFriendRequests());
   }, [dispatch, match.params.id]);
 
   const getNextBatch = (e) => {
@@ -117,10 +123,77 @@ const Profile = ({ match }) => {
             {profile.location && (
               <span className="item-header-location">{profile.location}</span>
             )}
-            {auth.isAuthenticated &&
-              auth.loading === false &&
-              auth.user.payload._id !== profile.user._id && (
-                <button>Add Friend</button>
+            {auth.loading === false &&
+              auth.user.payload._id !== profile.user._id &&
+              !auth.user.payload.friends.find(
+                (friend) => friend === match.params.id
+              ) && (
+                <>
+                  {!!friendRequest.friendRequests.find(
+                    (request) => request.receiver === match.params.id
+                  ) ? (
+                    <button
+                      disabled={friendRequest.loading}
+                      className="link-button addFriend"
+                      onClick={() => {
+                        const request = friendRequest.friendRequests.find(
+                          (request) => request.receiver === match.params.id
+                        );
+                        dispatch(cancelFriendRequest(request._id));
+                      }}
+                    >
+                      Cancel Request
+                    </button>
+                  ) : (
+                    <>
+                      {!!friendRequest.friendRequests.find(
+                        (request) => request.sender === match.params.id
+                      ) ? (
+                        <div className="profile-request-container">
+                          <span>Respond to their friend request</span>
+                          <div>
+                            <button
+                              onClick={() => {
+                                const request =
+                                  friendRequest.friendRequests.find(
+                                    (request) =>
+                                      request.sender === match.params.id
+                                  );
+                                dispatch(acceptFriendRequest(request._id));
+                              }}
+                              className="link-button acceptDecline bg-white"
+                            >
+                              Confirm
+                            </button>
+                            <button
+                              onClick={() => {
+                                const request =
+                                  friendRequest.friendRequests.find(
+                                    (request) =>
+                                      request.sender === match.params.id
+                                  );
+                                dispatch(declineFriendRequest(request._id));
+                              }}
+                              className="link-button acceptDecline bg-white"
+                            >
+                              Decline
+                            </button>
+                          </div>
+                        </div>
+                      ) : (
+                        <button
+                          disabled={friendRequest.loading}
+                          className="link-button addFriend"
+                          onClick={() => {
+                            dispatch(sendFriendRequest(match.params.id));
+                          }}
+                        >
+                          Add Friend
+                        </button>
+                      )}
+                    </>
+                  )}
+                </>
               )}
           </div>
 
@@ -179,7 +252,7 @@ const Profile = ({ match }) => {
                     )}
                 </div>
               </div>
-              <FriendsList />
+              <FriendsList id={match.params.id} profile={profile} />
             </div>
             <div className="profile-right">
               <NewPostForm profilepicture={profile.user.profilepicture} />

@@ -217,7 +217,6 @@ export const deleteComment = (postId, commentId) => async (dispatch) => {
     );
 
     dispatch(postActions.removeComment({ postId, comments: res.data }));
-    console.log(res.data);
     dispatch(setAlert("Comment Removed", "success"));
   } catch (err) {
     postActions.postError({

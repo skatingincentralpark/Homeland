@@ -12,10 +12,6 @@ const FriendRequestSchema = new mongoose.Schema({
     ref: "user",
     required: true,
   },
-  isAccepted: {
-    type: Boolean,
-    default: false,
-  },
 });
 
 module.exports = FriendRequest = mongoose.model(

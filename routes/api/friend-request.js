@@ -8,11 +8,14 @@ const FriendRequest = require("../../models/FriendRequest");
 const Notification = require("../../models/Notification");
 
 // @route   GET api/friend-request
-// @desc    Get all friend requests
+// @desc    Get friend requests for a single user
 // @access  Public
 router.get("/", auth, async (req, res) => {
   try {
-    const friendrequests = await FriendRequest.find();
+    const friendrequests = await FriendRequest.find({
+      $or: [{ receiver: req.user.id }, { sender: req.user.id }],
+    });
+
     res.json(friendrequests);
   } catch (err) {
     console.error(err.message);
@@ -25,7 +28,8 @@ router.get("/", auth, async (req, res) => {
 // @access  Private
 router.post("/:id", [auth, checkObjectId("id")], async (req, res) => {
   try {
-    const user = await User.findById(req.params.id);
+    const user = await User.findById(req.params.id).select("-password");
+
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
@@ -40,21 +44,18 @@ router.post("/:id", [auth, checkObjectId("id")], async (req, res) => {
       return res.status(400).json({ error: "Already Friends" });
     }
 
-    const friendRequest = await FriendRequest.findOne({
+    const existingFriendRequest = await FriendRequest.findOne({
       sender: req.user.id,
       receiver: req.params.id,
     });
-
-    if (friendRequest) {
+    if (existingFriendRequest) {
       return res.status(400).json({ error: "Friend Request already sent" });
     }
-
-    const friendRequest2 = await FriendRequest.findOne({
+    const existingFriendRequest2 = await FriendRequest.findOne({
       sender: req.params.id,
       receiver: req.user.id,
     });
-
-    if (friendRequest2) {
+    if (existingFriendRequest2) {
       return res
         .status(400)
         .json({ error: "They've already sent you a friend request" });
@@ -65,29 +66,28 @@ router.post("/:id", [auth, checkObjectId("id")], async (req, res) => {
       receiver: req.params.id,
     });
 
-    const save = await newFriendRequest.save();
+    const friendRequest = await newFriendRequest.save();
 
     // Notification
-    const sender = await FriendRequest.findById(save.id).populate("sender", [
-      "name",
-    ]);
+    const sender = await FriendRequest.findById(friendRequest.id).populate(
+      "sender",
+      ["name"]
+    );
 
     const newNotification = new Notification({
       body: `${sender.sender.name} has sent you friend request`,
       sender: req.user.id,
-      id: save.id,
+      id: friendRequest.id,
       count: 1,
       receivedby: [req.params.id],
+      profilepicture: user.profilepicture,
     });
 
     await newNotification.save();
 
-    res.status(200).json({
-      message: "Friend Request Sent",
-    });
+    res.json(friendRequest);
   } catch (err) {
-    console.log(err.message);
-    return res.status(500).json({ error: "Something went wrong" });
+    return res.status(500).json({ error: err.message });
   }
 });
 
@@ -106,8 +106,10 @@ router.put(
           .json({ error: "Request already accepted or not sent yet" });
       }
 
-      const sender = await User.findById(friendRequest.sender);
-      const currentUser = await User.findById(req.user.id);
+      const sender = await User.findById(friendRequest.sender).select(
+        "-password"
+      );
+      const currentUser = await User.findById(req.user.id).select("-password");
 
       if (sender.friends.includes(friendRequest.receiver)) {
         return res.status(400).json({ error: "Already in your friends list" });
@@ -116,28 +118,45 @@ router.put(
         return res.status(400).json({ error: "Already in your friends list" });
       }
 
-      sender.friends.push(req.user.id);
+      // Create friend object
+      const newFriendCurrent = {
+        user: req.user.id,
+        name: currentUser.name,
+        profilepicture: currentUser.profilepicture,
+      };
+
+      const newFriendSender = {
+        user: friendRequest.sender,
+        name: sender.name,
+        profilepicture: sender.profilepicture,
+      };
+
+      sender.friends.unshift(newFriendCurrent);
       await sender.save();
 
-      currentUser.friends.push(friendRequest.sender);
+      currentUser.friends.unshift(newFriendSender);
       await currentUser.save();
 
       await FriendRequest.deleteOne({ _id: req.params.request_id });
 
       // Notification
+      await Notification.deleteOne({ id: req.params.request_id });
+      const user = await User.findById(req.user.id).select("-password");
+
       const newNotification = new Notification({
         body: `${currentUser.name} has accepted your friend request`,
         sender: currentUser.id,
-        id: req.params.request_id,
+        id: null,
+        status: "GENERAL",
         count: 1,
         receivedby: [friendRequest.sender],
+        profilepicture: user.profilepicture,
       });
 
       await newNotification.save();
 
       res.status(200).json({ message: "Friend Request Accepted" });
     } catch (err) {
-      console.log(err);
       return res.status(500).json({ error: "Something went wrong" });
     }
   }
@@ -165,20 +184,23 @@ router.delete(
       // Notification
       await Notification.deleteOne({ id: req.params.request_id });
 
+      const user = await User.findById(req.user.id).select("-password");
+
       const newNotification = new Notification({
         body: `${friendRequest.receiver.name} has declined your friend request`,
         sender: req.user.id,
-        id: req.params.request_id,
+        id: null,
         count: 1,
+        status: "GENERAL",
         receivedby: [friendRequest.sender],
+        profilepicture: user.profilepicture,
       });
 
       await newNotification.save();
 
       res.status(200).json({ message: "Friend Request Declined" });
     } catch (err) {
-      console.log(err);
-      return res.status(500).json({ error: "Something went wrong" });
+      return res.status(500).json({ error: err.message });
     }
   }
 );
@@ -201,13 +223,12 @@ router.delete(
       }
       await FriendRequest.deleteOne({ _id: req.params.request_id });
 
-      res.status(200).json({ message: "Friend Request Canceled" });
-
       // Notification
       await Notification.deleteOne({ id: req.params.request_id });
+
+      res.status(200).json({ message: "Friend Request Canceled" });
     } catch (err) {
-      console.log(err);
-      return res.status(500).json({ error: "Something went wrong" });
+      return res.status(500).json({ error: err.message });
     }
   }
 );

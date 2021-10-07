@@ -20,7 +20,6 @@ function authError(state, action) {
     user: null,
   });
 }
-
 function authSuccess(state, action) {
   localStorage.setItem("token", action.payload.token);
   Object.assign(state, {
@@ -29,7 +28,6 @@ function authSuccess(state, action) {
     loading: false,
   });
 }
-
 function userLoaded(state, action) {
   Object.assign(state, {
     isAuthenticated: true,

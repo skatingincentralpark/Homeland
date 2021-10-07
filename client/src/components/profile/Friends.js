@@ -1,13 +1,25 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { Link, Redirect } from "react-router-dom";
+
+import { useDispatch, useSelector } from "react-redux";
+import { getProfileById, notFound } from "../../store/profile/profile-actions";
 
 import FriendItem from "./FriendItem";
 
-import { useSelector } from "react-redux";
+const Friends = ({ match }) => {
+  const dispatch = useDispatch();
+  const { profile, loading } = useSelector((state) => state.profile);
 
-const Friends = () => {
-  const { loading } = useSelector((state) => state.auth);
+  useEffect(() => {
+    dispatch(getProfileById(match.params.id));
+  }, [dispatch, match.params.id]);
 
   if (loading) return <h1 className="p-1 mt-2">Loading...</h1>;
+
+  if (!profile && !loading) {
+    dispatch(notFound());
+  }
+  if (!profile && !loading) return <Redirect to="/newsfeed" />;
 
   return (
     <main className="profile mt-5">
@@ -24,16 +36,10 @@ const Friends = () => {
           <div className="profile-item-header">
             <span className="item-header-title">Friends</span>
           </div>
-          <div className="all-friends">
-            <FriendItem />
-            <FriendItem />
-            <FriendItem />
-            <FriendItem />
-            <FriendItem />
-            <FriendItem />
-            <FriendItem />
-            <FriendItem />
-            <FriendItem />
+          <div className="profile-friends grid-6">
+            {profile.user.friends.map((friend) => (
+              <FriendItem key={friend._id} friend={friend} />
+            ))}
           </div>
         </div>
       </div>

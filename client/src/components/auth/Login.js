@@ -1,8 +1,8 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { Link, Redirect } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
-import { login } from "../../store/auth/auth-actions";
+import { login, logout } from "../../store/auth/auth-actions";
 import { getNotifications } from "../../store/notification/notification-actions";
 
 const Login = () => {
@@ -12,6 +12,10 @@ const Login = () => {
   const dispatch = useDispatch();
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   // const loading = useSelector((state) => state.auth.loading);
+
+  useEffect(() => {
+    dispatch(logout());
+  }, [dispatch]);
 
   const onSubmit = async (e) => {
     e.preventDefault();

@@ -21,6 +21,14 @@ function notificationError(state, action) {
     loading: true,
   });
 }
+function removeNotification(state, action) {
+  Object.assign(state, {
+    notifications: state.notifications.filter(
+      (notif) => notif.id !== action.payload
+    ),
+    loading: false,
+  });
+}
 
 // @@ AUTH REDUCERS
 const notificationSlice = createSlice({
@@ -31,6 +39,7 @@ const notificationSlice = createSlice({
     readNotifications: getNotifications,
     notificationError: notificationError,
     clearNotifications: notificationError,
+    removeNotification,
   },
 });
 

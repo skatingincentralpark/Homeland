@@ -12,11 +12,11 @@ const NotificationSchema = new mongoose.Schema({
   },
   id: {
     type: Schema.Types.ObjectId,
-    ref: "post",
+    ref: "id",
   },
   status: {
     type: String,
-    enum: ["FRIEND", "LIKE", "COMMENT"],
+    enum: ["FRIEND", "LIKE", "COMMENT", "GENERAL"],
     default: "FRIEND",
   },
   count: {
