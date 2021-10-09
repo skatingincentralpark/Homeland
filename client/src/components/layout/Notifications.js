@@ -67,7 +67,7 @@ const Notifications = (props) => {
                     onClick={() => {
                       dispatch(acceptFriendRequest(notification.id));
                     }}
-                    className="link-button acceptDecline"
+                    className="link-button mx-05 w-100 bg-gray1"
                   >
                     Confirm
                   </button>
@@ -75,7 +75,7 @@ const Notifications = (props) => {
                     onClick={() => {
                       dispatch(declineFriendRequest(notification.id));
                     }}
-                    className="link-button acceptDecline"
+                    className="link-button mx-05 w-100 bg-gray1"
                   >
                     Decline
                   </button>

@@ -3,7 +3,7 @@ Theme Name: Homeland
 Theme URI: TBD
 Description: Custom Theme for Homeland
 Author: Charles Zhao
-Author URI: TBD
+Author URI: https://instagram.com/portrait_of_innocent_x
 */
 
 /*------------------------------------------------------
@@ -48,7 +48,6 @@ html {
   overflow-y: scroll;
   overflow-x: hidden;
   background: #fff;
-  margin: 0 !important;
   -webkit-text-size-adjust: 100%;
   font-size: 13px;
 }
@@ -57,15 +56,10 @@ body {
   width: 100%;
   height: 100%;
   min-height: 100vh;
-  overflow-x: hidden;
+  min-width: 320px;
   font: 1rem "Helvetica Neue", sans-serif;
   line-height: 1.4rem;
-  color: #000;
-  min-width: 320px;
-  -webkit-font-smoothing: antialiased;
-  -moz-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  font-smoothing: antialiased;
+  color: black;
   background-color: var(--gray1);
 }
 
@@ -91,6 +85,7 @@ body {
 /*------------------------------------------------------
 CONTAINERS
 ------------------------------------------------------*/
+/* General Button Container */
 .link-button {
   display: block;
   font-size: 1rem;
@@ -99,40 +94,14 @@ CONTAINERS
   background-color: var(--gray2);
   border: 1px solid rgb(220, 220, 220);
   border-radius: 5em;
-  padding: 0.5em;
-}
-.link-button.addFriend {
   padding: 0.5em 1em;
-  margin-top: 0.5em;
-}
-.link-button.acceptDecline {
-  padding: 0.5em 1em;
-  margin: 0em 0.5em 0 0.5em;
-  width: 100%;
-  background-color: var(--gray1);
 }
 .link-button:hover {
   filter: brightness(0.95);
   text-decoration: none;
   cursor: pointer;
 }
-.general-container {
-  background-color: white;
-  border-radius: 1rem;
-  box-shadow: 0 0.1rem 0.2rem var(--box-shadow);
-  margin: 1em 1em 1em 1em;
-  max-width: 50rem;
-  width: 100%;
-}
-.text-form {
-  margin-left: 1em;
-  padding: 0.5em 1em;
-}
-.delete-btn {
-  color: white;
-  background: var(--danger-color) !important;
-}
-
+/* Extra Options (Ellipse) */
 .extra-options-btn {
   flex-shrink: 0;
   height: 2rem;
@@ -159,7 +128,6 @@ TYPOGRAPHY
   padding: 0.1em 0;
   color: gray;
 }
-
 a {
   color: black;
   text-decoration: none;
@@ -193,54 +161,9 @@ hr {
   border: 1px solid var(--gray2);
   border-top: 1px;
 }
-.terms {
-  color: gray;
-}
 /*------------------------------------------------------
-TEXT INPUT
+AVATAR
 ------------------------------------------------------*/
-.text-input-container {
-  width: 100%;
-  max-width: 50rem;
-}
-.text-input-container textarea {
-  white-space: pre-line;
-  resize: none;
-}
-.text-input textarea {
-  white-space: pre-line;
-  resize: none;
-}
-.text-input-container textarea::-webkit-scrollbar {
-  width: 0px;
-}
-.text-input-top {
-  display: flex;
-  align-items: center;
-}
-.text-input.new-post {
-  background-color: white;
-  border-radius: 1rem;
-  box-shadow: 0 0.1rem 0.2rem var(--box-shadow);
-  padding: 1em;
-  margin: 1em 0 2em 0;
-}
-.avatar {
-  width: 2em;
-  height: 2em;
-  margin-right: 1em;
-  border-radius: 50%;
-  background: linear-gradient(270deg, #b7f226, #0ac62a);
-  background-size: 400% 400%;
-  -webkit-animation: gradient 4s ease infinite;
-  -moz-animation: gradient 4s ease infinite;
-  animation: gradient 4s ease infinite;
-  flex-shrink: 0;
-}
-.avatar-mid {
-  width: 2.5em;
-  height: 2.5em;
-}
 .post-avatar {
   display: flex;
 }
@@ -251,59 +174,69 @@ TEXT INPUT
   border-radius: 50%;
   margin-right: 0.75em;
 }
-.post-avatar:hover {
+.post-avatar:hover,
+.display-picture:hover {
   opacity: 0.8;
 }
-
+.display-picture img {
+  object-fit: fill;
+  width: 10em;
+  border-radius: 50%;
+  margin-bottom: 1em;
+}
+/*------------------------------------------------------
+TEXT INPUT
+------------------------------------------------------*/
+.text-input {
+  padding: 1em;
+}
+.text-form {
+  margin-left: 1em;
+  padding: 0.5em 1em;
+}
+.text-input textarea {
+  white-space: pre-line;
+  resize: none;
+}
+.text-input textarea::-webkit-scrollbar {
+  width: 0px;
+}
+.text-input-top {
+  display: flex;
+  align-items: center;
+}
 .text-input form {
   display: flex;
   align-items: center;
   flex: 1;
 }
-.text-input input {
-  font-size: 1rem;
-  width: 100%;
-  background-color: var(--gray1);
-  border-radius: 1.5em;
-  border: none;
-  padding: 0.5em 0.75em;
-  outline: none;
-}
 .text-input input:focus {
   filter: brightness(0.95);
 }
 
-@media only screen and (min-width: 900px) {
-  .text-input.new-post {
-    margin: 0 0em 2em 0em;
-  }
-  .text-input-container {
-    max-width: 50rem;
-  }
-}
-
 /*------------------------------------------------------
-NEW POST FORM
+NEW POST FORM (WITH IMAGE UPLOADER)
 ------------------------------------------------------*/
-.text-input-container input[type="file"] {
+.image-upload input[type="file"] {
   display: none;
 }
-.text-input-container label {
+.image-upload label {
   color: black;
   height: 2em;
   width: 100%;
   background-color: var(--gray1);
   border-radius: 2em;
+  border: 1px solid #ccc;
   padding: 0.5em;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.text-input-container label:hover {
+.image-upload label:hover {
   filter: brightness(0.95);
   cursor: pointer;
 }
-.text-input-container img {
+.image-upload img {
   height: 100%;
   margin-right: 0.5em;
 }
@@ -314,6 +247,16 @@ NEW POST FORM
 .thumbnails img {
   height: 100%;
   margin: auto;
+  display: flex;
+}
+.thumbnail-large {
+  height: 100%;
+  width: 100%;
+  display: flex;
+}
+.thumbnail-large img {
+  width: 100%;
+  object-fit: contain;
   display: flex;
 }
 
@@ -329,7 +272,6 @@ select {
   outline: none;
   color: gray;
 }
-
 .form-group input,
 select,
 textarea {
@@ -343,20 +285,17 @@ textarea {
   border-radius: 1em;
   outline: none;
   border: 1px solid #ccc;
+  resize: none;
 }
 .form-group input,
 select {
   border-radius: 2em;
 }
-
 .form-group input:focus,
 select:focus,
 textarea:focus {
   filter: brightness(0.95);
 }
-/*------------------------------------------------------
-FORMS
-------------------------------------------------------*/
 .form-group {
   margin-bottom: 1em;
 }
@@ -374,6 +313,31 @@ UI (button to link etc.)
 }
 
 /*------------------------------------------------------
+LANDING
+------------------------------------------------------*/
+.test-landing {
+  padding: 2rem;
+  position: fixed;
+  bottom: 0;
+}
+.test-landing h1 {
+  font-size: 12rem;
+  font-weight: 600;
+}
+.test-landing sup {
+  font-size: 3rem;
+  font-weight: 600;
+}
+.test-landing h2 {
+  font-size: 4rem;
+  font-weight: 600;
+  line-height: 4rem;
+}
+.landing-buttons {
+  width: 20rem;
+}
+
+/*------------------------------------------------------
 NEWSFEED
 ------------------------------------------------------*/
 .newsfeed {
@@ -382,6 +346,8 @@ NEWSFEED
   align-items: center;
   justify-content: center;
   padding: 5rem 1rem 1.5rem 1rem;
+  max-width: 40rem;
+  margin: auto;
 }
 
 /*------------------------------------------------------
@@ -391,21 +357,21 @@ POST
   background-color: white;
   border-radius: 1rem;
   box-shadow: 0 0.1rem 0.2rem var(--box-shadow);
-  max-width: 50rem;
-  margin: 0 0 3em 0;
+  margin: 0 0 1.5em 0;
   width: 100%;
 }
 .post-inner {
   padding: 2em 1em;
 }
 .single-post {
-  margin: 7.5em auto !important;
+  margin: auto;
+  padding: 5em 1em 1em 1em;
+  max-width: 40rem;
   display: flex;
-  justify-content: center;
 }
-/*-----------------------
-Post Header
------------------------*/
+/*------------------------------------------------------
+POST-HEADER
+------------------------------------------------------*/
 .post-header {
   display: flex;
   align-items: center;
@@ -438,18 +404,6 @@ Post Header
   border-radius: 1em;
   font-size: 1rem;
 }
-.lol {
-  position: fixed;
-  z-index: 99;
-  top: calc(50px + 1em);
-  width: -webkit-fill-available;
-  margin: 0;
-  background-color: white;
-  box-shadow: 0 0.1rem 0.2rem var(--box-shadow);
-  border-radius: 1em;
-  font-size: 1rem;
-}
-
 .post-information {
   display: flex;
   flex-direction: column;
@@ -457,24 +411,17 @@ Post Header
 .post-author {
   font-weight: 600;
 }
-/*-----------------------
-Post Content
------------------------*/
+/*------------------------------------------------------
+POST-CONTENT
+------------------------------------------------------*/
 .post-content {
   padding-bottom: 1em;
-}
-.post-content-text {
-  padding: 0 1em 0 1em;
-}
-.post-content-image {
-  padding-top: 1em;
 }
 .post-content-image img {
   width: 100%;
 }
-
 .post-content-likes {
-  color: rgb(100, 100, 100);
+  color: gray;
 }
 .post-content-interactions-container {
   padding: 1em 1em 0 1em;
@@ -504,13 +451,9 @@ Post Content
 .post-content-interactions button:hover {
   filter: brightness(0.95);
 }
-/*-----------------------
-Post Footer
------------------------*/
-.post-footer {
-  padding: 0 1em 1em 1em;
-}
-
+/*------------------------------------------------------
+POST-FOOTER
+------------------------------------------------------*/
 .btn-like {
   border-radius: 5em 0 0 5em;
   border-right: 1px solid lightgray !important;
@@ -519,9 +462,9 @@ Post Footer
   border-radius: 0 5em 5em 0;
   border-left: 1px solid lightgray !important;
 }
-/*----------
-Post Comments
-----------*/
+/*------------------------------------------------------
+POST-COMMENTS
+------------------------------------------------------*/
 .comment {
   display: flex;
   padding-bottom: 1.5em;
@@ -571,20 +514,9 @@ Post Comments
   bottom: -0.5rem;
   right: -1.8rem;
 }
-
 @media only screen and (min-width: 900px) {
-  .post {
-    max-width: 50rem;
-    width: 100%;
-  }
   .comment .extra-options-btn {
     visibility: hidden;
-  }
-}
-@media only screen and (min-width: 10370px) {
-  .post {
-    max-width: 50rem;
-    width: 50rem;
   }
 }
 
@@ -599,45 +531,19 @@ PROFILE
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  padding-bottom: 2em;
+  padding: 2em 0;
 }
-.profile-left {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+.profile-left,
 .profile-right {
   display: flex;
-  justify-content: flex-start;
-  align-items: center;
   flex-direction: column;
-}
-.item-header-title {
-  margin-bottom: 0.5em;
-}
-.profile-avatar {
-  width: 8em;
-  height: 8em;
-  border-radius: 50%;
-  background-color: lightgray;
-  flex-shrink: 0;
-  margin-bottom: 2em;
-}
-.display-picture img {
-  object-fit: fill;
-  width: 10em;
-  border-radius: 50%;
-  margin-bottom: 1em;
-}
-.display-picture:hover {
-  opacity: 0.8;
+  align-items: center;
 }
 .profile-item-container {
   background-color: white;
   border-radius: 1rem;
   box-shadow: 0 0.1rem 0.2rem var(--box-shadow);
-  margin: 0 0 1em 0;
-  max-width: 50rem;
+  margin: 0 0 1.5em 0;
   width: 100%;
 }
 .profile-item-container-inner {
@@ -683,14 +589,11 @@ PROFILE
 }
 @media only screen and (min-width: 900px) {
   .profile-bottom {
-    display: flex;
-    justify-content: center;
-  }
-  .profile-left {
-    margin: 0 1em 0 1em;
-  }
-  .profile-item-container {
-    max-width: 30rem;
+    display: grid;
+    grid-template-columns: 3fr 5fr;
+    gap: 1.5em;
+    max-width: 70rem;
+    margin: auto;
   }
 }
 
@@ -826,7 +729,7 @@ NAVIGATION
 .header-popup {
   position: fixed;
   z-index: 99;
-  top: calc(50px + 1em);
+  top: auto;
   width: -webkit-fill-available;
   margin: 0;
   background-color: white;
@@ -869,9 +772,9 @@ nav div {
   padding-bottom: 0.25em;
 }
 .bell {
-  animation: line 0.25s;
+  animation: ding 0.25s;
 }
-@keyframes line {
+@keyframes ding {
   0% {
     transform: rotate(0);
     transform-origin: top;
@@ -903,7 +806,6 @@ nav div {
 .notification-item {
   display: flex;
   padding: 1em 1em;
-  /* margin: 0.25em 0; */
 }
 .notification-item div:nth-child(2) {
   display: flex;
@@ -915,7 +817,6 @@ nav div {
 }
 .notification-btn-container {
   display: flex;
-  /* gap: 0.5em; */
   padding: 0.5em 1em 1em 0.5em;
 }
 .nav-top.notification-title {
@@ -929,11 +830,15 @@ nav div {
 /*------------------------------------------------------
 REGISTER / LOGIN
 ------------------------------------------------------*/
+.registerlogin-container {
+  height: 100vh;
+}
 .registerlogin {
   padding: 4em 1em;
   background-color: white;
   box-shadow: 0 0.1rem 0.2rem var(--box-shadow);
   margin-top: 2em;
+  height: 100%;
 }
 .registerlogin-image {
   width: 100%;
@@ -957,12 +862,15 @@ REGISTER / LOGIN
 }
 
 @media only screen and (min-width: 900px) {
+  .registerlogin-container {
+    padding-top: 7.5em;
+  }
   .registerlogin {
     max-width: 60em;
     margin: auto;
     border-radius: 1em;
     padding: 2em;
-    margin-top: 10em;
+    height: auto;
   }
   .register {
     display: grid;
@@ -1010,17 +918,6 @@ EDIT USER FORM
 }
 
 /*------------------------------------------------------
-iMAGE RENDERER
-------------------------------------------------------*/
-.image-container {
-  background-color: #ccc;
-  overflow: hidden;
-  position: relative;
-  max-width: 800px;
-  margin: 20px auto;
-}
-
-/*------------------------------------------------------
 SPACING
 ------------------------------------------------------*/
 /* margin */
@@ -1032,6 +929,9 @@ SPACING
 }
 .m-auto {
   margin: auto;
+}
+.mx-05 {
+  margin: 0 0.5em;
 }
 .my-1 {
   margin: 1em 0;
@@ -1073,6 +973,18 @@ SPACING
 .p-1 {
   padding: 1em;
 }
+.p-2 {
+  padding: 2em;
+}
+.pt-0 {
+  padding-top: 0;
+}
+.pt-1 {
+  padding-top: 1em;
+}
+.pt-5 {
+  padding-top: 5em;
+}
 .px-1 {
   padding: 0 1em;
 }
@@ -1082,6 +994,9 @@ SPACING
 }
 .w-50 {
   width: 50%;
+}
+.maxw-40 {
+  max-width: 40rem;
 }
 .maxw-70 {
   max-width: 70rem;
@@ -1100,6 +1015,10 @@ SPACING
 .block {
   display: block;
 }
+/* border */
+.border-none {
+  border: none;
+}
 /* color */
 .gray {
   color: gray;
@@ -1112,6 +1031,9 @@ SPACING
 }
 .bg-black {
   background: black;
+}
+.bg-gray1 {
+  background: var(--gray1);
 }
 .bg-white {
   background: white;

@@ -56,11 +56,8 @@ const CreateProfile = ({ history }) => {
   if (loading) return <h1 className="p-1 mt-2">Loading...</h1>;
 
   return (
-    <main>
-      <div className="registerlogin register desktop-mt-5 maxw-70">
-        <div className="registerlogin-left">
-          <div className="registerlogin-image alt-grad-bg"></div>
-        </div>
+    <main className="registerlogin-container">
+      <div className="registerlogin maxw-40">
         <div>
           <h1 className="large text-primary">Create Your Profile</h1>
           <p className="lead mb-2">
@@ -118,6 +115,7 @@ const CreateProfile = ({ history }) => {
                 placeholder="A short bio of yourself"
                 name="bio"
                 maxLength="300"
+                rows="1"
               ></textarea>
             </div>
             <button className="link-button w-100 mb-1 invert">Submit</button>

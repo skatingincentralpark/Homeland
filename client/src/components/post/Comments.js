@@ -21,7 +21,7 @@ const Comments = (props) => {
   };
 
   return (
-    <div className="post-footer-comments">
+    <div className="px-1">
       {comments &&
         comments.map((comment, i) => (
           <CommentItem
@@ -34,7 +34,7 @@ const Comments = (props) => {
           />
         ))}
       {!!comments.length && (
-        <button className="button-to-link" onClick={loadMore}>
+        <button className="button-to-link mb-1" onClick={loadMore}>
           Load More
         </button>
       )}

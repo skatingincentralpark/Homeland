@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { Link, Redirect } from "react-router-dom";
+import Image from "react-graceful-image";
 
 import { useDispatch, useSelector } from "react-redux";
 import { getProfileById, notFound } from "../../store/profile/profile-actions";
@@ -22,27 +23,35 @@ const Friends = ({ match }) => {
   if (!profile && !loading) return <Redirect to="/newsfeed" />;
 
   return (
-    <main className="profile mt-5">
-      <div className="profile-top">
-        <div className="profile-avatar" />
-        <span className="item-header-title">
-          <b>Charles Zhao</b>
-        </span>
-        <span className="item-header-location">Sydney, Australia</span>
-      </div>
+    <main className="profile pt-5">
+      {!profile.loading && (
+        <>
+          <div className="profile-top">
+            <div className="display-picture">
+              <Link to="/edit-user">
+                <Image src={profile.user.profilepicture} />
+              </Link>
+            </div>
+            <span className="item-header-title mb-05">
+              <b>{profile.user.name}</b>
+            </span>
+            <span className="item-header-location">{profile.location}</span>
+          </div>
 
-      <div className="profile-item-container m-auto maxw-70">
-        <div className="profile-item-container-inner">
-          <div className="profile-item-header">
-            <span className="item-header-title">Friends</span>
+          <div className="profile-item-container m-auto maxw-70">
+            <div className="profile-item-container-inner p-2">
+              <div className="profile-item-header">
+                <span className="item-header-title">Friends</span>
+              </div>
+              <div className="profile-friends grid-6">
+                {profile.user.friends.map((friend) => (
+                  <FriendItem key={friend._id} friend={friend} />
+                ))}
+              </div>
+            </div>
           </div>
-          <div className="profile-friends grid-6">
-            {profile.user.friends.map((friend) => (
-              <FriendItem key={friend._id} friend={friend} />
-            ))}
-          </div>
-        </div>
-      </div>
+        </>
+      )}
     </main>
   );
 };

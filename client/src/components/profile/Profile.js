@@ -73,7 +73,12 @@ const Profile = ({ match }) => {
     }
   }
 
-  if (loading) return <SkeletonProfile />;
+  if (loading)
+    return (
+      <main className="profile pt-5">
+        <SkeletonProfile />
+      </main>
+    );
 
   if (
     auth.user &&
@@ -82,18 +87,20 @@ const Profile = ({ match }) => {
     auth.user.payload._id === match.params.id
   )
     return (
-      <div className="post mb-1 mt-5 m-auto px-1 bg-gradient">
-        <div className="post-inner">
-          <h1 className="white">Welcome to Homeland!</h1>
-          <p className="white">
-            Lets get you started by filling in some information & adding a
-            display picture.
-          </p>
-          <Link className="link-button mt-2" to="/create-profile">
-            Create Profile
-          </Link>
+      <main className="profile pt-5">
+        <div className="post mb-1 m-auto px-1 bg-gradient maxw-40">
+          <div className="post-inner">
+            <h1 className="white">Welcome to Homeland!</h1>
+            <p className="white">
+              Lets get you started by filling in some information & adding a
+              display picture.
+            </p>
+            <Link className="link-button mt-2" to="/create-profile">
+              Create Profile
+            </Link>
+          </div>
         </div>
-      </div>
+      </main>
     );
 
   if (!profile && !loading) {
@@ -102,7 +109,7 @@ const Profile = ({ match }) => {
   if (!profile && !loading) return <Redirect to="/newsfeed" />;
 
   return (
-    <main className="profile mt-5">
+    <main className="profile pt-5">
       {profile ? (
         <>
           <div className="profile-top">
@@ -117,7 +124,7 @@ const Profile = ({ match }) => {
                 <Image src={profile.user.profilepicture} />
               )}
             </div>
-            <span className="item-header-title">
+            <span className="item-header-title mb-05">
               <b>{profile.user.name}</b>
             </span>
             {profile.location && (
@@ -134,7 +141,7 @@ const Profile = ({ match }) => {
                   ) ? (
                     <button
                       disabled={friendRequest.loading}
-                      className="link-button addFriend"
+                      className="link-button addFriend mt-05"
                       onClick={() => {
                         const request = friendRequest.friendRequests.find(
                           (request) => request.receiver === match.params.id
@@ -183,7 +190,7 @@ const Profile = ({ match }) => {
                       ) : (
                         <button
                           disabled={friendRequest.loading}
-                          className="link-button addFriend"
+                          className="link-button addFriend mt-05"
                           onClick={() => {
                             dispatch(sendFriendRequest(match.params.id));
                           }}
@@ -202,8 +209,10 @@ const Profile = ({ match }) => {
               <div className="profile-item-container mt-0">
                 <div className="profile-item-container-inner">
                   <div className="profile-item-header">
-                    <span className="item-header-title">
-                      <span>Intro</span>
+                    <span className="mb-05">
+                      <span className="item-header-title">
+                        <b>Intro</b>
+                      </span>
                     </span>
                   </div>
                   <div className="profile-intro">
@@ -252,7 +261,13 @@ const Profile = ({ match }) => {
                     )}
                 </div>
               </div>
-              <FriendsList id={match.params.id} profile={profile} />
+              {profile.user.friends && (
+                <FriendsList
+                  loading={loading}
+                  id={match.params.id}
+                  profile={profile}
+                />
+              )}
             </div>
             <div className="profile-right">
               <NewPostForm profilepicture={profile.user.profilepicture} />

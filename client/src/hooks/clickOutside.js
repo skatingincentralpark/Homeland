@@ -9,10 +9,10 @@ export const useClickOutside = (ref, onClickOutside) => {
     };
 
     // Bind
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("mouseup", handleClickOutside);
     return () => {
       // dispose
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("mouseup", handleClickOutside);
     };
   }, [ref, onClickOutside]);
 };

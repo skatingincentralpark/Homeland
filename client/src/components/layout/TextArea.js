@@ -12,13 +12,11 @@ const TextArea = (props) => {
   return (
     <textarea
       style={style}
-      name=""
-      id=""
+      className="border-none"
       value={props.value}
       cols="30"
       rows="1"
       placeholder="Create a post..."
-      // required
       onChange={onChange}
     />
   );

@@ -5,7 +5,6 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   createProfile,
   getCurrentProfile,
-  deleteAccount,
 } from "../../store/profile/profile-actions";
 
 const initialState = {
@@ -20,14 +19,16 @@ const initialState = {
 
 const EditProfile = ({ history }) => {
   const { profile, loading } = useSelector((state) => state.profile);
-  const { user } = useSelector((state) => state.auth);
+  const auth = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
 
   const [formData, setFormData] = useState(initialState);
 
+  useEffect(() => {});
+
   useEffect(() => {
-    if (!profile) dispatch(getCurrentProfile());
+    dispatch(getCurrentProfile());
     if (!loading && profile) {
       const profileData = { ...initialState };
       for (const key in profile) {
@@ -37,7 +38,7 @@ const EditProfile = ({ history }) => {
       }
       setFormData(profileData);
     }
-  }, [profile]);
+  }, [getCurrentProfile]);
 
   const {
     highschool,
@@ -58,10 +59,6 @@ const EditProfile = ({ history }) => {
     dispatch(createProfile(formData, history, true));
   };
 
-  const onDelete = () => {
-    dispatch(deleteAccount());
-  };
-
   if (!profile && !loading) {
     return <Redirect to="/create-profile" />;
   }
@@ -69,12 +66,9 @@ const EditProfile = ({ history }) => {
   if (loading) return <h1 className="p-1 mt-2">Loading...</h1>;
 
   return (
-    <main>
+    <main className="registerlogin-container">
       {profile && !loading && (
-        <div className="registerlogin register desktop-mt-5 maxw-70">
-          <div className="registerlogin-left">
-            <div className="registerlogin-image alt-grad-bg"></div>
-          </div>
+        <div className="registerlogin maxw-40">
           <div>
             <h1 className="large text-primary">Edit Your Profile</h1>
             <p className="lead mb-2">
@@ -140,26 +134,26 @@ const EditProfile = ({ history }) => {
                   name="interests"
                 />
               </div>
-              <div className="form-group">
+              <div className="form-group mb-2">
                 <textarea
                   onChange={onChange}
                   value={bio}
                   placeholder="A short bio of yourself"
                   name="bio"
                   maxLength="300"
+                  rows="1"
                 ></textarea>
               </div>
               <button className="link-button w-100 mb-1 invert">Submit</button>
-              <Link
-                className="link-button mb-2"
-                to={`/profile/${user.payload._id}`}
-              >
-                Go Back
-              </Link>
+              {!auth.loading && (
+                <Link
+                  className="link-button"
+                  to={`/profile/${auth.user.payload._id}`}
+                >
+                  Go Back
+                </Link>
+              )}
             </form>
-            <button onClick={onDelete} className="link-button w-100 delete-btn">
-              Delete account
-            </button>
           </div>
         </div>
       )}

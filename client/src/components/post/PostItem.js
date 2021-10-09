@@ -106,7 +106,7 @@ const PostItem = (props) => {
       {/* Post Content */}
       <div className="post-content">
         {text && (
-          <div className="post-content-text">
+          <div className="px-1">
             {text.map((txt, i) =>
               txt.type === "br" ? (
                 <br key={i} />
@@ -117,7 +117,7 @@ const PostItem = (props) => {
           </div>
         )}
         {image && (
-          <div className="post-content-image">
+          <div className="post-content-image pt-1">
             <Image
               src={image}
               customPlaceholder={(ref) => <SkeletonImage refProp={ref} />}
@@ -155,9 +155,7 @@ const PostItem = (props) => {
               postId={_id}
               profilepicture={auth.user.payload.profilepicture}
             />
-            <div className="post-footer-comments">
-              <Comments comments={comments} postId={_id} />
-            </div>
+            <Comments comments={comments} postId={_id} />
           </>
         </div>
       )}

@@ -92,7 +92,7 @@ const Navbar = () => {
             </div>
             {toggleNav && (
               <nav className="header-popup">
-                <div>
+                <div className="py-05">
                   <div className="nav-top">
                     <div className="post-avatar">
                       <img
@@ -151,16 +151,17 @@ const Navbar = () => {
           </header>
         </>
       ) : (
-        <header>
-          <div className="header-inner">
-            <div />
-            <div className="header-logo">
-              <Link to="/">
-                <img src={Logo} alt="logo" className="svg" />
-              </Link>
-            </div>
-          </div>
-        </header>
+        <></>
+        // <header>
+        //   <div className="header-inner">
+        //     <div />
+        //     <div className="header-logo">
+        //       <Link to="/">
+        //         <img src={Logo} alt="logo" className="svg" />
+        //       </Link>
+        //     </div>
+        //   </div>
+        // </header>
       )}
     </>
   );

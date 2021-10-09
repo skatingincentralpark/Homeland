@@ -23,7 +23,7 @@ const NewPostForm = (props) => {
   };
 
   return (
-    <div className="text-input-container">
+    <div className="profile-item-container">
       <div className="text-input new-post">
         <div className="text-input-top">
           <div className="post-avatar">
@@ -31,31 +31,31 @@ const NewPostForm = (props) => {
           </div>
           <form>
             <TextArea setText={setText} value={text} />
-
             <button onClick={onSubmit} className="link-button text-form">
               Post
             </button>
           </form>
         </div>
         <hr />
-        <input
-          type="file"
-          id="file"
-          accept="image/*"
-          onChange={(e) => {
-            setPostImage(e.target.files[0]);
-          }}
-          // value={postImage}
-        />
-        <label htmlFor="file">
-          <img src={Camera} alt="" />
-          Add a photo
-        </label>
-        {postImage && (
-          <div className="thumbnails">
-            <img src={URL.createObjectURL(postImage)} alt="" />
-          </div>
-        )}
+        <div className="image-upload">
+          <input
+            type="file"
+            id="file"
+            accept="image/*"
+            onChange={(e) => {
+              setPostImage(e.target.files[0]);
+            }}
+          />
+          <label htmlFor="file">
+            <img src={Camera} alt="" />
+            Add a photo
+          </label>
+          {postImage && (
+            <div className="thumbnails">
+              <img src={URL.createObjectURL(postImage)} alt="" />
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

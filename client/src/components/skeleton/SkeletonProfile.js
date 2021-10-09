@@ -9,7 +9,7 @@ const SkeletonProfile = ({ theme }) => {
 
   return (
     <>
-      <div className={`skeleton-wrapper skeleton-gray mt-5 ${themeClass}`}>
+      <div className={`skeleton-wrapper skeleton-gray mt-2 ${themeClass}`}>
         <div className="skeleton-profile-top">
           <div className="skeleton bigavatar gray"></div>
           <SkeletonElement type="title gray" />

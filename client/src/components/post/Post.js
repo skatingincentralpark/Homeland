@@ -30,8 +30,6 @@ const Post = ({ match }) => {
       )}
     </main>
   );
-
-  // return loading || post === null ? <p>Loading...</p> ? <PostItem />
 };
 
 export default Post;

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Image from "react-graceful-image";
 
-const FriendsList = ({ profile, id }) => {
+const FriendsList = ({ loading, profile, id }) => {
   const {
     user: { friends },
   } = profile;
@@ -10,7 +10,9 @@ const FriendsList = ({ profile, id }) => {
   const [friendsArray, setFriendsArray] = useState([]);
 
   useEffect(() => {
-    setFriendsArray(friends.slice(0, 9));
+    if (!loading) {
+      setFriendsArray(friends.slice(0, 9));
+    }
   }, [friends]);
 
   return (

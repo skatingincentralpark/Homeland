@@ -23,6 +23,7 @@
 }
 .skel-post-top {
   display: flex;
+  gap: 1em;
   justify-content: center;
   align-items: center;
 }
@@ -145,6 +146,12 @@
 .skeleton.image {
   width: 100%;
   height: 50em;
+  border-radius: 4px;
+  margin: 0 0 2em 0;
+}
+.skeleton.image2 {
+  width: 100%;
+  height: 100%;
   border-radius: 4px;
   margin: 0 0 2em 0;
 }

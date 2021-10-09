@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getPosts, getPostsNext } from "../../store/post/post-actions";
 import { profileActions } from "../../store/profile/profile-slice";
 import { postActions } from "../../store/post/post-slice";
+import { friendRequestActions } from "../../store/friendRequest/friendRequest-slice";
 
 import PostItem from "../post/PostItem";
 import NewPostForm from "../post/NewPostForm";
@@ -24,6 +25,7 @@ const Newsfeed = () => {
   useEffect(() => {
     dispatch(profileActions.clearProfile());
     dispatch(postActions.clearPost());
+    dispatch(friendRequestActions.clearFriendRequests());
   }, [dispatch]);
 
   useEffect(() => {
@@ -65,7 +67,7 @@ const Newsfeed = () => {
     <main className="newsfeed">
       {/* New User Module */}
       {!profileExists && (
-        <div className="post mb-1 mt-1 px-1 bg-gradient">
+        <div className="post mb-2 px-1 bg-gradient">
           <div className="post-inner">
             <h1 className="white">Welcome to Homeland!</h1>
             <p className="white">

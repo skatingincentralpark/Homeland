@@ -3,6 +3,7 @@ import { Link, Redirect } from "react-router-dom";
 
 import { useSelector, useDispatch } from "react-redux";
 import { edit } from "../../store/auth/auth-actions";
+import { deleteAccount } from "../../store/profile/profile-actions";
 
 const initialState = {
   name: "",
@@ -49,9 +50,9 @@ const EditUser = ({ history }) => {
   };
 
   return (
-    <main>
+    <main className="registerlogin-container">
       {user && !loading && (
-        <div className="registerlogin edit-user desktop-mt-5 maxw-70">
+        <div className="registerlogin edit-user maxw-70">
           <div className="registerlogin-left">
             <div className="edit-user">
               <img
@@ -98,7 +99,7 @@ const EditUser = ({ history }) => {
                   }}
                 />
               </div>
-              <div className="form-group">
+              <div className="form-group mb-2">
                 <input
                   type="password"
                   placeholder="Password"
@@ -110,13 +111,21 @@ const EditUser = ({ history }) => {
               </div>
               <input
                 type="submit"
-                className="link-button w-100 mb-1"
+                className="link-button w-100 mb-1 invert"
                 value="Update"
               />
             </form>
             <Link className="link-button" to={`/profile/${user.payload._id}`}>
               Go Back
             </Link>
+            <button
+              className="link-button mt-1 w-100 alert-danger"
+              onClick={() => {
+                dispatch(deleteAccount());
+              }}
+            >
+              Delete Account
+            </button>
           </div>
         </div>
       )}

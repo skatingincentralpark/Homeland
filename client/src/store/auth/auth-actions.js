@@ -107,6 +107,7 @@ export const register = ({ name, email, password, image }) => {
 
       dispatch(loadUser());
     } catch (err) {
+      console.log(err);
       const errors = err.response.data.errors;
 
       if (errors) {
