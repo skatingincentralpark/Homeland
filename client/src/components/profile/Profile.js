@@ -39,17 +39,38 @@ const Profile = ({ match }) => {
     dispatch(getFriendRequests());
   }, [dispatch, match.params.id]);
 
-  const getNextBatch = (e) => {
-    e.preventDefault();
+  const getNextBatch = () => {
+    if (posts.length) {
+      const lastPostId = posts.reduce((prev, curr) => {
+        return prev._id < curr._id ? prev._id : curr._id;
+      });
 
-    const lastPostId = posts.reduce((prev, curr) => {
-      return prev._id < curr._id ? prev._id : curr._id;
+      dispatch(
+        getPostsByUserNext({ userId: match.params.id, postId: lastPostId })
+      );
+    }
+  };
+
+  // Lazy load
+  const handleScroll = () => {
+    const bottom =
+      Math.ceil(window.innerHeight + window.scrollY) >=
+      document.documentElement.scrollHeight;
+
+    if (bottom) {
+      console.log("at the bottom");
+      getNextBatch();
+    }
+  };
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll, {
+      passive: true,
     });
 
-    dispatch(
-      getPostsByUserNext({ userId: match.params.id, postId: lastPostId })
-    );
-  };
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [handleScroll]);
 
   let interests = [];
   if (profile) {
@@ -189,7 +210,7 @@ const Profile = ({ match }) => {
                         </div>
                       ) : (
                         <button
-                          disabled={friendRequest.loading}
+                          disabled={friendRequest.loading || !auth.profile}
                           className="link-button addFriend mt-05"
                           onClick={() => {
                             dispatch(sendFriendRequest(match.params.id));
@@ -274,7 +295,6 @@ const Profile = ({ match }) => {
               {posts.map((post) => (
                 <PostItem key={post._id} post={post} />
               ))}
-              <button onClick={getNextBatch}>Load more</button>
               {posts.length === 0 && (
                 <div className="post">
                   <div className="post-header"> Your posts will go here</div>

@@ -81,6 +81,8 @@ export const register = ({ name, email, password, image }) => {
       let profilepicture;
 
       if (image) {
+        setAuthToken();
+
         const formData = new FormData();
         formData.append("file", image);
         formData.append("upload_preset", "profile-pictures");
@@ -107,7 +109,8 @@ export const register = ({ name, email, password, image }) => {
 
       dispatch(loadUser());
     } catch (err) {
-      console.log(err);
+      console.log(err.response.data);
+
       const errors = err.response.data.errors;
 
       if (errors) {

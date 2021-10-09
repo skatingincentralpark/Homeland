@@ -35,11 +35,12 @@ const Newsfeed = () => {
   }, [auth, posts]);
 
   const getNextBatch = () => {
-    const lastPostId = posts.reduce((prev, curr) => {
-      return prev._id < curr._id ? prev._id : curr._id;
-    });
-    console.log("Getting Next Batch");
-    dispatch(getPostsNext(lastPostId));
+    if (posts.length) {
+      const lastPostId = posts.reduce((prev, curr) => {
+        return prev._id < curr._id ? prev._id : curr._id;
+      });
+      dispatch(getPostsNext(lastPostId));
+    }
   };
 
   // Lazy load
@@ -49,7 +50,6 @@ const Newsfeed = () => {
       document.documentElement.scrollHeight;
 
     if (bottom) {
-      console.log("at the bottom");
       getNextBatch();
     }
   };
