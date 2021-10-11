@@ -27,7 +27,7 @@ const FriendsList = ({ loading, profile, id }) => {
           </Link>
         </div>
         {/* Profile Friends */}
-        <div className="profile-friends">
+        <div className="profile-item-grid">
           {friendsArray.map((friend) => (
             <div className="profile-friends-item" key={friend._id}>
               <Link to={`/profile/${friend.user}`}>

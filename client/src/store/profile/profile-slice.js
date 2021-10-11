@@ -5,6 +5,7 @@ import { createSlice } from "@reduxjs/toolkit";
 // @@ INITIAL STATE
 const initialState = {
   profile: null,
+  photos: [],
   profiles: [],
   loading: true,
   error: {},
@@ -17,10 +18,10 @@ function getProfile(state, action) {
     loading: false,
   });
 }
-function getProfiles(state, action) {
+function getPhotos(state, action) {
   Object.assign(state, {
-    profiles: action.payload,
-    loading: false,
+    ...state,
+    photos: action.payload,
   });
 }
 function profileError(state, action) {
@@ -34,6 +35,10 @@ function clearProfile(state, action) {
   Object.assign(state, {
     profile: null,
     loading: true,
+    photos: [],
+    profiles: [],
+    loading: true,
+    error: {},
   });
 }
 function loadFriends(state, action) {
@@ -49,6 +54,7 @@ const profileSlice = createSlice({
   initialState: initialState,
   reducers: {
     getProfile,
+    getPhotos,
     profileError,
     clearProfile,
     loadFriends,

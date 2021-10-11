@@ -65,6 +65,7 @@ body {
 
 :root {
   --box-shadow: rgba(0, 0, 0, 0.2);
+  --box-shadow2: rgba(0, 0, 0, 0.2);
   --gray1: rgb(240, 240, 240);
   --gray2: rgb(220, 220, 220);
   --gray3: rgb(180, 180, 180);
@@ -74,6 +75,9 @@ body {
   --caution: #e5ff00;
   --danger-color: #dc3545;
   --success-color: #28a745;
+
+  --font1: 1.8rem;
+  --font2: 1.4rem;
 }
 
 *,
@@ -91,10 +95,10 @@ CONTAINERS
   font-size: 1rem;
   text-align: center;
   font-weight: 600;
-  background-color: var(--gray2);
-  border: 1px solid rgb(220, 220, 220);
-  border-radius: 5em;
-  padding: 0.5em 1em;
+  background-color: var(--gray1);
+  border: none;
+  border-radius: 0.5em;
+  padding: 0.5em 2em;
 }
 .link-button:hover {
   filter: brightness(0.95);
@@ -142,10 +146,8 @@ h1 {
   margin-bottom: 0.5em;
 }
 h2 {
-  font-size: 2rem;
-  margin-bottom: 1em;
+  font-size: 1.8rem;
   line-height: 2.2rem;
-  font-weight: 400;
 }
 ul {
   margin: 0.5em 0 0 1.5em;
@@ -193,6 +195,9 @@ TEXT INPUT
 .text-form {
   margin-left: 1em;
   padding: 0.5em 1em;
+}
+.textarea {
+  border-radius: 5em;
 }
 .text-input textarea {
   white-space: pre-line;
@@ -376,7 +381,7 @@ POST-HEADER
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1em 1em 1em 1em;
+  padding: 1em 1em 0em 1em;
   z-index: 99;
 }
 .post-header-left {
@@ -524,14 +529,33 @@ POST-COMMENTS
 PROFILE
 ------------------------------------------------------*/
 .profile {
-  padding: 0 1em;
+  padding-top: 3em;
 }
 .profile-top {
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  padding: 2em 0;
+  padding: 4em 1em 0 1em;
+  background: white;
+  margin: auto auto 2em auto;
+  border-bottom: 1px solid lightgray;
+}
+.profile-top button {
+  font-size: 1.2rem;
+}
+.profile-nav {
+  border-top: 1px solid lightgray;
+  width: 100%;
+  max-width: 68rem;
+  display: flex;
+  gap: 1em;
+  justify-content: center;
+  padding: 0.75em 0;
+  margin: 1em 1em 0 1em;
+}
+.profile-nav button {
+  font-weight: 600;
 }
 .profile-left,
 .profile-right {
@@ -570,15 +594,21 @@ PROFILE
 .profile-request-container div {
   display: flex;
 }
+.profile-bottom {
+  padding: 0 1em;
+}
 .profile-item-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-bottom: 0.5em;
+  padding-bottom: 1em;
 }
 .item-header-title {
   font-size: 1.4rem;
   font-weight: 600;
+}
+.item-header-bio {
+  color: gray;
 }
 .item-header-seeall {
   background-color: white;
@@ -617,20 +647,28 @@ INTRO ITEM
 /*-----------------------
 FRIENDS ITEM
 -----------------------*/
-.profile-friends {
+.profile-item-grid {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
-  gap: 1em;
+  gap: 0.5em;
 }
-.profile-friends img {
+.image-square-container {
+  position: relative;
+  width: 100%;
+  padding-bottom: 100%;
+  margin: 1.66%;
+  overflow: hidden;
+  border-radius: 1em;
+}
+.profile-item-grid img {
   width: 100%;
   border-radius: 1em;
 }
-.profile-friends-item {
-  position: relative;
+.profile-item-grid img:hover {
+  opacity: 0.85;
 }
-.profile-friends-item a:hover img {
-  opacity: 0.8;
+.profile-photos img {
+  position: absolute;
 }
 .name-container {
   font-weight: 600;
@@ -638,18 +676,14 @@ FRIENDS ITEM
 }
 
 @media only screen and (min-width: 900px) {
-  .profile-friends {
+  .profile-item-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 1em;
+    gap: 0.5em;
   }
   .name-container {
     display: block;
   }
-}
-
-.grid-6 {
-  grid-template-columns: repeat(6, 1fr);
 }
 
 /*------------------------------------------------------
@@ -669,9 +703,9 @@ header {
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 99;
+  z-index: 97;
   background-color: white;
-  box-shadow: 0 0.1rem 0.2rem var(--box-shadow);
+  box-shadow: 0 0.1rem 4rem var(--box-shadow2);
 }
 .header-inner {
   padding: 0.75em 1em;
@@ -918,6 +952,19 @@ EDIT USER FORM
 }
 
 /*------------------------------------------------------
+MODAL
+------------------------------------------------------*/
+.modal-backdrop {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.2);
+  z-index: 98;
+}
+
+/*------------------------------------------------------
 SPACING
 ------------------------------------------------------*/
 /* margin */
@@ -976,17 +1023,20 @@ SPACING
 .p-2 {
   padding: 2em;
 }
+.px-1 {
+  padding: 0 1em;
+}
 .pt-0 {
   padding-top: 0;
 }
 .pt-1 {
   padding-top: 1em;
 }
+.pt-1 {
+  padding-top: 1em;
+}
 .pt-5 {
   padding-top: 5em;
-}
-.px-1 {
-  padding: 0 1em;
 }
 /* width */
 .w-100 {
@@ -1001,6 +1051,16 @@ SPACING
 .maxw-70 {
   max-width: 70rem;
 }
+/* display */
+.grid-6 {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 0.5em;
+}
+.grid-6 img {
+  width: 100%;
+  border-radius: 1em;
+}
 /* position */
 .center {
   position: fixed;
@@ -1011,9 +1071,22 @@ SPACING
 .relative {
   position: relative;
 }
+.fixed-centered {
+  position: fixed;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+}
+/* z-index */
+.z-99 {
+  z-index: 99;
+}
 /* display */
 .block {
   display: block;
+}
+.inline {
+  display: inline;
 }
 /* border */
 .border-none {

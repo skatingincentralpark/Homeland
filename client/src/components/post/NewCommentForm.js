@@ -23,7 +23,11 @@ const NewCommentForm = ({ postId, profilepicture }) => {
         <img src={profilepicture} alt="display-picture" />
       </div>
       <form onSubmit={onSubmit}>
-        <TextArea setText={setText} value={text} />
+        <TextArea
+          setText={setText}
+          value={text}
+          placeholder="Create a comment..."
+        />
         <button className="link-button text-form">Post</button>
       </form>
     </div>

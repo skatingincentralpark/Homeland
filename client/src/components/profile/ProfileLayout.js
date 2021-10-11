@@ -22,7 +22,7 @@ import NewPostForm from "../post/NewPostForm";
 import SkeletonProfile from "../skeleton/SkeletonProfile";
 import ProfileTop from "./ProfileTop";
 
-const Profile = ({ match }) => {
+const Profile = ({ match, children }) => {
   const dispatch = useDispatch();
   const { profile, loading, photos } = useSelector((state) => state.profile);
   const { posts, loading: postLoading } = useSelector((state) => state.post);
@@ -138,14 +138,24 @@ const Profile = ({ match }) => {
     <main className="profile">
       {profile ? (
         <>
-          <ProfileTop
+          {/* <ProfileTop
             auth={auth}
             profile={profile}
             friendRequest={friendRequest}
             match={match}
-          />
+          /> */}
+          <h1>'LOLOLOLOL</h1>
+          <h1>'LOLOLOLOL</h1>
+          <h1>'LOLOLOLOL</h1>
+          <h1>'LOLOLOLOL</h1>
+          <h1>'LOLOLOLOL</h1>
+          <h1>'LOLOLOLOL</h1>
+          <h1>'LOLOLOLOL</h1>
+          <h1>'LOLOLOLOL</h1>
+          <h1>'LOLOLOLOL</h1>
 
-          <div className="profile-bottom">
+          {children}
+          {/* <div className="profile-bottom">
             <div className="profile-left">
               <div className="profile-item-container mt-0">
                 <div className="profile-item-container-inner">
@@ -224,7 +234,7 @@ const Profile = ({ match }) => {
                 </div>
               )}
             </div>
-          </div>
+          </div> */}
         </>
       ) : (
         <div className="post mb-1 m-auto px-1 bg-gradient">

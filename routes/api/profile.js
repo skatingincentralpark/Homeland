@@ -29,6 +29,27 @@ router.get("/me", auth, async (req, res) => {
   }
 });
 
+// @route   GET api/profile/photos/:usesrId
+// @desc    User specific: Get first batch of photos (9)
+// @access  Private
+router.get("/photos/:userId", auth, async (req, res) => {
+  try {
+    const posts = await Post.find({
+      user: req.params.userId,
+      image: { $exists: true },
+    })
+      .limit(9)
+      .sort({
+        date: -1,
+      });
+
+    res.json(posts);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
 // @route   POST api/profile
 // @desc    Create or update user profile
 // @access  Private

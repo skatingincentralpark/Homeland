@@ -106,7 +106,7 @@ const PostItem = (props) => {
       {/* Post Content */}
       <div className="post-content">
         {text && (
-          <div className="px-1">
+          <div className="px-1 pt-1">
             {text.map((txt, i) =>
               txt.type === "br" ? (
                 <br key={i} />

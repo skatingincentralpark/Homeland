@@ -42,6 +42,22 @@ export const getProfileById = (userId) => async (dispatch) => {
   }
 };
 
+// Get photos
+export const getPhotos = (userId) => async (dispatch) => {
+  try {
+    const res = await axios.get(`/api/profile/photos/${userId}`);
+
+    dispatch(profileActions.getPhotos(res.data));
+  } catch (err) {
+    dispatch(
+      profileActions.profileError({
+        msg: err.response.statusText,
+        status: err.response.status,
+      })
+    );
+  }
+};
+
 // @@   Create or update profile
 export const createProfile =
   (formData, history, edit = false, userId) =>

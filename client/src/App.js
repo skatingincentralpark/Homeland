@@ -14,6 +14,7 @@ import EditProfile from "./components/profile-forms/EditProfile";
 import EditUser from "./components/profile-forms/EditUser";
 import Profile from "./components/profile/Profile";
 import Friends from "./components/profile/Friends";
+import Photos from "./components/profile/Photos";
 import TempRegister from "./components/auth/TempRegister";
 import Post from "./components/post/Post";
 
@@ -62,6 +63,7 @@ const App = (props) => {
           <PrivateRoute exact path="/edit-profile" component={EditProfile} />
           <PrivateRoute exact path="/profile/:id" component={Profile} />
           <PrivateRoute exact path="/profile/:id/friends" component={Friends} />
+          <PrivateRoute exact path="/profile/:id/photos" component={Photos} />
         </Switch>
       </Fragment>
     </Router>

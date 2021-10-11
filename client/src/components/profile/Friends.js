@@ -4,12 +4,16 @@ import Image from "react-graceful-image";
 
 import { useDispatch, useSelector } from "react-redux";
 import { getProfileById, notFound } from "../../store/profile/profile-actions";
+import { getFriendRequests } from "../../store/friendRequest/friendRequest-actions";
 
 import FriendItem from "./FriendItem";
+import ProfileTop from "./ProfileTop";
 
 const Friends = ({ match }) => {
   const dispatch = useDispatch();
   const { profile, loading } = useSelector((state) => state.profile);
+  const auth = useSelector((state) => state.auth);
+  const friendRequest = useSelector((state) => state.friendRequest);
 
   useEffect(() => {
     dispatch(getProfileById(match.params.id));
@@ -19,6 +23,7 @@ const Friends = ({ match }) => {
 
   if (!profile && !loading) {
     dispatch(notFound());
+    dispatch(getFriendRequests());
   }
   if (!profile && !loading) return <Redirect to="/newsfeed" />;
 
@@ -26,17 +31,12 @@ const Friends = ({ match }) => {
     <main className="profile pt-5">
       {!profile.loading && (
         <>
-          <div className="profile-top">
-            <div className="display-picture">
-              <Link to="/edit-user">
-                <Image src={profile.user.profilepicture} />
-              </Link>
-            </div>
-            <span className="item-header-title mb-05">
-              <b>{profile.user.name}</b>
-            </span>
-            <span className="item-header-location">{profile.location}</span>
-          </div>
+          <ProfileTop
+            auth={auth}
+            profile={profile}
+            friendRequest={friendRequest}
+            match={match}
+          />
 
           <div className="profile-item-container m-auto maxw-70">
             <div className="profile-item-container-inner p-2">
