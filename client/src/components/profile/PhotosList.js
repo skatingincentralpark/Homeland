@@ -15,6 +15,9 @@ const PhotosList = (props) => {
           </Link>
         </div>
         {/* Profile Friends */}
+        {!photoPosts.length && (
+          <span className="gray grayscale">Currently empty &#128561;</span>
+        )}
         <div className="profile-item-grid profile-photos">
           {photoPosts.map((post) => (
             <div className="image-square-container" key={post._id}>

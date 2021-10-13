@@ -19,8 +19,7 @@ const Friends = ({ match }) => {
     dispatch(getProfileById(match.params.id));
   }, [dispatch, match.params.id]);
 
-  if (loading) return <h1 className="p-1 mt-2">Loading...</h1>;
-
+  if (loading) return <h1 className="p-1 mt-2"></h1>;
   if (!profile && !loading) {
     dispatch(notFound());
     dispatch(getFriendRequests());
@@ -28,21 +27,25 @@ const Friends = ({ match }) => {
   if (!profile && !loading) return <Redirect to="/newsfeed" />;
 
   return (
-    <main className="profile pt-5">
+    <main className="profile">
       {!profile.loading && (
         <>
           <ProfileTop
             auth={auth}
             profile={profile}
-            friendRequest={friendRequest}
             match={match}
+            friendRequest={friendRequest}
           />
-
           <div className="profile-item-container m-auto maxw-70">
             <div className="profile-item-container-inner p-2">
-              <div className="profile-item-header">
+              <div className="profile-item-header pb-1-5">
                 <span className="item-header-title">Friends</span>
               </div>
+              {!loading && !profile.user.friends.length && (
+                <span className="gray grayscale mt-05 block">
+                  Currently empty &#128539;
+                </span>
+              )}
               <div className="profile-friends grid-6">
                 {profile.user.friends.map((friend) => (
                   <FriendItem key={friend._id} friend={friend} />

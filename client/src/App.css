@@ -78,6 +78,8 @@ body {
 
   --font1: 1.8rem;
   --font2: 1.4rem;
+
+  --border-radius: 1.25em;
 }
 
 *,
@@ -97,13 +99,16 @@ CONTAINERS
   font-weight: 600;
   background-color: var(--gray1);
   border: none;
-  border-radius: 0.5em;
+  border-radius: var(--border-radius);
   padding: 0.5em 2em;
 }
 .link-button:hover {
   filter: brightness(0.95);
   text-decoration: none;
   cursor: pointer;
+}
+.link-button:active {
+  filter: brightness(0.85);
 }
 /* Extra Options (Ellipse) */
 .extra-options-btn {
@@ -163,6 +168,9 @@ hr {
   border: 1px solid var(--gray2);
   border-top: 1px;
 }
+.bold {
+  font-weight: 600;
+}
 /*------------------------------------------------------
 AVATAR
 ------------------------------------------------------*/
@@ -195,9 +203,11 @@ TEXT INPUT
 .text-form {
   margin-left: 1em;
   padding: 0.5em 1em;
+  padding: calc(0.5em + 1.5px) 1.25em;
 }
 .textarea {
-  border-radius: 5em;
+  border-radius: 1.25em;
+  padding: 0.6em 1em;
 }
 .text-input textarea {
   white-space: pre-line;
@@ -230,7 +240,7 @@ NEW POST FORM (WITH IMAGE UPLOADER)
   height: 2em;
   width: 100%;
   background-color: var(--gray1);
-  border-radius: 2em;
+  border-radius: var(--border-radius);
   border: 1px solid #ccc;
   padding: 0.5em;
   display: flex;
@@ -272,7 +282,7 @@ select {
   font-size: 1rem;
   width: 100%;
   background-color: var(--gray1);
-  border-radius: 1.5em;
+  border-radius: var(--border-radius);
   padding: 0.5em;
   outline: none;
   color: gray;
@@ -287,14 +297,14 @@ textarea {
   padding: 0.5em 0.75em;
   font-size: 1rem;
   font-family: Helvetica, sans-serif;
-  border-radius: 1em;
+  border-radius: var(--border-radius);
   outline: none;
   border: 1px solid #ccc;
   resize: none;
 }
 .form-group input,
 select {
-  border-radius: 2em;
+  border-radius: var(--border-radius);
 }
 .form-group input:focus,
 select:focus,
@@ -350,7 +360,7 @@ NEWSFEED
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 5rem 1rem 1.5rem 1rem;
+  padding: 6rem 1rem 1.5rem 1rem;
   max-width: 40rem;
   margin: auto;
 }
@@ -370,7 +380,7 @@ POST
 }
 .single-post {
   margin: auto;
-  padding: 5em 1em 1em 1em;
+  padding: 6em 1em 1em 1em;
   max-width: 40rem;
   display: flex;
 }
@@ -391,6 +401,24 @@ POST-HEADER
 }
 .post-header-right {
   position: relative;
+}
+.header-right-container {
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+  padding: 0.4em 0.8em 0.4em 0.4em;
+  border-radius: 5em;
+}
+.header-right-container:hover {
+  background-color: var(--gray1);
+  text-decoration: none;
+}
+.header-right-container:active {
+  filter: brightness(0.95);
+}
+.header-right-container img {
+  width: 2em;
+  border: 1px solid lightgray;
 }
 .post-popup button {
   font-size: 1rem;
@@ -440,7 +468,7 @@ POST-CONTENT
   cursor: pointer;
 }
 .post-content-interactions {
-  margin: 1em 0 0.5em 0;
+  margin: 1em 0 0 0;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   border-radius: 0.5rem;
@@ -460,11 +488,11 @@ POST-CONTENT
 POST-FOOTER
 ------------------------------------------------------*/
 .btn-like {
-  border-radius: 5em 0 0 5em;
+  border-radius: var(--border-radius) 0 0 var(--border-radius);
   border-right: 1px solid lightgray !important;
 }
 .btn-share {
-  border-radius: 0 5em 5em 0;
+  border-radius: 0 var(--border-radius) var(--border-radius) 0;
   border-left: 1px solid lightgray !important;
 }
 /*------------------------------------------------------
@@ -480,9 +508,7 @@ POST-COMMENTS
 .comment .extra-options-btn {
   visibility: visible;
 }
-.comment:first-child {
-  margin-top: 1.5em;
-}
+
 .comment-content-bubble {
   background-color: var(--gray1);
   border-radius: 1.25em;
@@ -530,6 +556,7 @@ PROFILE
 ------------------------------------------------------*/
 .profile {
   padding-top: 3em;
+  padding-bottom: 2em;
 }
 .profile-top {
   display: flex;
@@ -549,13 +576,27 @@ PROFILE
   width: 100%;
   max-width: 68rem;
   display: flex;
-  gap: 1em;
   justify-content: center;
   padding: 0.75em 0;
   margin: 1em 1em 0 1em;
 }
-.profile-nav button {
+.profile-nav a {
+  padding: 0.5em 1.5em;
+}
+.profile-nav a:hover {
+  background-color: var(--gray1);
+  border-radius: var(--border-radius);
+  text-decoration: none;
+}
+.profile-nav a:active {
+  background-color: var(--gray2);
+}
+.profile-nav-selected {
+  /* color: gray; */
   font-weight: 600;
+}
+.profile-nav-selected:hover {
+  background-color: white;
 }
 .profile-left,
 .profile-right {
@@ -613,9 +654,11 @@ PROFILE
 .item-header-seeall {
   background-color: white;
   padding: 0.5em;
+  border-radius: var(--border-radius);
 }
 .item-header-seeall:hover {
   filter: brightness(0.95);
+  text-decoration: none;
 }
 @media only screen and (min-width: 900px) {
   .profile-bottom {
@@ -716,25 +759,40 @@ header {
 .header-logo {
   display: flex;
   justify-self: normal;
+  align-items: center;
   grid-area: logo;
 }
+.header-logo a {
+  height: 2em;
+}
 .header-logo img {
-  height: 25px;
+  height: 100%;
+}
+.header-logo img:hover {
+  filter: opacity(0.7);
 }
 .header-right button {
-  background-color: white;
+  background-color: rgba(0, 0, 0, 0);
   border: none;
   cursor: pointer;
+  height: 2.8em;
+  padding: 0;
+}
+.header-right button:hover img {
+  filter: brightness(0.95);
+}
+.header-right button:active img {
+  filter: brightness(0.85);
+}
+.header-right img {
+  height: 100%;
 }
 .header-right {
   justify-self: right;
   align-items: center;
+  gap: 0.5em;
   display: flex;
   grid-area: nav;
-}
-.header-right img {
-  height: 20px;
-  transform: translateY(1px);
 }
 .header-profile {
   grid-area: profile;
@@ -806,7 +864,19 @@ nav div {
   padding-bottom: 0.25em;
 }
 .bell {
-  animation: ding 0.25s;
+  /* animation: ding 0.25s; */
+  position: relative;
+}
+.bell span {
+  position: absolute;
+  font-size: 0.9rem;
+  top: -3px;
+  right: 0;
+  background: red;
+  color: white;
+  width: 1.3em;
+  height: 1.3em;
+  border-radius: 50%;
 }
 @keyframes ding {
   0% {
@@ -1038,6 +1108,12 @@ SPACING
 .pt-5 {
   padding-top: 5em;
 }
+.pb-1 {
+  padding-bottom: 1em;
+}
+.pb-1-5 {
+  padding-bottom: 1.5em;
+}
 /* width */
 .w-100 {
   width: 100%;
@@ -1120,6 +1196,10 @@ SPACING
 }
 .bg-none {
   background: none;
+}
+/* filter */
+.grayscale {
+  filter: grayscale(1);
 }
 
 @media only screen and (min-width: 900px) {

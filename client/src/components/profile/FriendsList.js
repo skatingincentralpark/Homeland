@@ -27,6 +27,9 @@ const FriendsList = ({ loading, profile, id }) => {
           </Link>
         </div>
         {/* Profile Friends */}
+        {!loading && !friends.length && (
+          <span className="gray grayscale">Currently empty &#128539;</span>
+        )}
         <div className="profile-item-grid">
           {friendsArray.map((friend) => (
             <div className="profile-friends-item" key={friend._id}>

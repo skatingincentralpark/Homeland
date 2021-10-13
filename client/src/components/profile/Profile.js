@@ -22,7 +22,9 @@ import NewPostForm from "../post/NewPostForm";
 import SkeletonProfile from "../skeleton/SkeletonProfile";
 import ProfileTop from "./ProfileTop";
 
-const Profile = ({ match }) => {
+const Profile = (props) => {
+  const { match } = props;
+
   const dispatch = useDispatch();
   const { profile, loading, photos } = useSelector((state) => state.profile);
   const { posts, loading: postLoading } = useSelector((state) => state.post);
@@ -38,10 +40,6 @@ const Profile = ({ match }) => {
     dispatch(getPostsByUser(match.params.id));
     dispatch(getFriendRequests());
     dispatch(getPhotos(match.params.id));
-
-    return () => {
-      dispatch(profileActions.clearProfile());
-    };
   }, [dispatch, match.params.id]);
 
   const getNextBatch = () => {
@@ -141,10 +139,9 @@ const Profile = ({ match }) => {
           <ProfileTop
             auth={auth}
             profile={profile}
-            friendRequest={friendRequest}
             match={match}
+            friendRequest={friendRequest}
           />
-
           <div className="profile-bottom">
             <div className="profile-left">
               <div className="profile-item-container mt-0">
@@ -196,9 +193,14 @@ const Profile = ({ match }) => {
                   {auth.isAuthenticated &&
                     auth.loading === false &&
                     auth.user.payload._id === profile.user._id && (
-                      <Link to="/edit-profile" className="link-button">
-                        Edit Profile
-                      </Link>
+                      <>
+                        <Link to="/edit-profile" className="link-button mb-05">
+                          Edit Profile
+                        </Link>
+                        <Link to="/edit-user" className="link-button">
+                          Edit Account
+                        </Link>
+                      </>
                     )}
                 </div>
               </div>
@@ -220,7 +222,9 @@ const Profile = ({ match }) => {
               ))}
               {posts.length === 0 && (
                 <div className="post">
-                  <div className="post-header"> Your posts will go here</div>
+                  <div className="post-header pb-1 gray">
+                    Your posts will go here
+                  </div>
                 </div>
               )}
             </div>

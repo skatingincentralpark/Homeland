@@ -105,7 +105,9 @@ const PostItem = (props) => {
       </div>
       {/* Post Content */}
       <div className="post-content">
-        {text && (
+        {text.map((txt) => txt.trim === "") ? (
+          ""
+        ) : (
           <div className="px-1 pt-1">
             {text.map((txt, i) =>
               txt.type === "br" ? (

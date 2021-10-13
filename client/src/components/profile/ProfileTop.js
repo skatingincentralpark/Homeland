@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import Image from "react-graceful-image";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -13,6 +14,7 @@ import {
 
 const ProfileTop = (props) => {
   const { auth, profile, friendRequest, match } = props;
+  const history = useHistory();
 
   const dispatch = useDispatch();
 
@@ -111,9 +113,49 @@ const ProfileTop = (props) => {
           </>
         )}
       <div className="profile-nav">
-        <button className="button-to-link">Posts</button>
-        <button className="button-to-link">Friends</button>
-        <button className="button-to-link">Photos</button>
+        <NavLink
+          activeClassName="profile-nav-selected"
+          exact
+          to={`/profile/${match.params.id}`}
+        >
+          Posts
+        </NavLink>
+        <NavLink
+          activeClassName="profile-nav-selected"
+          to={`/profile/${match.params.id}/friends`}
+        >
+          Friends
+        </NavLink>
+        <NavLink
+          activeClassName="profile-nav-selected"
+          to={`/profile/${match.params.id}/photos`}
+        >
+          Photos
+        </NavLink>
+        {/* <button
+          onClick={() => {
+            history.push(`/profile/${match.params.id}`);
+          }}
+          className="button-to-link"
+        >
+          Posts
+        </button>
+        <button
+          onClick={() => {
+            history.push(`/profile/${match.params.id}/friends`);
+          }}
+          className="button-to-link"
+        >
+          Friends
+        </button>
+        <button
+          onClick={() => {
+            history.push(`/profile/${match.params.id}/photos`);
+          }}
+          className="button-to-link"
+        >
+          Photos
+        </button> */}
       </div>
     </div>
   );
