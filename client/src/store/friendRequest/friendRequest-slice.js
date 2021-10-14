@@ -25,7 +25,7 @@ function addFriendRequest(state, action) {
 function removeFriendRequest(state, action) {
   Object.assign(state, {
     friendRequests: state.friendRequests.filter(
-      (request) => request._id != action.payload
+      (request) => request._id !== action.payload
     ),
     loading: false,
   });

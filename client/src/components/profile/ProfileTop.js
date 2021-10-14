@@ -1,9 +1,8 @@
 import React, { useEffect } from "react";
-import { useHistory } from "react-router-dom";
 import Image from "react-graceful-image";
 import { Link, NavLink } from "react-router-dom";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   getFriendRequests,
   sendFriendRequest,
@@ -14,7 +13,6 @@ import {
 
 const ProfileTop = (props) => {
   const { auth, profile, friendRequest, match } = props;
-  const history = useHistory();
 
   const dispatch = useDispatch();
 
@@ -132,30 +130,6 @@ const ProfileTop = (props) => {
         >
           Photos
         </NavLink>
-        {/* <button
-          onClick={() => {
-            history.push(`/profile/${match.params.id}`);
-          }}
-          className="button-to-link"
-        >
-          Posts
-        </button>
-        <button
-          onClick={() => {
-            history.push(`/profile/${match.params.id}/friends`);
-          }}
-          className="button-to-link"
-        >
-          Friends
-        </button>
-        <button
-          onClick={() => {
-            history.push(`/profile/${match.params.id}/photos`);
-          }}
-          className="button-to-link"
-        >
-          Photos
-        </button> */}
       </div>
     </div>
   );

@@ -37,7 +37,6 @@ function clearProfile(state, action) {
     loading: true,
     photos: [],
     profiles: [],
-    loading: true,
     error: {},
   });
 }

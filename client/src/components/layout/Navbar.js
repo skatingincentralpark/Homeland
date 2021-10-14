@@ -40,7 +40,7 @@ const Navbar = () => {
     if (toggleNotif) {
       dispatch(readNotifications());
     }
-  }, [toggleNotif]);
+  }, [toggleNotif, dispatch]);
 
   const logoutHandler = () => {
     dispatch(logout());
@@ -70,7 +70,7 @@ const Navbar = () => {
                     <div className="post-avatar">
                       <img
                         src={user.payload.profilepicture}
-                        alt="display-picture"
+                        alt="user avatar"
                       />
                     </div>
                     <span>{user.payload.name.split(" ")[0]}</span>
@@ -100,7 +100,7 @@ const Navbar = () => {
                   )}
                 </button>
                 <button onClick={toggleNavHandler}>
-                  <img src={Dropdown} alt="dropdown" />
+                  <img src={Dropdown} alt="navigation button" />
                 </button>
               </div>
             </div>
@@ -111,7 +111,7 @@ const Navbar = () => {
                     <div className="post-avatar">
                       <img
                         src={user.payload.profilepicture}
-                        alt="display-picture"
+                        alt="user avatar"
                       />
                     </div>
                     <div>

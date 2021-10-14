@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import nl2br from "react-nl2br";
 
 import { useDispatch } from "react-redux";
-import { addComment, deleteComment } from "../../store/post/post-actions";
+import { addComment } from "../../store/post/post-actions";
 
 import TextArea from "../layout/TextArea";
 
@@ -20,7 +20,7 @@ const NewCommentForm = ({ postId, profilepicture }) => {
   return (
     <div className="text-input text-input-top pt-0">
       <div className="post-avatar">
-        <img src={profilepicture} alt="display-picture" />
+        <img src={profilepicture} alt="user avatar" />
       </div>
       <form onSubmit={onSubmit}>
         <TextArea

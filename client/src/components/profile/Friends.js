@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
-import { Link, Redirect } from "react-router-dom";
-import Image from "react-graceful-image";
+import { Redirect } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
 import { getProfileById, notFound } from "../../store/profile/profile-actions";
@@ -19,7 +18,7 @@ const Friends = ({ match }) => {
     dispatch(getProfileById(match.params.id));
   }, [dispatch, match.params.id]);
 
-  if (loading) return <h1 className="p-1 mt-2"></h1>;
+  if (loading) return <>Loading</>;
   if (!profile && !loading) {
     dispatch(notFound());
     dispatch(getFriendRequests());

@@ -13,7 +13,8 @@ const UserSchema = new mongoose.Schema({
   },
   profilepicture: {
     type: String,
-    default: "https://media.getty.edu/museum/images/web/enlarge/31280101.jpg",
+    default:
+      "https://res.cloudinary.com/dkgzyvlpc/image/upload/v1634191332/profile-pictures/Asset_6_vgmp0v.png",
     required: true,
   },
   password: {

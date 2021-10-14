@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Link, Redirect } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -12,7 +12,6 @@ import {
   getPostsByUser,
   getPostsByUserNext,
 } from "../../store/post/post-actions";
-import { profileActions } from "../../store/profile/profile-slice";
 import { postActions } from "../../store/post/post-slice";
 
 import PostItem from "../post/PostItem";
@@ -27,7 +26,7 @@ const Profile = (props) => {
 
   const dispatch = useDispatch();
   const { profile, loading, photos } = useSelector((state) => state.profile);
-  const { posts, loading: postLoading } = useSelector((state) => state.post);
+  const { posts } = useSelector((state) => state.post);
   const auth = useSelector((state) => state.auth);
   const friendRequest = useSelector((state) => state.friendRequest);
 
@@ -42,30 +41,31 @@ const Profile = (props) => {
     dispatch(getPhotos(match.params.id));
   }, [dispatch, match.params.id]);
 
-  const getNextBatch = () => {
-    if (posts.length) {
-      const lastPostId = posts.reduce((prev, curr) => {
-        return prev._id < curr._id ? prev._id : curr._id;
-      });
-
-      dispatch(
-        getPostsByUserNext({ userId: match.params.id, postId: lastPostId })
-      );
-    }
-  };
-
   // Lazy load
-  const handleScroll = () => {
-    const bottom =
-      Math.ceil(window.innerHeight + window.scrollY) >=
-      document.documentElement.scrollHeight;
-
-    if (bottom) {
-      console.log("at the bottom");
-      getNextBatch();
-    }
-  };
   useEffect(() => {
+    const getNextBatch = () => {
+      if (posts.length) {
+        const lastPostId = posts.reduce((prev, curr) => {
+          return prev._id < curr._id ? prev._id : curr._id;
+        });
+
+        dispatch(
+          getPostsByUserNext({ userId: match.params.id, postId: lastPostId })
+        );
+      }
+    };
+
+    const handleScroll = () => {
+      const bottom =
+        Math.ceil(window.innerHeight + window.scrollY) >=
+        document.documentElement.scrollHeight;
+
+      if (bottom) {
+        console.log("at the bottom");
+        getNextBatch();
+      }
+    };
+
     window.addEventListener("scroll", handleScroll, {
       passive: true,
     });
@@ -73,7 +73,7 @@ const Profile = (props) => {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [handleScroll]);
+  }, [dispatch, match.params.id, posts]);
 
   let interests = [];
   if (profile) {
@@ -112,7 +112,7 @@ const Profile = (props) => {
   )
     return (
       <main className="profile pt-5">
-        <div className="post mb-1 m-auto px-1 bg-gradient maxw-40">
+        <div className="post mb-1 m-auto px-1 mt-2 bg-gradient maxw-40">
           <div className="post-inner">
             <h1 className="white">Welcome to Homeland!</h1>
             <p className="white">

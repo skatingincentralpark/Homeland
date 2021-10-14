@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Link, Redirect } from "react-router-dom";
 import Image from "react-graceful-image";
 
@@ -22,7 +22,7 @@ const Friends = (props) => {
     dispatch(getPhotos(match.params.id));
   }, [dispatch, match.params.id]);
 
-  if (loading) return <h1 className="p-1 mt-2"></h1>;
+  if (loading) return <>Loading</>;
   if (!profile && !loading) {
     dispatch(notFound());
   }

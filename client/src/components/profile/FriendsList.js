@@ -13,7 +13,7 @@ const FriendsList = ({ loading, profile, id }) => {
     if (!loading && friends) {
       setFriendsArray(friends.slice(0, 9));
     }
-  }, [friends]);
+  }, [friends, loading]);
 
   return (
     <div className="profile-item-container">

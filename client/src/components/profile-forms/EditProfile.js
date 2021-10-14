@@ -25,8 +25,6 @@ const EditProfile = ({ history }) => {
 
   const [formData, setFormData] = useState(initialState);
 
-  useEffect(() => {});
-
   useEffect(() => {
     dispatch(getCurrentProfile());
     if (!loading && profile) {
@@ -38,7 +36,7 @@ const EditProfile = ({ history }) => {
       }
       setFormData(profileData);
     }
-  }, [getCurrentProfile]);
+  }, [dispatch, loading, profile]);
 
   const {
     highschool,

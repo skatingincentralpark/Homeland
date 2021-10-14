@@ -5,17 +5,15 @@ import { useClickOutside } from "../../hooks/clickOutside";
 
 import Ellipsis from "../../static/svg/ellipsis.svg";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { deleteComment } from "../../store/post/post-actions";
 
 const CommentItem = (props) => {
   const { _id, user, name, date, text, profilepicture } = props.comment;
-  const { idOfMenuOpen, setIdOfMenuOpen } = props;
 
   const [togglePopup, setTogglePopup] = useState(false);
 
   const dispatch = useDispatch();
-  const auth = useSelector((state) => state.auth);
 
   const togglePopupHandler = () => {
     if (togglePopup) {

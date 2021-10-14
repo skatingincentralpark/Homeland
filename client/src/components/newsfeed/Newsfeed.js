@@ -34,26 +34,28 @@ const Newsfeed = () => {
     }
   }, [auth, posts]);
 
-  const getNextBatch = () => {
-    if (posts.length) {
-      const lastPostId = posts.reduce((prev, curr) => {
-        return prev._id < curr._id ? prev._id : curr._id;
-      });
-      dispatch(getPostsNext(lastPostId));
-    }
-  };
-
   // Lazy load
-  const handleScroll = () => {
-    const bottom =
-      Math.ceil(window.innerHeight + window.scrollY) >=
-      document.documentElement.scrollHeight;
 
-    if (bottom) {
-      getNextBatch();
-    }
-  };
   useEffect(() => {
+    const getNextBatch = () => {
+      if (posts.length) {
+        const lastPostId = posts.reduce((prev, curr) => {
+          return prev._id < curr._id ? prev._id : curr._id;
+        });
+        dispatch(getPostsNext(lastPostId));
+      }
+    };
+
+    const handleScroll = () => {
+      const bottom =
+        Math.ceil(window.innerHeight + window.scrollY) >=
+        document.documentElement.scrollHeight;
+
+      if (bottom) {
+        getNextBatch();
+      }
+    };
+
     window.addEventListener("scroll", handleScroll, {
       passive: true,
     });
@@ -61,7 +63,7 @@ const Newsfeed = () => {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [handleScroll]);
+  }, [dispatch, posts]);
 
   return (
     <main className="newsfeed">

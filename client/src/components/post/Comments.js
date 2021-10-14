@@ -10,9 +10,8 @@ const Comments = (props) => {
   const amount = counter * 3;
 
   useEffect(() => {
-    setCounter(2);
     setComments(props.comments.slice(0, amount));
-  }, [props.comments]);
+  }, [props.comments, amount]);
 
   const loadMore = (e) => {
     e.preventDefault();

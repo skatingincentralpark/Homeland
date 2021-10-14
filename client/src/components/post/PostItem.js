@@ -54,13 +54,13 @@ const PostItem = (props) => {
     if (auth.user && likes.length > 0) {
       setUserLiked(!!likes.find((like) => like.user === auth.user.payload._id));
     }
-  }, [auth]);
+  }, [auth, likes]);
 
   useEffect(() => {
     if (auth.isAuthenticated && auth.user) {
       setIsUsersPost(auth.user.payload._id === user);
     }
-  }, [auth.user]);
+  }, [auth.user, auth.isAuthenticated, user]);
 
   return (
     <div className="post">
@@ -89,7 +89,7 @@ const PostItem = (props) => {
                 className="extra-options-btn"
                 onClick={togglePopupHandler}
               >
-                <img src={Ellipsis} alt="" />
+                <img src={Ellipsis} alt="extra options" />
               </button>
             )}
             {togglePopup && (

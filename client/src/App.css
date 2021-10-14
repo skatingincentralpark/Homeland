@@ -183,6 +183,7 @@ AVATAR
   height: 2.25em;
   border-radius: 50%;
   margin-right: 0.75em;
+  border: 1px solid var(--gray2);
 }
 .post-avatar:hover,
 .display-picture:hover {

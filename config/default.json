@@ -2,6 +2,6 @@
     "mongoURI": "mongodb+srv://charles:V3jVyIZOh1ZeCMn2@cluster0.cjl4j.mongodb.net/homeland?retryWrites=true&w=majority",
     "jwtSecret": "mysecrettoken",
     "cloudName": "dkgzyvlpc",
-"apiKey": "548513166898656",    
+    "apiKey": "548513166898656",    
     "apiSecret": "-kX5sYbflSh49GSXRMrb7rojjVE"
 }

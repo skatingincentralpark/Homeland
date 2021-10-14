@@ -16,7 +16,6 @@ import EditUser from "./components/profile-forms/EditUser";
 import Profile from "./components/profile/Profile";
 import Friends from "./components/profile/Friends";
 import Photos from "./components/profile/Photos";
-import TempRegister from "./components/auth/TempRegister";
 import Post from "./components/post/Post";
 
 // Redux
@@ -65,7 +64,6 @@ const App = () => {
         <Switch>
           <Route exact path="/" component={Landing} />
           <Route exact path="/login" component={Login} />
-          <Route exact path="/tempregister" component={TempRegister} />
           <Route exact path="/register" component={Register} />
           <PrivateRoute exact path="/newsfeed" component={Newsfeed} />
           <PrivateRoute exact path="/newsfeed/:id" component={Post} />
