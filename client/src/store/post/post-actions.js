@@ -170,13 +170,16 @@ export const removeLike = (id) => async (dispatch) => {
 
 // Delete post
 export const deletePost = (id) => async (dispatch) => {
+  dispatch(uiActions.loadingTrue());
   try {
     await axios.delete(`/api/posts/${id}`);
 
     dispatch(postActions.deletePost(id));
 
     dispatch(setAlert("Post removed", "success"));
+    dispatch(uiActions.loadingFalse());
   } catch (err) {
+    dispatch(uiActions.loadingFalse());
     dispatch(
       postActions.postError({
         msg: err.response.statusText,

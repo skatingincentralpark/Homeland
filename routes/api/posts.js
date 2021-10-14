@@ -3,10 +3,22 @@ const router = express.Router();
 const auth = require("../../middleware/auth");
 const checkObjectId = require("../../middleware/checkObjectId");
 const { body, validationResult } = require("express-validator");
+const cloudinary = require("cloudinary").v2;
 
 const Post = require("../../models/Post");
 const User = require("../../models/User");
 const Notification = require("../../models/Notification");
+
+const config = require("config");
+const cloudName = config.get("cloudName");
+const apiKey = config.get("apiKey");
+const apiSecret = config.get("apiSecret");
+
+cloudinary.config({
+  cloud_name: cloudName,
+  api_key: apiKey,
+  api_secret: apiSecret,
+});
 
 // @route   POST api/posts
 // @desc    Create a post
@@ -136,6 +148,15 @@ router.get("/:id", [auth, checkObjectId("id")], async (req, res) => {
 router.delete("/:id", [auth, checkObjectId("id")], async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
+
+    if (post.image) {
+      const regex = /upload\/(?:v\d+\/)?([^\.]+)/;
+      const imageToDelete = post.image.match(regex)[1];
+
+      cloudinary.uploader.destroy(imageToDelete, function (result) {
+        console.log("success");
+      });
+    }
 
     if (!post) {
       return res.status(404).json({ msg: "Post not found" });
