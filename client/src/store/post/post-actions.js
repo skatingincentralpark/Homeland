@@ -1,6 +1,7 @@
 import axios from "axios";
 
 import { postActions } from "./post-slice";
+import { uiActions } from "../ui/ui-slice";
 
 import { setAlert } from "../alert/alert-actions";
 import setAuthToken from "../../utils/setAuthToken";
@@ -9,6 +10,7 @@ import setAuthToken from "../../utils/setAuthToken";
 export const addPost =
   ({ text, postImage }) =>
   async (dispatch) => {
+    dispatch(uiActions.loadingTrue());
     try {
       let image;
 
@@ -41,13 +43,16 @@ export const addPost =
       dispatch(postActions.addPost(res.data));
 
       dispatch(setAlert("Post created", "success"));
+      dispatch(uiActions.loadingFalse());
     } catch (err) {
+      dispatch(uiActions.loadingFalse());
       dispatch(
         postActions.postError({
           msg: err.response.statusText,
           status: err.response.status,
         })
       );
+      dispatch(setAlert(err.response.data, "danger"));
     }
   };
 

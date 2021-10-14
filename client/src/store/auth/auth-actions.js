@@ -6,6 +6,7 @@ import { profileActions } from "../profile/profile-slice";
 import { notificationActions } from "../notification/notification-slice";
 import { postActions } from "../post/post-slice";
 import { friendRequestActions } from "../friendRequest/friendRequest-slice";
+import { uiActions } from "../ui/ui-slice";
 
 import setAuthToken from "../../utils/setAuthToken";
 
@@ -31,6 +32,7 @@ export const loadUser = () => async (dispatch) => {
 // @@   Edit user
 export const edit = ({ name, email, password, image }) => {
   return async (dispatch) => {
+    dispatch(uiActions.loadingTrue());
     try {
       let profilepicture;
 
@@ -64,7 +66,9 @@ export const edit = ({ name, email, password, image }) => {
       dispatch(authActions.updateSuccess(res.data));
       dispatch(loadUser());
       dispatch(setAlert("User Updated", "success"));
+      dispatch(uiActions.loadingFalse());
     } catch (err) {
+      dispatch(uiActions.loadingFalse());
       const errors = err.response.data.errors;
 
       if (errors) {

@@ -2,6 +2,7 @@ import axios from "axios";
 
 import { profileActions } from "./profile-slice";
 import { authActions } from "../auth/auth-slice";
+import { uiActions } from "../ui/ui-slice";
 
 import { setAlert } from "../alert/alert-actions";
 
@@ -62,6 +63,7 @@ export const getPhotos = (userId) => async (dispatch) => {
 export const createProfile =
   (formData, history, edit = false, userId) =>
   async (dispatch) => {
+    dispatch(uiActions.loadingTrue());
     try {
       // Create config object, send POST request, which creates/edits a profile
       // Sends all the fields to mongo (company, website, location, etc.)
@@ -83,7 +85,9 @@ export const createProfile =
       if (!edit) {
         history.push(`/profile/${userId}`);
       }
+      dispatch(uiActions.loadingFalse());
     } catch (err) {
+      dispatch(uiActions.loadingFalse());
       // If error, dispatch an alert for every error in the array
       const errors = err.response.data.errors;
 

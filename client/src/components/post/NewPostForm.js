@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import nl2br from "react-nl2br";
 import Image from "react-graceful-image";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addPost } from "../../store/post/post-actions";
 
 import Camera from "../../static/svg/camera.svg";
@@ -10,6 +10,8 @@ import TextArea from "../layout/TextArea";
 
 const NewPostForm = (props) => {
   const dispatch = useDispatch();
+
+  const { loading } = useSelector((state) => state.ui);
 
   const [text, setText] = useState("");
   const [postImage, setPostImage] = useState();
@@ -23,7 +25,7 @@ const NewPostForm = (props) => {
   };
 
   return (
-    <div className="profile-item-container">
+    <div className="profile-item-container" disabled={loading}>
       <div className="text-input new-post">
         <div className="text-input-top">
           <div className="post-avatar">

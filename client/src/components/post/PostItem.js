@@ -105,19 +105,15 @@ const PostItem = (props) => {
       </div>
       {/* Post Content */}
       <div className="post-content">
-        {text.map((txt) => txt.trim === "") ? (
-          ""
-        ) : (
-          <div className="px-1 pt-1">
-            {text.map((txt, i) =>
-              txt.type === "br" ? (
-                <br key={i} />
-              ) : (
-                <Fragment key={i}>{txt}</Fragment>
-              )
-            )}
-          </div>
-        )}
+        <div className="px-1 pt-1">
+          {text.map((txt, i) =>
+            txt.type === "br" ? (
+              <br key={i} />
+            ) : (
+              <Fragment key={i}>{txt}</Fragment>
+            )
+          )}
+        </div>
         {image && (
           <div className="post-content-image pt-1">
             <Image

@@ -79,9 +79,10 @@ router.post(
         { user: req.user.id },
         { $set: profileFields },
         { new: true, upsert: true, setDefaultsOnInsert: true }
-      );
+      ).populate("user", ["name", "profilepicture", "friends"]);
 
       const user = await User.findById(req.user.id);
+
       user.profile = true;
       await user.save();
 

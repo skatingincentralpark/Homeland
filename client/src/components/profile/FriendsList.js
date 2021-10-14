@@ -10,7 +10,7 @@ const FriendsList = ({ loading, profile, id }) => {
   const [friendsArray, setFriendsArray] = useState([]);
 
   useEffect(() => {
-    if (!loading) {
+    if (!loading && friends) {
       setFriendsArray(friends.slice(0, 9));
     }
   }, [friends]);
@@ -27,7 +27,7 @@ const FriendsList = ({ loading, profile, id }) => {
           </Link>
         </div>
         {/* Profile Friends */}
-        {!loading && !friends.length && (
+        {!loading && friends.length === 0 && (
           <span className="gray grayscale">Currently empty &#128539;</span>
         )}
         <div className="profile-item-grid">

@@ -1,8 +1,9 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import PrivateRoute from "./components/routing/PrivateRoute";
 import Alert from "./components/layout/Alert";
+import Progress from "./components/loading/Progress";
 
 import Navbar from "./components/layout/Navbar";
 import Landing from "./components/landing/Landing";
@@ -31,20 +32,34 @@ if (localStorage.token) {
   setAuthToken(localStorage.token);
 }
 
-const App = (props) => {
+const App = () => {
   const dispatch = useDispatch();
 
-  const user = useSelector((state) => state.user);
+  const { loading } = useSelector((state) => state.ui);
+
+  const [state, setState] = useState({
+    isAnimating: false,
+    key: 0,
+  });
+
+  useEffect(() => {
+    setState((prevState) => ({
+      isAnimating: loading,
+      key: prevState.isAnimating ? prevState.key : prevState.key ^ 1,
+    }));
+  }, [loading]);
 
   useEffect(() => {
     dispatch(loadUser());
     dispatch(getNotifications());
-    console.log("end of useeffect");
   }, [dispatch]);
 
   return (
     <Router>
       <Fragment>
+        <>
+          <Progress isAnimating={state.isAnimating} key={state.key} />
+        </>
         <Navbar />
         <Alert />
         <Switch>

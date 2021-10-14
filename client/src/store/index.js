@@ -7,6 +7,7 @@ import profileReducer from "./profile/profile-slice";
 import postReducer from "./post/post-slice";
 import notificationReducer from "./notification/notification-slice";
 import friendRequestReducer from "./friendRequest/friendRequest-slice";
+import uiReducer from "./ui/ui-slice";
 
 const store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ const store = configureStore({
     post: postReducer,
     notification: notificationReducer,
     friendRequest: friendRequestReducer,
+    ui: uiReducer,
   },
 });
 
