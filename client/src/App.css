@@ -185,6 +185,10 @@ AVATAR
   margin-right: 0.75em;
   border: 1px solid var(--gray2);
 }
+.post-avatar.med-avatar img {
+  width: 3em;
+  height: 3em;
+}
 .post-avatar:hover,
 .display-picture:hover {
   opacity: 0.8;

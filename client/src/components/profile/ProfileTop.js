@@ -4,7 +4,6 @@ import { Link, NavLink } from "react-router-dom";
 
 import { useDispatch } from "react-redux";
 import {
-  getFriendRequests,
   sendFriendRequest,
   cancelFriendRequest,
   declineFriendRequest,
@@ -15,10 +14,6 @@ const ProfileTop = (props) => {
   const { auth, profile, friendRequest, match } = props;
 
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getFriendRequests());
-  }, [dispatch]);
 
   return (
     <div className="profile-top">

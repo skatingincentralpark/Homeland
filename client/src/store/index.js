@@ -8,6 +8,7 @@ import postReducer from "./post/post-slice";
 import notificationReducer from "./notification/notification-slice";
 import friendRequestReducer from "./friendRequest/friendRequest-slice";
 import uiReducer from "./ui/ui-slice";
+import messengerReducer from "./messenger/messenger-slice";
 
 const store = configureStore({
   reducer: {
@@ -18,6 +19,7 @@ const store = configureStore({
     notification: notificationReducer,
     friendRequest: friendRequestReducer,
     ui: uiReducer,
+    messenger: messengerReducer,
   },
 });
 

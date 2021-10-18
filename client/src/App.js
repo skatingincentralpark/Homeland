@@ -1,10 +1,12 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
+// UI
 import PrivateRoute from "./components/routing/PrivateRoute";
 import Alert from "./components/layout/Alert";
 import Progress from "./components/loading/Progress";
 
+// Routes
 import Navbar from "./components/layout/Navbar";
 import Landing from "./components/landing/Landing";
 import Register from "./components/auth/Register";
@@ -17,12 +19,14 @@ import Profile from "./components/profile/Profile";
 import Friends from "./components/profile/Friends";
 import Photos from "./components/profile/Photos";
 import Post from "./components/post/Post";
+import Messenger from "./components/messenger/Messenger";
 
 // Redux
 import { useDispatch, useSelector } from "react-redux";
 import { loadUser } from "./store/auth/auth-actions";
 import { getNotifications } from "./store/notification/notification-actions";
 
+// Utils
 import setAuthToken from "./utils/setAuthToken";
 
 import "./App.css";
@@ -77,6 +81,7 @@ const App = () => {
           <PrivateRoute exact path="/profile/:id" component={Profile} />
           <PrivateRoute exact path="/profile/:id/friends" component={Friends} />
           <PrivateRoute exact path="/profile/:id/photos" component={Photos} />
+          <PrivateRoute exact path="/messenger" component={Messenger} />
         </Switch>
       </Fragment>
     </Router>

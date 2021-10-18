@@ -1,0 +1,116 @@
+.messenger {
+  height: 100vh;
+  display: flex;
+  padding-top: 56px;
+  background-color: white;
+}
+
+.chatMenu {
+  flex: 3.5;
+}
+.chatMenuInput {
+  width: 90%;
+  padding: 10px 0;
+  border: none;
+  border-bottom: 1px solid gray;
+  background-color: white;
+  color: gray;
+  outline: none;
+}
+
+.chatBox {
+  flex: 5.5;
+}
+.chatBoxWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+}
+.chatBoxTop {
+  height: 100%;
+  overflow-y: scroll;
+  padding-right: 1em;
+}
+.chatOnline {
+  flex: 3;
+}
+
+.chatMenuWrapper,
+.chatBoxWrapper,
+.chatOnlineWrapper {
+  padding: 10px;
+  height: 100%;
+}
+
+.noConvoText {
+  top: 2em;
+  position: absolute;
+  font-size: 1.5rem;
+  color: var(--gray2);
+  cursor: default;
+}
+
+.chatBoxBottom {
+  display: flex;
+  margin-top: 1em;
+}
+
+/* messages */
+.message {
+  margin-top: 2em;
+  display: flex;
+  flex-direction: column;
+}
+
+.messageTop {
+  display: flex;
+}
+
+.messageText {
+  background-color: rgb(29, 133, 230);
+  color: white;
+  border-radius: 1.25em;
+  padding: 0.75em 1em;
+  margin: 0 0 0.25em 0;
+  width: fit-content;
+  position: relative;
+  max-width: 30rem;
+}
+
+.messageBottom {
+  color: gray;
+  margin: 0.25em 0 0 4em;
+}
+
+.message.own {
+  align-items: flex-end;
+}
+
+.message.own .messageText {
+  background-color: var(--gray1);
+  color: black;
+}
+
+/* chatOnline */
+.chatOnlineFriend {
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: 1em;
+}
+
+.chatOnlineImgContainer {
+  position: relative;
+}
+
+.chatOnlineBadge {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: limegreen;
+  position: absolute;
+  top: 0.2em;
+  right: 0.5em;
+}

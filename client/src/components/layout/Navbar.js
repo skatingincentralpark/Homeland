@@ -84,7 +84,7 @@ const Navbar = () => {
                   ) : (
                     <>
                       {!notification.notifications.filter(
-                        (n) => !n.readby.includes(user.payload._id)
+                        (n) => !n.readby.includes(user?.payload._id)
                       ).length ? (
                         ""
                       ) : (

@@ -18,6 +18,8 @@ app.use("/api/profile", require("./routes/api/profile"));
 app.use("/api/posts", require("./routes/api/posts"));
 app.use("/api/friend-request", require("./routes/api/friend-request"));
 app.use("/api/notification", require("./routes/api/notification"));
+app.use("/api/conversations", require("./routes/api/conversations"));
+app.use("/api/messages", require("./routes/api/messages"));
 
 const PORT = process.env.PORT || 5000;
 
