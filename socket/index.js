@@ -29,13 +29,21 @@ io.on("connection", (socket) => {
   });
 
   // send and get message
-  socket.on("sendMessage", ({ senderId, receiverId, text }) => {
-    const user = getUser(receiverId);
-    io.to(user.socketId).emit("getMessage", { senderId, text });
+  socket.on("sendMessage", (message) => {
+    const user = getUser(message.receiverId);
+    if (user) {
+      io.to(user.socketId).emit("getMessage", message);
+    }
   });
 
   // when disconnect
   socket.on("disconnect", () => {
+    console.log("A user disconnected");
+    removeUser(socket.id);
+    io.emit("getUsers", users);
+  });
+
+  socket.on("manualDisconnect", () => {
     console.log("A user disconnected");
     removeUser(socket.id);
     io.emit("getUsers", users);

@@ -7,6 +7,7 @@ import { notificationActions } from "../notification/notification-slice";
 import { postActions } from "../post/post-slice";
 import { friendRequestActions } from "../friendRequest/friendRequest-slice";
 import { uiActions } from "../ui/ui-slice";
+import { messengerActions } from "../messenger/messenger-slice";
 
 import setAuthToken from "../../utils/setAuthToken";
 
@@ -163,5 +164,6 @@ export const logout = () => {
     dispatch(notificationActions.clearNotifications());
     dispatch(postActions.clearPosts());
     dispatch(friendRequestActions.clearFriendRequests());
+    dispatch(messengerActions.clearConversations());
   };
 };

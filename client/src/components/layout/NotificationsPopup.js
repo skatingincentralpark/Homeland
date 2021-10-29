@@ -8,7 +8,7 @@ import {
   acceptFriendRequest,
 } from "../../store/friendRequest/friendRequest-actions";
 
-const Notifications = (props) => {
+const NotificationsPopup = (props) => {
   const { notification, closeHandler } = props;
 
   const dispatch = useDispatch();
@@ -91,4 +91,4 @@ const Notifications = (props) => {
   );
 };
 
-export default Notifications;
+export default NotificationsPopup;

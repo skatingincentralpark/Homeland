@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { Link, Redirect } from "react-router-dom";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -7,22 +8,22 @@ import {
   notFound,
   getPhotos,
 } from "../../store/profile/profile-actions";
-import { getFriendRequests } from "../../store/friendRequest/friendRequest-actions";
 import {
   getPostsByUser,
   getPostsByUserNext,
 } from "../../store/post/post-actions";
 import { postActions } from "../../store/post/post-slice";
+import { getFriendRequests } from "../../store/friendRequest/friendRequest-actions";
 
-import PostItem from "../post/PostItem";
-import FriendsList from "./FriendsList";
 import PhotosList from "./PhotosList";
+import ProfileTop from "./ProfileTop";
+import FriendsList from "./FriendsList";
+import PostItem from "../post/PostItem";
 import NewPostForm from "../post/NewPostForm";
 import SkeletonProfile from "../skeleton/SkeletonProfile";
-import ProfileTop from "./ProfileTop";
 
 const Profile = (props) => {
-  const { match } = props;
+  const { computedMatch: match } = props;
 
   const dispatch = useDispatch();
   const { profile, loading, photos } = useSelector((state) => state.profile);
@@ -42,38 +43,38 @@ const Profile = (props) => {
   }, [dispatch, match.params.id]);
 
   // Lazy load
-  useEffect(() => {
-    const getNextBatch = () => {
-      if (posts.length) {
-        const lastPostId = posts.reduce((prev, curr) => {
-          return prev._id < curr._id ? prev._id : curr._id;
-        });
+  const getNextBatch = () => {
+    if (posts.length) {
+      const lastPostId = posts.reduce((prev, curr) => {
+        return prev._id < curr._id ? prev._id : curr._id;
+      });
 
-        dispatch(
-          getPostsByUserNext({ userId: match.params.id, postId: lastPostId })
-        );
-      }
-    };
+      dispatch(
+        getPostsByUserNext({ userId: match.params.id, postId: lastPostId })
+      );
+    }
+  };
+  // useEffect(() => {
 
-    const handleScroll = () => {
-      const bottom =
-        Math.ceil(window.innerHeight + window.scrollY) >=
-        document.documentElement.scrollHeight;
+  //   const handleScroll = () => {
+  //     const bottom =
+  //       Math.ceil(window.innerHeight + window.scrollY) >=
+  //       document.documentElement.scrollHeight;
 
-      if (bottom) {
-        console.log("at the bottom");
-        getNextBatch();
-      }
-    };
+  //     if (bottom) {
+  //       console.log("at the bottom");
+  //       getNextBatch();
+  //     }
+  //   };
 
-    window.addEventListener("scroll", handleScroll, {
-      passive: true,
-    });
+  //   window.addEventListener("scroll", handleScroll, {
+  //     passive: true,
+  //   });
 
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [dispatch, match.params.id, posts]);
+  //   return () => {
+  //     window.removeEventListener("scroll", handleScroll);
+  //   };
+  // }, [dispatch, match.params.id, posts]);
 
   let interests = [];
   if (profile) {
@@ -217,9 +218,18 @@ const Profile = (props) => {
             </div>
             <div className="profile-right">
               <NewPostForm profilepicture={profile.user.profilepicture} />
-              {posts.map((post) => (
-                <PostItem key={post._id} post={post} />
-              ))}
+              <InfiniteScroll
+                dataLength={posts.length} //This is important field to render the next data
+                next={getNextBatch}
+                hasMore={true}
+                loader={<h4>Loading...</h4>}
+                scrollThreshold="20px"
+                endMessage={<p></p>}
+              >
+                {posts.map((post) => (
+                  <PostItem key={post._id} post={post} />
+                ))}
+              </InfiniteScroll>
               {posts.length === 0 && (
                 <div className="post">
                   <div className="post-header pb-1 gray">

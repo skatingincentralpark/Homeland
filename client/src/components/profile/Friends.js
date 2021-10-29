@@ -8,7 +8,9 @@ import { getFriendRequests } from "../../store/friendRequest/friendRequest-actio
 import FriendItem from "./FriendItem";
 import ProfileTop from "./ProfileTop";
 
-const Friends = ({ match }) => {
+const Friends = (props) => {
+  const { computedMatch: match } = props;
+
   const dispatch = useDispatch();
   const { profile, loading } = useSelector((state) => state.profile);
   const auth = useSelector((state) => state.auth);

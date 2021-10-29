@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import InfiniteScroll from "react-infinite-scroll-component";
 import { Link } from "react-router-dom";
 
 import { useSelector, useDispatch } from "react-redux";
@@ -35,35 +36,42 @@ const Newsfeed = () => {
   }, [auth, posts]);
 
   // Lazy load
+  const getNextBatch = () => {
+    if (posts.length) {
+      const lastPostId = posts.reduce((prev, curr) => {
+        return prev._id < curr._id ? prev._id : curr._id;
+      });
+      dispatch(getPostsNext(lastPostId));
+    }
+  };
+  // useEffect(() => {
+  //   const getNextBatch = () => {
+  //     if (posts.length) {
+  //       const lastPostId = posts.reduce((prev, curr) => {
+  //         return prev._id < curr._id ? prev._id : curr._id;
+  //       });
+  //       dispatch(getPostsNext(lastPostId));
+  //     }
+  //   };
 
-  useEffect(() => {
-    const getNextBatch = () => {
-      if (posts.length) {
-        const lastPostId = posts.reduce((prev, curr) => {
-          return prev._id < curr._id ? prev._id : curr._id;
-        });
-        dispatch(getPostsNext(lastPostId));
-      }
-    };
+  //   const handleScroll = () => {
+  //     const bottom =
+  //       Math.ceil(window.innerHeight + window.scrollY) >=
+  //       document.documentElement.scrollHeight;
 
-    const handleScroll = () => {
-      const bottom =
-        Math.ceil(window.innerHeight + window.scrollY) >=
-        document.documentElement.scrollHeight;
+  //     if (bottom) {
+  //       getNextBatch();
+  //     }
+  //   };
 
-      if (bottom) {
-        getNextBatch();
-      }
-    };
+  //   window.addEventListener("scroll", handleScroll, {
+  //     passive: true,
+  //   });
 
-    window.addEventListener("scroll", handleScroll, {
-      passive: true,
-    });
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [dispatch, posts]);
+  //   return () => {
+  //     window.removeEventListener("scroll", handleScroll);
+  //   };
+  // }, [dispatch, posts]);
 
   return (
     <main className="newsfeed">
@@ -86,7 +94,11 @@ const Newsfeed = () => {
       {auth.user && (
         <NewPostForm profilepicture={auth.user.payload.profilepicture} />
       )}
-      {/* Posts */}
+      <LinkPreview
+        url="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+        width="400px"
+      />
+      ;{/* Posts */}
       {loading ? (
         <>
           <SkeletonPostItem />
@@ -94,7 +106,18 @@ const Newsfeed = () => {
           <SkeletonPostItem />
         </>
       ) : (
-        posts.map((post) => <PostItem key={post._id} post={post} />)
+        <InfiniteScroll
+          dataLength={posts.length} //This is important field to render the next data
+          next={getNextBatch}
+          hasMore={true}
+          loader={<h4>Loading...</h4>}
+          scrollThreshold="20px"
+          endMessage={<p></p>}
+        >
+          {posts.map((post) => (
+            <PostItem key={post._id} post={post} />
+          ))}
+        </InfiniteScroll>
       )}
     </main>
   );

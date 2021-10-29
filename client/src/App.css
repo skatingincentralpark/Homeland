@@ -171,6 +171,9 @@ hr {
 .bold {
   font-weight: 600;
 }
+.med {
+  font-weight: 500;
+}
 /*------------------------------------------------------
 AVATAR
 ------------------------------------------------------*/
@@ -454,6 +457,41 @@ POST-HEADER
 .post-author {
   font-weight: 600;
 }
+/*------------------------------------------------------
+MESSENGER POPUP
+------------------------------------------------------*/
+.message-preview {
+  white-space: nowrap;
+}
+.message-popup-timestamp {
+  position: absolute;
+  right: 0;
+  padding: 0 1em 0 0;
+  z-index: 50;
+}
+.latestMessageFadeOut {
+  background: linear-gradient(
+    90deg,
+    rgba(139, 139, 139, 0) 0%,
+    rgba(255, 255, 255, 1) 35%
+  );
+  right: 0em;
+  position: absolute;
+  width: 10em;
+  height: 100%;
+  top: 0;
+}
+.notification-item:last-child .latestMessageFadeOut {
+  border-radius: 0 0 1em 0;
+}
+.notification-item:hover {
+  background: var(--gray1);
+  cursor: pointer;
+}
+.notification-item:active {
+  filter: brightness(0.95);
+}
+
 /*------------------------------------------------------
 POST-CONTENT
 ------------------------------------------------------*/
@@ -842,9 +880,6 @@ NAVIGATION
 .header-popup:first-child {
   margin: 1em;
 }
-nav div {
-  padding: 0.5em 0;
-}
 .nav-top {
   display: flex;
   align-items: center;
@@ -935,7 +970,7 @@ nav div {
 }
 .nav-top.notification-title {
   font-weight: 600;
-  padding: 1em 0;
+  padding: 0.75em 0;
 }
 .unread {
   background-color: var(--gray2);
@@ -1032,6 +1067,13 @@ EDIT USER FORM
 }
 
 /*------------------------------------------------------
+INFINITE SCROLL COMPONENT
+------------------------------------------------------*/
+.infinite-scroll-component__outerdiv {
+  width: 100%;
+}
+
+/*------------------------------------------------------
 MODAL
 ------------------------------------------------------*/
 .modal-backdrop {
@@ -1106,6 +1148,12 @@ SPACING
 .px-1 {
   padding: 0 1em;
 }
+.py-05 {
+  padding: 0.5em 0;
+}
+.py-1 {
+  padding: 1em 0;
+}
 .pt-0 {
   padding-top: 0;
 }
@@ -1147,6 +1195,9 @@ SPACING
   width: 100%;
   border-radius: 1em;
 }
+.align-items-center {
+  align-items: center;
+}
 /* position */
 .center {
   position: fixed;
@@ -1163,6 +1214,10 @@ SPACING
   top: 50%;
   left: 50%;
 }
+/* text */
+.text-center {
+  text-align: center;
+}
 /* z-index */
 .z-99 {
   z-index: 99;
@@ -1173,6 +1228,10 @@ SPACING
 }
 .inline {
   display: inline;
+}
+/* overflow */
+.overflow-x-hidden {
+  overflow-x: hidden;
 }
 /* border */
 .border-none {

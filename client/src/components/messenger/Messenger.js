@@ -1,12 +1,11 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import { io } from "socket.io-client";
 
-import { useSelector, useDispatch } from "react-redux";
 import {
-  getConversations,
   getConversation,
   sendMessage,
 } from "../../store/messenger/messenger-actions";
+import { useSelector, useDispatch } from "react-redux";
 import { messengerActions } from "../../store/messenger/messenger-slice";
 
 import Conversation from "./Conversation";
@@ -16,13 +15,11 @@ import ChatOnline from "./ChatOnline";
 
 import "./messenger.css";
 
-const Messenger = () => {
+const Messenger = ({ socket }) => {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
   const messenger = useSelector((state) => state.messenger);
   const [text, setText] = useState("");
-  const [arrivalMessage, setArrivalMessage] = useState(null);
-  const socket = useRef();
   const scrollRef = useRef();
 
   let currentId;
@@ -33,74 +30,41 @@ const Messenger = () => {
   }
 
   useEffect(() => {
-    socket.current = io("ws://localhost:8900");
-    socket.current.on("getMessage", (data) => {
-      setArrivalMessage({
-        sender: data.senderId,
-        text: data.text,
-        createdAt: Date.now(),
-      });
-    });
+    return () => {
+      dispatch(messengerActions.clearConversation());
+    };
   }, []);
 
-  useEffect(() => {
-    arrivalMessage &&
-      messenger.conversation.members.find(
-        (member) => member._id === arrivalMessage.sender
-      ) &&
-      dispatch(messengerActions.receiveMessage(arrivalMessage));
-  }, [arrivalMessage, messenger.conversation]);
-
-  useEffect(() => {
-    if (!auth.loading) {
-      socket.current.emit("addUser", currentId);
-      socket.current.on("getUsers", (users) => {
-        dispatch(messengerActions.setOnlineUsers(users));
-      });
-    }
-  }, [auth.user]);
-
-  useEffect(() => {
-    socket.current.on("welcome", (message) => {
-      console.log(message);
-    });
-  }, [socket]);
-
-  useEffect(() => {
-    if (!auth.loading) {
-      dispatch(getConversations(currentId));
-    }
-  }, [auth.loading, dispatch]);
-
+  // submit
   const onSubmit = (e) => {
     e.preventDefault();
 
-    const message = {
-      sender: currentId,
-      text: text,
-      conversationId: messenger.conversation._id,
-    };
+    if (!text) {
+      return;
+    }
 
     const receiverId = messenger.conversation.members.find(
       (m) => m._id !== currentId
     )._id;
 
-    socket.current.emit("sendMessage", {
-      senderId: currentId,
-      receiverId,
+    const message = {
+      sender: currentId,
       text: text,
-    });
+      conversationId: messenger.conversation._id,
+      receiverId,
+      createdAt: Date.now(),
+    };
+
+    socket.current.emit("sendMessage", message);
 
     dispatch(sendMessage(message));
-
     setText("");
   };
 
+  // scroll into view
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messenger.messages]);
-
-  useEffect(() => {});
 
   return (
     <>
@@ -171,7 +135,7 @@ const Messenger = () => {
             <div className="chatOnlineWrapper">
               <ChatOnline
                 onlineUsers={messenger.onlineUsers}
-                friends={friends}
+                friends={auth.user.payload.friends}
                 currentId={currentId}
                 getConversation={getConversation}
               />

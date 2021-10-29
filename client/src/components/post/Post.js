@@ -8,7 +8,7 @@ import { profileActions } from "../../store/profile/profile-slice";
 
 import SkeletonPostItem from "../skeleton/SkeletonPostItem";
 
-const Post = ({ match }) => {
+const Post = ({ computedMatch: match }) => {
   const dispatch = useDispatch();
 
   const { post, loading } = useSelector((state) => state.post);

@@ -1,0 +1,44 @@
+.messenger-overlay {
+}
+.chatWindow {
+  z-index: 99;
+  position: fixed;
+  bottom: 0;
+  right: 1em;
+  background: white;
+  border: 1px solid lightgray;
+  overflow: auto;
+  border-radius: 1em 1em 0 0;
+}
+.chatWindowHeader {
+  border-bottom: 1px solid lightgray;
+  padding-bottom: 0.5em;
+}
+.chatWindowHeader .post-header-left {
+  justify-content: space-between;
+}
+.chatWindow .chatBoxTop {
+  height: 30rem;
+}
+.chatWindowWrapper {
+}
+.chatWindowControls {
+  font-size: 1.5rem;
+  display: flex;
+  gap: 0.5rem;
+  color: gray;
+}
+.chatWindowControls button {
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  background: white;
+  border-radius: 1em;
+  border: none;
+}
+.chatWindowControls button:hover {
+  background: var(--gray1);
+}
+.chatWindowControls button:active {
+  filter: brightness(0.95);
+}

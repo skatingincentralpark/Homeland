@@ -11,7 +11,7 @@ import {
 import ProfileTop from "./ProfileTop";
 
 const Friends = (props) => {
-  const { match } = props;
+  const { computedMatch: match } = props;
   const dispatch = useDispatch();
   const { profile, loading, photos } = useSelector((state) => state.profile);
   const auth = useSelector((state) => state.auth);
