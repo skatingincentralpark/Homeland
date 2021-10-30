@@ -31,9 +31,7 @@ const SkeletonProfile = ({ theme }) => {
           </div>
           <Shimmer />
         </div>
-        <div
-          className={`skeleton-wrapper m-0 skeleton-postItem profile ${themeClass}`}
-        >
+        <div className={`skeleton-wrapper m-0 skeleton-postItem ${themeClass}`}>
           <div className="skeleton-postItem-inner">
             <div className="skel-post-top">
               <SkeletonElement type="avatar" />

@@ -59,11 +59,6 @@ const ChatWindow = ({ socket }) => {
     setText("");
   };
 
-  // useEffect(() => {
-  //   scrollRef.current?.scrollIntoView({ behavior: "smooth" });
-  // }, []);
-
-  // Lazy load
   const getNextBatchMsgsHandler = () => {
     if (messenger.messages.length) {
       const msgArr = messenger.messages.map((msg) => msg._id);
@@ -83,44 +78,6 @@ const ChatWindow = ({ socket }) => {
       );
     }
   };
-
-  // useEffect(() => {
-  //   const getNextBatchMsgsHandler = () => {
-  //     if (messenger.messages.length) {
-  //       const msgArr = messenger.messages.map((msg) => msg._id);
-  //       console.log(messenger.messages);
-
-  //       const lastMsgId = msgArr.reduce((prev, curr) => {
-  //         return prev < curr ? prev : curr;
-  //       });
-
-  //       console.log("LASTMSGID: " + lastMsgId);
-
-  //       dispatch(
-  //         getNextBatchMsgs({
-  //           conversationId: messenger.conversation._id,
-  //           msgId: lastMsgId,
-  //         })
-  //       );
-  //     }
-  //   };
-
-  //   const chatWindow = document.querySelector(".chatBoxTop");
-
-  //   const handleScroll = () => {
-  //     if (chatWindow.scrollTop == 0) {
-  //       getNextBatchMsgsHandler();
-  //     }
-  //   };
-
-  //   chatWindow.addEventListener("scroll", handleScroll, {
-  //     passive: true,
-  //   });
-
-  //   return () => {
-  //     chatWindow.removeEventListener("scroll", handleScroll);
-  //   };
-  // }, [dispatch, messenger.messages]);
 
   return (
     <div className="chatWindow">

@@ -1,7 +1,9 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment, useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import Moment from "react-moment";
+import Linkify from "react-linkify";
 import Image from "react-graceful-image";
+import { LinkPreview } from "@dhaiwat10/react-link-preview";
 
 import NewCommentForm from "./NewCommentForm";
 import Comments from "./Comments";
@@ -33,6 +35,7 @@ const PostItem = (props) => {
   const [userLiked, setUserLiked] = useState(false);
   const [toggleComments, setToggleComments] = useState(false);
   const [togglePopup, setTogglePopup] = useState(false);
+  const [link, setLink] = useState("");
 
   const toggleCommentsHandler = () => {
     setToggleComments((prev) => !prev);
@@ -61,6 +64,28 @@ const PostItem = (props) => {
       setIsUsersPost(auth.user.payload._id === user);
     }
   }, [auth.user, auth.isAuthenticated, user]);
+
+  // @@     URLS
+
+  const detectURLs = useCallback((message) => {
+    var urlRegex = /(((https?:\/\/)|(www\.))[^\s]+)/g;
+    if (message.match(urlRegex)) {
+      console.log(message);
+      setLink(message);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (text) {
+      text.map((txt) => {
+        if (txt.type === "br") {
+          return;
+        } else {
+          detectURLs(txt);
+        }
+      });
+    }
+  }, [text]);
 
   return (
     <div className="post">
@@ -110,10 +135,13 @@ const PostItem = (props) => {
             txt.type === "br" ? (
               <br key={i} />
             ) : (
-              <Fragment key={i}>{txt}</Fragment>
+              <Linkify key={i}>{txt}</Linkify>
             )
           )}
         </div>
+        {link && (
+          <LinkPreview className="m-1 mb-0 w-auto" url={link} width="100%" />
+        )}
         {image && (
           <div className="post-content-image pt-1">
             <Image

@@ -498,6 +498,10 @@ POST-CONTENT
 .post-content {
   padding-bottom: 1em;
 }
+.post-content a {
+  color: blue;
+  text-decoration: underline;
+}
 .post-content-image img {
   width: 100%;
 }
@@ -531,6 +535,9 @@ POST-CONTENT
 }
 .post-content-interactions button:hover {
   filter: brightness(0.95);
+}
+.post-content-interactions button:active {
+  filter: brightness(0.85);
 }
 /*------------------------------------------------------
 POST-FOOTER
@@ -1074,6 +1081,13 @@ INFINITE SCROLL COMPONENT
 }
 
 /*------------------------------------------------------
+LINK PREVIEW
+------------------------------------------------------*/
+.react-loading-skeleton:first-child {
+  margin-top: 1em;
+}
+
+/*------------------------------------------------------
 MODAL
 ------------------------------------------------------*/
 .modal-backdrop {
@@ -1173,6 +1187,9 @@ SPACING
   padding-bottom: 1.5em;
 }
 /* width */
+.w-auto {
+  width: auto !important;
+}
 .w-100 {
   width: 100%;
 }

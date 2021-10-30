@@ -54,27 +54,6 @@ const Profile = (props) => {
       );
     }
   };
-  // useEffect(() => {
-
-  //   const handleScroll = () => {
-  //     const bottom =
-  //       Math.ceil(window.innerHeight + window.scrollY) >=
-  //       document.documentElement.scrollHeight;
-
-  //     if (bottom) {
-  //       console.log("at the bottom");
-  //       getNextBatch();
-  //     }
-  //   };
-
-  //   window.addEventListener("scroll", handleScroll, {
-  //     passive: true,
-  //   });
-
-  //   return () => {
-  //     window.removeEventListener("scroll", handleScroll);
-  //   };
-  // }, [dispatch, match.params.id, posts]);
 
   let interests = [];
   if (profile) {
