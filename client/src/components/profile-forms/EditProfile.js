@@ -27,6 +27,7 @@ const EditProfile = ({ history }) => {
 
   useEffect(() => {
     dispatch(getCurrentProfile());
+
     if (!loading && profile) {
       const profileData = { ...initialState };
       for (const key in profile) {
@@ -36,7 +37,7 @@ const EditProfile = ({ history }) => {
       }
       setFormData(profileData);
     }
-  }, [dispatch, loading, profile]);
+  }, [dispatch]);
 
   const {
     highschool,

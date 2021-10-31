@@ -27,8 +27,6 @@ import MessengerOverlay from "./components/messengerOverlay/MessengerOverlay";
 import { useDispatch, useSelector } from "react-redux";
 import { loadUser } from "./store/auth/auth-actions";
 import { getNotifications } from "./store/notification/notification-actions";
-import { messengerActions } from "./store/messenger/messenger-slice";
-import { getConversations } from "./store/messenger/messenger-actions";
 
 // Utils
 import setAuthToken from "./utils/setAuthToken";
@@ -39,7 +37,7 @@ if (localStorage.token) {
   setAuthToken(localStorage.token);
 }
 
-const App = () => {
+const App = ({ history }) => {
   const dispatch = useDispatch();
   const socket = useRef();
   const [socketReady, setSocketReady] = useState(false);

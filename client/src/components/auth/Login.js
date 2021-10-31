@@ -6,6 +6,7 @@ import { login, logout } from "../../store/auth/auth-actions";
 import { getNotifications } from "../../store/notification/notification-actions";
 
 import SkeletonImage2 from "../skeleton/SkeletonImage2";
+import Logo from "../../static/svg/logo.svg";
 
 const Login = () => {
   const email = useRef();
@@ -35,57 +36,69 @@ const Login = () => {
   }
 
   return (
-    <main className="registerlogin-container">
-      <div className="registerlogin register">
-        <SkeletonImage2 />
-        <div>
-          <h1 className="large text-primary">Sign In</h1>
-          <p className="lead">To experience Homeland</p>
-          <form
-            className="form"
-            action="create-profile.html"
-            onSubmit={onSubmit}
-          >
-            <div className="form-group">
-              <input
-                type="email"
-                placeholder="Email Address"
-                name="email"
-                required
-                ref={email}
-              />
-            </div>
-            <div className="form-group">
-              <input
-                type="password"
-                placeholder="Password"
-                name="password"
-                minLength="6"
-                required
-                ref={password}
-              />
-            </div>
-
-            <input
-              type="submit"
-              className="link-button w-100 mb-2"
-              value="Login"
-            />
-          </form>
-          <p className="my-1">
-            Don't have an account?{" "}
-            <b>
-              <Link to="/register">Sign up</Link>
-            </b>
-          </p>
-          <small className="gray">
-            By clicking sign in you agree to our Bla, Bla Policy and Blabla
-            Policy. You may receive Bla notifications from us and can opt out at
-            any time.
-          </small>
+    <>
+      <header>
+        <div className="header-inner">
+          <div />
+          <div className="header-logo">
+            <Link to="/">
+              <img src={Logo} alt="logo" className="svg" />
+            </Link>
+          </div>
         </div>
-      </div>
-    </main>
+      </header>
+      <main className="registerlogin-container">
+        <div className="registerlogin register">
+          <SkeletonImage2 />
+          <div>
+            <h1 className="large text-primary">Sign In</h1>
+            <p className="lead">To experience Homeland</p>
+            <form
+              className="form"
+              action="create-profile.html"
+              onSubmit={onSubmit}
+            >
+              <div className="form-group">
+                <input
+                  type="email"
+                  placeholder="Email Address"
+                  name="email"
+                  required
+                  ref={email}
+                />
+              </div>
+              <div className="form-group">
+                <input
+                  type="password"
+                  placeholder="Password"
+                  name="password"
+                  minLength="6"
+                  required
+                  ref={password}
+                />
+              </div>
+
+              <input
+                type="submit"
+                className="link-button w-100 mb-2"
+                value="Login"
+              />
+            </form>
+            <p className="my-1">
+              Don't have an account?{" "}
+              <b>
+                <Link to="/register">Sign up</Link>
+              </b>
+            </p>
+            <small className="gray">
+              By clicking sign in you agree to our Bla, Bla Policy and Blabla
+              Policy. You may receive Bla notifications from us and can opt out
+              at any time.
+            </small>
+          </div>
+        </div>
+      </main>
+    </>
   );
 };
 

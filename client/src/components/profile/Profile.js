@@ -79,7 +79,7 @@ const Profile = (props) => {
 
   if (loading)
     return (
-      <main className="profile pt-5">
+      <main className="profile pt-5 mx-1">
         <SkeletonProfile />
       </main>
     );
