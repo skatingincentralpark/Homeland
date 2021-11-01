@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useClickOutside } from "../../hooks/clickOutside";
-import { io } from "socket.io-client";
 
 import Logo from "../../static/svg/logo.svg";
 import Notification from "../../static/svg/notification.svg";
@@ -19,6 +18,7 @@ const Navbar = ({ socket }) => {
   const [toggleNav, setToggleNav] = useState(false);
   const [toggleNotif, setToggleNotif] = useState(false);
   const [toggleMessenger, setToggleMessenger] = useState(false);
+  const location = useLocation();
 
   const toggleNavHandler = () => {
     setToggleNav((prev) => !prev);
@@ -62,6 +62,10 @@ const Navbar = ({ socket }) => {
     closeHandler();
   };
 
+  if (location.pathname === "/") {
+    return <> </>;
+  }
+
   return (
     <>
       {isAuthenticated ? (
@@ -77,54 +81,60 @@ const Navbar = ({ socket }) => {
 
               <div className="header-right">
                 {!loading && user && (
-                  <Link
-                    to={`/profile/${user?.payload._id}`}
-                    onClick={closeHandler}
-                    className="header-right-container"
-                  >
-                    <div className="post-avatar">
-                      <img
-                        src={user?.payload.profilepicture}
-                        alt="user avatar"
-                      />
-                    </div>
-                    <span>{user?.payload.name.split(" ")[0]}</span>
-                  </Link>
-                )}
-                <button className="bell" onClick={toggleMessengerHandler}>
-                  <img src={Messenger} alt="messenger" className="svg" />
-                  {!messenger || messenger.loading || !messenger.unreadCount ? (
-                    ""
-                  ) : (
-                    <span>{messenger.unreadCount}</span>
-                  )}
-                </button>
-                <button className="bell" onClick={toggleNotifHandler}>
-                  <img src={Notification} alt="bell" className="svg" />
+                  <>
+                    <Link
+                      to={`/profile/${user?.payload._id}`}
+                      onClick={closeHandler}
+                      className="header-right-container"
+                    >
+                      <div className="post-avatar">
+                        <img
+                          src={user?.payload.profilepicture}
+                          alt="user avatar"
+                        />
+                      </div>
+                      <span>{user?.payload.name.split(" ")[0]}</span>
+                    </Link>
 
-                  {!notification || notification.loading ? (
-                    ""
-                  ) : (
-                    <>
-                      {!notification.notifications.filter(
-                        (n) => !n.readby.includes(user?.payload._id)
-                      ).length ? (
+                    <button className="bell" onClick={toggleMessengerHandler}>
+                      <img src={Messenger} alt="messenger" className="svg" />
+                      {!messenger ||
+                      messenger.loading ||
+                      !messenger.unreadCount ? (
                         ""
                       ) : (
-                        <span>
-                          {
-                            notification.notifications.filter(
-                              (n) => !n.readby.includes(user?.payload._id)
-                            ).length
-                          }
-                        </span>
+                        <span>{messenger.unreadCount}</span>
                       )}
-                    </>
-                  )}
-                </button>
-                <button onClick={toggleNavHandler}>
-                  <img src={Dropdown} alt="navigation button" />
-                </button>
+                    </button>
+
+                    <button className="bell" onClick={toggleNotifHandler}>
+                      <img src={Notification} alt="bell" className="svg" />
+
+                      {!notification || notification.loading ? (
+                        ""
+                      ) : (
+                        <>
+                          {!notification.notifications.filter(
+                            (n) => !n.readby.includes(user?.payload._id)
+                          ).length ? (
+                            ""
+                          ) : (
+                            <span>
+                              {
+                                notification.notifications.filter(
+                                  (n) => !n.readby.includes(user?.payload._id)
+                                ).length
+                              }
+                            </span>
+                          )}
+                        </>
+                      )}
+                    </button>
+                    <button onClick={toggleNavHandler}>
+                      <img src={Dropdown} alt="navigation button" />
+                    </button>
+                  </>
+                )}
               </div>
             </div>
             {toggleNav && (
@@ -196,7 +206,20 @@ const Navbar = ({ socket }) => {
           </header>
         </>
       ) : (
-        <></>
+        <header ref={headerRef}>
+          <div className="header-inner">
+            <div className="header-logo">
+              <Link to="/" onClick={closeHandler}>
+                <img src={Logo} alt="logo" className="svg" />
+              </Link>
+            </div>
+            <div className="header-right">
+              <button onClick={() => {}} className="visibility-hidden">
+                <img src={Dropdown} alt="navigation button" />
+              </button>
+            </div>
+          </div>
+        </header>
       )}
     </>
   );

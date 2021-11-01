@@ -37,7 +37,7 @@ const Login = () => {
 
   return (
     <>
-      <header>
+      {/* <header>
         <div className="header-inner">
           <div />
           <div className="header-logo">
@@ -46,7 +46,7 @@ const Login = () => {
             </Link>
           </div>
         </div>
-      </header>
+      </header> */}
       <main className="registerlogin-container">
         <div className="registerlogin register">
           <SkeletonImage2 />

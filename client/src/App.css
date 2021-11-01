@@ -449,7 +449,7 @@ POST
 .post {
   background-color: white;
   border-radius: 1rem;
-  box-shadow: 0 0.1rem 0.2rem var(--box-shadow);
+  box-shadow: 0.2rem 0.3em 0.5rem var(--box-shadow);
   margin: 0 0 1.5em 0;
   width: 100%;
 }
@@ -511,7 +511,7 @@ POST-HEADER
   width: 12em;
   padding: 1em 0.5em;
   background-color: white;
-  box-shadow: 0 0.3rem 0.6rem var(--box-shadow);
+  box-shadow: 0.3rem 0.4em 0.5rem var(--box-shadow);
   border-radius: 1em;
   font-size: 1rem;
 }
@@ -727,14 +727,13 @@ PROFILE
 .profile-item-container {
   background-color: white;
   border-radius: 1rem;
-  box-shadow: 0 0.1rem 0.2rem var(--box-shadow);
+  box-shadow: 0.2rem 0.3em 0.5rem var(--box-shadow);
   margin: 0 0 1.5em 0;
   width: 100%;
 }
 .profile-item-container-inner {
   background-color: white;
   border-radius: 1rem;
-  box-shadow: 0 0.1rem 0.2rem var(--box-shadow);
   padding: 1em;
 }
 .profile-request-container {
@@ -1144,6 +1143,9 @@ INFINITE SCROLL COMPONENT
 .infinite-scroll-component__outerdiv {
   width: 100%;
 }
+.infinite-scroll-component {
+  overflow: visible !important;
+}
 
 /*------------------------------------------------------
 LINK PREVIEW
@@ -1313,6 +1315,9 @@ SPACING
 }
 .inline {
   display: inline;
+}
+.visibility-hidden {
+  visibility: hidden;
 }
 /* overflow */
 .overflow-x-hidden {

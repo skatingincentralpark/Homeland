@@ -50,16 +50,6 @@ const Register = () => {
 
   return (
     <>
-      <header>
-        <div className="header-inner">
-          <div />
-          <div className="header-logo">
-            <Link to="/">
-              <img src={Logo} alt="logo" className="svg" />
-            </Link>
-          </div>
-        </div>
-      </header>
       <main className="registerlogin-container">
         <div className="registerlogin register">
           <div className="registerlogin-left">

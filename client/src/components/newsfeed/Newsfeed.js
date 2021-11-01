@@ -21,9 +21,6 @@ const Newsfeed = () => {
 
   useEffect(() => {
     dispatch(getPosts());
-  }, [dispatch]);
-
-  useEffect(() => {
     dispatch(profileActions.clearProfile());
     dispatch(postActions.clearPost());
     dispatch(friendRequestActions.clearFriendRequests());
