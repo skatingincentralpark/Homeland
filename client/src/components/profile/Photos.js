@@ -5,6 +5,7 @@ import Image from "react-graceful-image";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getProfileById,
+  getProfileByIdNoLoading,
   getPhotos,
   notFound,
 } from "../../store/profile/profile-actions";

@@ -30,6 +30,12 @@ function removeFriendRequest(state, action) {
     loading: false,
   });
 }
+function friendRequestLoading(state, action) {
+  Object.assign(state, {
+    ...state,
+    loading: true,
+  });
+}
 function clearFriendRequests(state, action) {
   Object.assign(state, {
     friendRequests: [],
@@ -53,6 +59,7 @@ const friendRequestSlice = createSlice({
     acceptFriendRequest: removeFriendRequest,
     declineFriendRequest: removeFriendRequest,
     removeFriendRequest: removeFriendRequest,
+    friendRequestLoading,
     clearFriendRequests,
     friendRequestError,
   },

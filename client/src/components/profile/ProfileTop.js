@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import Image from "react-graceful-image";
 import { Link, NavLink } from "react-router-dom";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   sendFriendRequest,
   cancelFriendRequest,
@@ -11,7 +11,11 @@ import {
 } from "../../store/friendRequest/friendRequest-actions";
 
 const ProfileTop = (props) => {
-  const { auth, profile, friendRequest, match } = props;
+  const { match } = props;
+
+  const { profile } = useSelector((state) => state.profile);
+  const auth = useSelector((state) => state.auth);
+  const friendRequest = useSelector((state) => state.friendRequest);
 
   const dispatch = useDispatch();
 
@@ -22,7 +26,7 @@ const ProfileTop = (props) => {
         auth.loading === false &&
         auth.user.payload._id === profile.user._id ? (
           <Link to="/edit-user">
-            <Image src={profile.user.profilepicture} />
+            <img src={profile.user.profilepicture} />
           </Link>
         ) : (
           <Image src={profile.user.profilepicture} />
@@ -32,10 +36,12 @@ const ProfileTop = (props) => {
         <h2>{profile.user.name}</h2>
       </span>
       {profile.bio && <span className="item-header-bio">{profile.bio}</span>}
-      {auth.loading === false &&
+      {!auth.loading &&
+        !profile.loading &&
+        !friendRequest.loading &&
         auth.user.payload._id !== profile.user._id &&
         !auth.user.payload.friends.find(
-          (friend) => friend === match.params.id
+          (friend) => friend.user === match.params.id
         ) && (
           <>
             {!!friendRequest.friendRequests.find(

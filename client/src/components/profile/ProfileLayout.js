@@ -1,26 +1,22 @@
 import React from "react";
 
-import ProfileTop from "./ProfileTop";
 import { useSelector } from "react-redux";
+import { useParams, useLocation } from "react-router-dom";
 
-const ProfileLayout = (props) => {
-  const { match } = props;
+import ProfileTop from "./ProfileTop";
 
-  const { profile, loading } = useSelector((state) => state.profile);
-  const auth = useSelector((state) => state.auth);
-  const friendRequest = useSelector((state) => state.friendRequest);
+const ProfileLayout = ({ children }) => {
+  const { loading } = useSelector((state) => state.profile);
+  // let { id } = useParams();
+  // console.log(id);
+  const location = useLocation();
+
+  console.log(location);
 
   return (
     <>
-      {!loading && (
-        <ProfileTop
-          auth={auth}
-          profile={profile}
-          match={match}
-          friendRequest={friendRequest}
-        />
-      )}
-      {props.children}
+      {!loading && <ProfileTop />}
+      {children}
     </>
   );
 };

@@ -7,6 +7,7 @@ import { loadUser } from "../auth/auth-actions";
 export const getFriendRequests = () => async (dispatch) => {
   //    Have to get friend request for curent user
   //    Update friend request slice (populate friend requests)
+  dispatch(friendRequestActions.friendRequestLoading());
   try {
     const res = await axios.get(`/api/friend-request`);
 

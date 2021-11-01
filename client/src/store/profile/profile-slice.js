@@ -31,6 +31,15 @@ function profileError(state, action) {
     profile: null,
   });
 }
+function profileLoading(state, action) {
+  if (action.payload === state.profile?.user._id) {
+    return;
+  }
+  Object.assign(state, {
+    ...state,
+    loading: true,
+  });
+}
 function clearProfile(state, action) {
   Object.assign(state, {
     profile: null,
@@ -54,6 +63,7 @@ const profileSlice = createSlice({
   reducers: {
     getProfile,
     getPhotos,
+    profileLoading,
     profileError,
     clearProfile,
     loadFriends,

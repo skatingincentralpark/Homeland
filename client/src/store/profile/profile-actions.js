@@ -8,6 +8,7 @@ import { setAlert } from "../alert/alert-actions";
 
 // @@   Get current user's profile
 export const getCurrentProfile = () => async (dispatch) => {
+  dispatch(profileActions.profileLoading());
   try {
     // TEMP: axios will get id from x-auth-token
     const res = await axios.get("/api/profile/me");
@@ -29,6 +30,23 @@ export const getCurrentProfile = () => async (dispatch) => {
 
 // Get profile by ID
 export const getProfileById = (userId) => async (dispatch) => {
+  dispatch(profileActions.profileLoading(userId));
+  try {
+    const res = await axios.get(`/api/profile/user/${userId}`);
+
+    dispatch(profileActions.getProfile(res.data));
+  } catch (err) {
+    dispatch(
+      profileActions.profileError({
+        msg: err.response.statusText,
+        status: err.response.status,
+      })
+    );
+  }
+};
+
+// Get profile by ID
+export const getProfileByIdNoLoading = (userId) => async (dispatch) => {
   try {
     const res = await axios.get(`/api/profile/user/${userId}`);
 

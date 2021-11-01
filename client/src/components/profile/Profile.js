@@ -5,6 +5,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getProfileById,
+  getProfileByIdNoLoading,
   notFound,
   getPhotos,
 } from "../../store/profile/profile-actions";
@@ -21,6 +22,7 @@ import FriendsList from "./FriendsList";
 import PostItem from "../post/PostItem";
 import NewPostForm from "../post/NewPostForm";
 import SkeletonProfile from "../skeleton/SkeletonProfile";
+import ProfileLayout from "./ProfileLayout";
 
 const Profile = (props) => {
   const { computedMatch: match } = props;
@@ -37,9 +39,10 @@ const Profile = (props) => {
 
   useEffect(() => {
     dispatch(getProfileById(match.params.id));
+    // dispatch(getProfileByIdNoLoading(match.params.id));
     dispatch(getPostsByUser(match.params.id));
-    dispatch(getFriendRequests());
     dispatch(getPhotos(match.params.id));
+    dispatch(getFriendRequests());
   }, [dispatch, match.params.id]);
 
   // Lazy load
