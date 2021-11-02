@@ -163,7 +163,7 @@ const ChatWindow = ({ socket }) => {
               loader={<Hourglass />}
               style={{ display: "flex", flexDirection: "column-reverse" }} //To put endMessage and loader to the top.
               inverse={true}
-              scrollThreshold="0"
+              scrollThreshold="0px"
               scrollableTarget="chatBoxTop"
               endMessage=""
             >

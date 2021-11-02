@@ -73,7 +73,7 @@ router.get("/:conversationId", auth, async (req, res) => {
     const messages = await Message.find({
       conversationId: req.params.conversationId,
     })
-      .limit(6)
+      .limit(12)
       .sort({ createdAt: -1 });
 
     // const messages = messages1.reverse();

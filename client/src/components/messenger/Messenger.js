@@ -1,9 +1,10 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
-import { io } from "socket.io-client";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 import {
   getConversation,
   sendMessage,
+  getNextBatchMsgs,
 } from "../../store/messenger/messenger-actions";
 import { useSelector, useDispatch } from "react-redux";
 import { messengerActions } from "../../store/messenger/messenger-slice";
@@ -12,6 +13,7 @@ import Conversation from "./Conversation";
 import Message from "./Message";
 import TextArea from "../layout/TextArea";
 import ChatOnline from "./ChatOnline";
+import Hourglass from "../layout/Hourglass";
 
 import "./messenger.css";
 
@@ -55,10 +57,27 @@ const Messenger = ({ socket }) => {
     setText("");
   };
 
+  const getNextBatchMsgsHandler = () => {
+    if (messenger.messages.length) {
+      const msgArr = messenger.messages.map((msg) => msg._id);
+
+      const lastMsgId = msgArr.reduce((prev, curr) => {
+        return prev < curr ? prev : curr;
+      });
+
+      dispatch(
+        getNextBatchMsgs({
+          conversationId: messenger.conversation._id,
+          msgId: lastMsgId,
+        })
+      );
+    }
+  };
+
   // scroll into view
-  useEffect(() => {
-    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messenger.messages]);
+  // useEffect(() => {
+  //   scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+  // }, [messenger.messages]);
 
   return (
     <>
@@ -87,22 +106,46 @@ const Messenger = ({ socket }) => {
             <div className="chatBoxWrapper">
               {messenger.conversation ? (
                 <>
-                  <div className="chatBoxTop">
-                    {messenger.messages.map((m) => (
-                      <div ref={scrollRef} key={m._id}>
-                        <Message
-                          message={m}
-                          own={m.sender === currentId}
-                          profilepicture={
-                            m.sender === currentId
-                              ? auth.user.payload.profilepicture
-                              : messenger.conversation.members.find(
-                                  (m) => m._id !== currentId
-                                ).profilepicture
-                          }
-                        />
-                      </div>
-                    ))}
+                  <div
+                    className="chatBoxTop"
+                    id="chatBoxTop"
+                    style={{
+                      height: "70rem",
+                      overflow: "auto",
+                      display: "flex",
+                      flexDirection: "column-reverse",
+                    }}
+                  >
+                    <InfiniteScroll
+                      dataLength={messenger.messages.length} //This is important field to render the next data
+                      next={getNextBatchMsgsHandler}
+                      hasMore={messenger.hasMore}
+                      loader={<Hourglass />}
+                      style={{
+                        display: "flex",
+                        flexDirection: "column-reverse",
+                      }} //To put endMessage and loader to the top.
+                      inverse={true}
+                      scrollThreshold="0px"
+                      scrollableTarget="chatBoxTop"
+                      endMessage=""
+                    >
+                      {messenger.messages.map((m) => (
+                        <div ref={scrollRef} key={m._id}>
+                          <Message
+                            message={m}
+                            own={m.sender === currentId}
+                            profilepicture={
+                              m.sender === currentId
+                                ? auth.user.payload.profilepicture
+                                : messenger.conversation.members.find(
+                                    (m) => m._id !== currentId
+                                  ).profilepicture
+                            }
+                          />
+                        </div>
+                      ))}
+                    </InfiniteScroll>
                   </div>
                   <div className="chatBoxBottom">
                     <TextArea
