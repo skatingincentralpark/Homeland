@@ -18,6 +18,7 @@ export const getConversations = (userId) => async (dispatch) => {
 };
 
 export const getConversation = (conversationId) => async (dispatch) => {
+  dispatch(messengerActions.messengerLoading());
   try {
     const res = await axios.get(`/api/messages/${conversationId}`);
 
@@ -62,7 +63,8 @@ export const getNextBatchMsgs =
 export const sendMessage = (message) => async (dispatch) => {
   try {
     const res = await axios.post(`/api/messages`, message);
-    dispatch(messengerActions.sendMessage(res.data));
+    const { conversation, savedMessage } = res.data;
+    dispatch(messengerActions.sendMessage({ conversation, savedMessage }));
   } catch (err) {
     dispatch(
       messengerActions.messengerError({

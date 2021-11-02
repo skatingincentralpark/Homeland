@@ -29,12 +29,6 @@ const Messenger = ({ socket }) => {
     friends = auth.user.payload.friends;
   }
 
-  useEffect(() => {
-    return () => {
-      dispatch(messengerActions.clearConversation());
-    };
-  }, []);
-
   // submit
   const onSubmit = (e) => {
     e.preventDefault();

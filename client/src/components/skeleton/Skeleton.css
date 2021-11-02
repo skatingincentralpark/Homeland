@@ -1,7 +1,6 @@
 /* basic styles */
 .skeleton {
   background: rgb(247, 247, 247) !important;
-  /* background: blue !important; */
   border-radius: 4px;
 }
 .skeleton-wrapper {
@@ -57,6 +56,9 @@
   margin-bottom: 1em;
 }
 .skeleton.gray {
+  background-color: rgb(230, 230, 230) !important;
+}
+.skeleton.bg-gray {
   background-color: rgb(230, 230, 230) !important;
 }
 
@@ -118,6 +120,17 @@
   height: 1.8em;
   border-radius: 2rem;
   margin: 1em 0 0 0;
+}
+.skeleton.message {
+  width: 50%;
+  height: 2.25em;
+  margin: 0 0 0 0;
+  border-radius: 2em;
+}
+.skeleton.popupName {
+  margin: 0 0 0 0;
+  border-radius: 2em;
+  width: 8rem;
 }
 .skeleton.avatar {
   width: 2.25em;
@@ -185,7 +198,6 @@
 
 /* themes */
 .skeleton-wrapper.light {
-  /* background: #f2f2f2; */
   background: white;
 }
 .skeleton-wrapper.dark {
@@ -216,6 +228,20 @@
 }
 .dark .shimmer {
   background: rgba(255, 255, 255, 0.05);
+}
+
+/* Height, Width, Colors */
+.skeleton.h-125 {
+  height: 1.25rem;
+}
+.skeleton.h-08 {
+  height: 0.8rem;
+}
+.skeleton.w-8 {
+  width: 8rem;
+}
+.skeleton.w-4 {
+  width: 4rem;
 }
 
 @keyframes loading {

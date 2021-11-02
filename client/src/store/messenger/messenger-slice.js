@@ -9,6 +9,8 @@ const initialState = {
   unreadCount: 0,
   conversation: null,
   messages: null,
+  hasMore: true,
+  showWindow: false,
   loading: true,
   onlineUsers: [],
   arrivalMessage: null,
@@ -26,6 +28,11 @@ function getDisplayedConversations(state, action) {
   Object.assign(state, {
     displayedConversations: action.payload,
     loading: false,
+  });
+}
+function messengerLoading(state, action) {
+  Object.assign(state, {
+    loading: true,
   });
 }
 function getUnreadCount(state, action) {
@@ -47,22 +54,43 @@ function getConversation(state, action) {
     loading: false,
   });
 }
+function showWindow(state, action) {
+  Object.assign(state, {
+    showWindow: true,
+  });
+}
+function hideWindow(state, action) {
+  Object.assign(state, {
+    showWindow: false,
+  });
+}
 function sendMessage(state, action) {
-  const updatedConvItem = state.conversations.find(
-    (conv) => conv._id == action.payload.conversationId
+  // to-do:   can refactor to index of
+  // to-do:   have to add latest message to conversation then update state /w it
+
+  const filteredConvs = state.conversations.filter(
+    (conv) => conv._id !== action.payload.conversation._id
   );
 
   Object.assign(state, {
-    messages: [...state.messages, action.payload],
-    conversation: updatedConvItem,
+    messages: [action.payload.savedMessage, ...state.messages],
+    conversation: action.payload.conversation,
+    conversations: [action.payload.conversation, ...filteredConvs],
     loading: false,
   });
 }
 function getNextBatchMsgs(state, action) {
-  Object.assign(state, {
-    messages: [...state.messages, ...action.payload],
-    loading: false,
-  });
+  if (action.payload.length === 0) {
+    Object.assign(state, {
+      hasMore: false,
+      loading: false,
+    });
+  } else {
+    Object.assign(state, {
+      messages: [...state.messages, ...action.payload],
+      loading: false,
+    });
+  }
 }
 function receiveMessage(state, action) {
   const updatedConvItem = state.conversations.find(
@@ -70,7 +98,7 @@ function receiveMessage(state, action) {
   );
 
   Object.assign(state, {
-    messages: [...state.messages, action.payload],
+    messages: [action.payload, ...state.messages],
     conversation: updatedConvItem,
     loading: false,
   });
@@ -139,6 +167,7 @@ function messengerError(state, action) {
 function clearConversation(state, action) {
   Object.assign(state, {
     conversation: null,
+    hasMore: true,
   });
 }
 function clearConversations(state, action) {
@@ -149,6 +178,8 @@ function clearConversations(state, action) {
     conversation: null,
     messages: null,
     loading: true,
+    showWindow: false,
+    hasMore: true,
     onlineUsers: [],
     arrivalMessage: null,
     error: {},
@@ -164,6 +195,9 @@ const messengerSlice = createSlice({
     getDisplayedConversations,
     getUnreadCount,
     getConversation,
+    messengerLoading,
+    showWindow,
+    hideWindow,
     updateConversations,
     updateConversationsUnread,
     sendMessage,

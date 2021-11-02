@@ -5,7 +5,6 @@ import { useSelector, useDispatch } from "react-redux";
 import "./messenger.css";
 
 const ChatOnline = ({ onlineUsers, currentId, getConversation, friends }) => {
-  const dispatch = useDispatch();
   const [onlineFriends, setOnlineFriends] = useState([]);
 
   useEffect(() => {

@@ -115,7 +115,7 @@ const MessengerOverlay = ({ socket }) => {
 
   return (
     <div className="messenger-overlay">
-      {messenger.conversation && <ChatWindow socket={socket} />}
+      {messenger.showWindow && <ChatWindow socket={socket} />}
     </div>
   );
 };

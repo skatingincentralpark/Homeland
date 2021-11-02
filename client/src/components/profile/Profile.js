@@ -39,7 +39,6 @@ const Profile = (props) => {
 
   useEffect(() => {
     dispatch(getProfileById(match.params.id));
-    // dispatch(getProfileByIdNoLoading(match.params.id));
     dispatch(getPostsByUser(match.params.id));
     dispatch(getPhotos(match.params.id));
     dispatch(getFriendRequests());

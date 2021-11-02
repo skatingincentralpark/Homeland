@@ -11,6 +11,8 @@ import { useSelector, useDispatch } from "react-redux";
 
 import TextArea from "../layout/TextArea";
 import Message from "../messenger/Message";
+import Hourglass from "../layout/Hourglass";
+import SkeletonText from "../skeleton/SkeletonText";
 
 const ChatWindow = ({ socket }) => {
   const dispatch = useDispatch();
@@ -19,6 +21,7 @@ const ChatWindow = ({ socket }) => {
   const scrollRef = useRef();
   const [text, setText] = useState("");
   const [recipient, setRecipient] = useState("");
+  const [isOnline, setIsOnline] = useState(null);
 
   useEffect(() => {
     const recipient = messenger.conversation?.members.find(
@@ -27,6 +30,23 @@ const ChatWindow = ({ socket }) => {
 
     setRecipient(recipient);
   }, [messenger.conversation]);
+
+  // @@     CHECK IF RECIPIENT IS ONLINE
+  // @@     CURRENT TO DO !!!
+  useEffect(() => {
+    if (!messenger.loading && recipient) {
+      const arr = messenger.onlineUsers.map((user) => user.userId);
+      console.log(arr);
+      console.log(recipient._id);
+      if (arr.find((id) => recipient._id === id)) {
+        setIsOnline(true);
+        console.log(isOnline);
+      } else {
+        setIsOnline(false);
+        console.log(isOnline);
+      }
+    }
+  }, [messenger.onlineUsers, messenger.loading, recipient]);
 
   let currentId;
   if (!auth.loading) {
@@ -62,13 +82,10 @@ const ChatWindow = ({ socket }) => {
   const getNextBatchMsgsHandler = () => {
     if (messenger.messages.length) {
       const msgArr = messenger.messages.map((msg) => msg._id);
-      console.log(messenger.messages);
 
       const lastMsgId = msgArr.reduce((prev, curr) => {
         return prev < curr ? prev : curr;
       });
-
-      console.log("LASTMSGID: " + lastMsgId);
 
       dispatch(
         getNextBatchMsgs({
@@ -82,86 +99,102 @@ const ChatWindow = ({ socket }) => {
   return (
     <div className="chatWindow">
       <div className="chatBoxWrapper">
-        {messenger.conversation ? (
-          <>
-            <div className="chatWindowHeader">
-              <div className="post-header-left">
-                <div className="post-avatar align-items-center">
-                  <Image src={recipient?.profilepicture || ""} />
+        <div className="chatWindowHeader">
+          <div className="post-header-left">
+            <div className="post-avatar align-items-center">
+              <div className="chatOnlineImgContainer">
+                <Image src={recipient?.profilepicture || ""} />
+                {isOnline && <div className="chatOnlineBadge"></div>}
+              </div>
 
-                  <div className="post-information">
-                    <span className="post-author">{recipient?.name}</span>
-                    <span className="post-date">Online</span>
-                  </div>
-                </div>
-
-                <div className="chatWindowControls">
-                  <button>&#8212;</button>
-                  <button
-                    onClick={() => {
-                      dispatch(messengerActions.clearConversation());
-                    }}
-                  >
-                    &#10005;
-                  </button>
-                </div>
+              <div className="post-information">
+                <span className="post-author">
+                  {recipient?.name || (
+                    <SkeletonText
+                      height="125"
+                      width="8"
+                      color="bg-gray"
+                      wrapperClasses="mb-05"
+                    />
+                  )}
+                </span>
+                <span className="post-date p-0">
+                  {recipient?.name ? (
+                    isOnline ? (
+                      "Online"
+                    ) : (
+                      "Offline"
+                    )
+                  ) : (
+                    <SkeletonText height="08" color="bg-gray" width="4" />
+                  )}
+                </span>
               </div>
             </div>
-            <div
-              className="chatBoxTop"
-              id="chatBoxTop"
-              style={{
-                height: "25rem",
-                overflow: "auto",
-                display: "flex",
-                flexDirection: "column-reverse",
-              }}
-            >
-              {/* <button onClick={getNextBatchMsgsHandler}>Get more msgs</button> */}
-              <InfiniteScroll
-                dataLength={messenger.messages.length} //This is important field to render the next data
-                next={getNextBatchMsgsHandler}
-                hasMore={true}
-                loader={<h4>Loading...</h4>}
-                style={{ display: "flex", flexDirection: "column-reverse" }} //To put endMessage and loader to the top.
-                inverse={true}
-                scrollThreshold="1px"
-                scrollableTarget="chatBoxTop"
-                endMessage={<p></p>}
+
+            <div className="chatWindowControls">
+              {/* <button>&#8212;</button> */}
+              <button
+                onClick={() => {
+                  dispatch(messengerActions.hideWindow());
+                  dispatch(messengerActions.clearConversation());
+                }}
               >
-                {messenger.messages.map((m) => (
-                  <div ref={scrollRef} key={m._id}>
-                    <Message
-                      message={m}
-                      own={m.sender === currentId}
-                      profilepicture={
-                        m.sender === currentId
-                          ? auth.user.payload.profilepicture
-                          : messenger.conversation.members.find(
-                              (m) => m._id !== currentId
-                            ).profilepicture
-                      }
-                    />
-                  </div>
-                ))}
-              </InfiniteScroll>
-            </div>
-            <div className="chatBoxBottom">
-              <TextArea
-                placeholder="Write something..."
-                setText={setText}
-                value={text}
-              />
-              <button onClick={onSubmit} className="link-button text-form">
-                Post
+                &#10005;
               </button>
             </div>
-          </>
-        ) : (
-          <span className="noConvoText">
-            Open a conversation to start a chat
-          </span>
-        )}
+          </div>
+        </div>
+        <div
+          className="chatBoxTop"
+          id="chatBoxTop"
+          style={{
+            height: "25rem",
+            overflow: "auto",
+            display: "flex",
+            flexDirection: "column-reverse",
+          }}
+        >
+          {messenger.conversation && !messenger.loading && (
+            <InfiniteScroll
+              dataLength={messenger.messages.length} //This is important field to render the next data
+              next={getNextBatchMsgsHandler}
+              hasMore={messenger.hasMore}
+              loader={<Hourglass />}
+              style={{ display: "flex", flexDirection: "column-reverse" }} //To put endMessage and loader to the top.
+              inverse={true}
+              scrollThreshold="0"
+              scrollableTarget="chatBoxTop"
+              endMessage=""
+            >
+              {messenger.messages.map((m) => (
+                <div ref={scrollRef} key={m._id}>
+                  <Message
+                    message={m}
+                    own={m.sender === currentId}
+                    profilepicture={
+                      m.sender === currentId
+                        ? auth.user.payload.profilepicture
+                        : messenger.conversation.members.find(
+                            (m) => m._id !== currentId
+                          ).profilepicture
+                    }
+                  />
+                </div>
+              ))}
+            </InfiniteScroll>
+          )}
+        </div>
+        <div className="chatBoxBottom">
+          <TextArea
+            placeholder="Write something..."
+            setText={setText}
+            value={text}
+          />
+          <button onClick={onSubmit} className="link-button text-form">
+            Post
+          </button>
+        </div>
       </div>
     </div>
   );

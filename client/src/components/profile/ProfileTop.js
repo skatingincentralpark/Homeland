@@ -27,6 +27,11 @@ const ProfileTop = (props) => {
         auth.user.payload._id === profile.user._id ? (
           <Link to="/edit-user">
             <img src={profile.user.profilepicture} />
+            {/* {profile.user.profilepicture ? (
+              <img src={profile.user.profilepicture} />
+            ) : (
+              <div className="skeleton bigavatar" />
+            )} */}
           </Link>
         ) : (
           <Image src={profile.user.profilepicture} />

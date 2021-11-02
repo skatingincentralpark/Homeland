@@ -199,8 +199,10 @@ AVATAR
 .display-picture img {
   object-fit: fill;
   width: 10em;
+  height: 10em;
   border-radius: 50%;
   margin-bottom: 1em;
+  background: rgb(230, 230, 230);
 }
 /*------------------------------------------------------
 TEXT INPUT
@@ -522,6 +524,7 @@ POST-HEADER
 .post-author {
   font-weight: 600;
 }
+
 /*------------------------------------------------------
 MESSENGER POPUP
 ------------------------------------------------------*/
@@ -1211,15 +1214,21 @@ SPACING
   margin-bottom: 0;
 }
 .mb-05 {
-  margin-bottom: 0.5em;
+  margin-bottom: 0.5em !important;
 }
 .mb-1 {
   margin-bottom: 1em;
+}
+.mb-125 {
+  margin-bottom: 1.25em;
 }
 .mb-2 {
   margin-bottom: 2em;
 }
 /* padding */
+.p-0 {
+  padding: 0;
+}
 .p-05 {
   padding: 0.5em;
 }

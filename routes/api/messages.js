@@ -9,7 +9,9 @@ const auth = require("../../middleware/auth");
 router.post("/", auth, async (req, res) => {
   const newMessage = new Message(req.body);
   try {
-    const conversation = await Conversation.findById(req.body.conversationId);
+    const conversation = await Conversation.findById(
+      req.body.conversationId
+    ).populate("members", ["name", "profilepicture", "friends"]);
 
     if (!conversation) {
       throw new Error("Conversation does not exist");
@@ -31,9 +33,9 @@ router.post("/", auth, async (req, res) => {
     conversation.unread = receiverId;
 
     await conversation.save();
-
     const savedMessage = await newMessage.save();
-    res.status(200).json(savedMessage);
+
+    res.status(200).json({ conversation, savedMessage });
   } catch (err) {
     res.status(500).send(err.message);
   }

@@ -4,6 +4,7 @@ import Moment from "react-moment";
 
 import { useSelector, useDispatch } from "react-redux";
 import { getConversation } from "../../store/messenger/messenger-actions";
+import { messengerActions } from "../../store/messenger/messenger-slice";
 
 const MessengerPopup = ({ closeHandler }) => {
   const dispatch = useDispatch();
@@ -24,6 +25,7 @@ const MessengerPopup = ({ closeHandler }) => {
                 conv.unread == userId ? "bg-gray1" : ""
               }`}
               onClick={() => {
+                dispatch(messengerActions.showWindow());
                 dispatch(getConversation(conv.convId));
                 closeHandler();
               }}
