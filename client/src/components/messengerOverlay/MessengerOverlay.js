@@ -30,28 +30,30 @@ const MessengerOverlay = ({ socket }) => {
   useEffect(() => {
     // @@      DISPLAY MESSENGER POPUP ITEMS
     //          Create array to be used in displaying the messenger popup items & unread count
-    let count = 0;
-    const arr = messenger.conversations.map((conv) => {
-      let member = conv.members.find((memb) => memb._id !== currentId);
-      member = {
-        ...member,
-        updatedAt: conv.updatedAt,
-        latestMessage: conv.latestMessage,
-        unread: conv.unread,
-        convId: conv._id,
-      };
+    if (messenger.conversations) {
+      let count = 0;
+      const arr = messenger.conversations.map((conv) => {
+        let member = conv.members.find((memb) => memb._id !== currentId);
+        member = {
+          ...member,
+          updatedAt: conv.updatedAt,
+          latestMessage: conv.latestMessage,
+          unread: conv.unread,
+          convId: conv._id,
+        };
 
-      if (
-        messenger.conversation?._id !== conv._id &&
-        conv.unread == currentId
-      ) {
-        count++;
-      }
+        if (
+          messenger.conversation?._id !== conv._id &&
+          conv.unread == currentId
+        ) {
+          count++;
+        }
 
-      return member;
-    });
-    dispatch(messengerActions.getDisplayedConversations(arr));
-    dispatch(messengerActions.getUnreadCount(count));
+        return member;
+      });
+      dispatch(messengerActions.getDisplayedConversations(arr));
+      dispatch(messengerActions.getUnreadCount(count));
+    }
   }, [messenger.conversations, currentId]);
 
   useEffect(() => {

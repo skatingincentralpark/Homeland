@@ -9,6 +9,7 @@
   border: 1px solid lightgray;
   overflow: auto;
   border-radius: 1em 1em 0 0;
+  max-width: 27rem;
 }
 .chatWindowHeader {
   border-bottom: 1px solid lightgray;

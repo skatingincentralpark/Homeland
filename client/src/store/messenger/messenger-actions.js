@@ -1,6 +1,7 @@
 import axios from "axios";
 
 import { messengerActions } from "./messenger-slice";
+import { uiActions } from "../ui/ui-slice";
 
 export const getConversations = (userId) => async (dispatch) => {
   try {
@@ -18,7 +19,7 @@ export const getConversations = (userId) => async (dispatch) => {
 };
 
 export const getConversation = (conversationId) => async (dispatch) => {
-  dispatch(messengerActions.messengerLoading());
+  dispatch(uiActions.loadingTrue());
   try {
     const res = await axios.get(`/api/messages/${conversationId}`);
 
@@ -39,6 +40,7 @@ export const getConversation = (conversationId) => async (dispatch) => {
       })
     );
   }
+  dispatch(uiActions.loadingFalse());
 };
 
 export const getNextBatchMsgs =

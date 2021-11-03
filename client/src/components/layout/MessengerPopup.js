@@ -6,6 +6,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { getConversation } from "../../store/messenger/messenger-actions";
 import { messengerActions } from "../../store/messenger/messenger-slice";
 
+import SkeletonConversation from "../skeleton/SkeletonConversation";
+
 const MessengerPopup = ({ closeHandler }) => {
   const dispatch = useDispatch();
   const messenger = useSelector((state) => state.messenger);
@@ -17,36 +19,43 @@ const MessengerPopup = ({ closeHandler }) => {
       <div className="notification-popup-inner overflow-x-hidden">
         <div className="nav-top notification-title">Messages</div>
         <div className="nav-mid m-0">
-          {messenger.displayedConversations.map((conv) => (
-            <div
-              key={conv._id}
-              to={`/profile`}
-              className={`notification-item align-items-center relative ${
-                conv.unread == userId ? "bg-gray1" : ""
-              }`}
-              onClick={() => {
-                dispatch(messengerActions.showWindow());
-                dispatch(getConversation(conv.convId));
-                closeHandler();
-              }}
-            >
-              <div className="post-avatar">
-                <img src={conv.profilepicture} alt="" />
-              </div>
-              <div>
-                <span>{conv.name}</span>
-                <span className="notification-timestamp">
-                  <span className="message-preview">
-                    {conv.latestMessage || "Just Added!"}
+          {!messenger.loading ? (
+            messenger.displayedConversations.map((conv) => (
+              <div
+                key={conv._id}
+                to={`/profile`}
+                className={`notification-item align-items-center relative ${
+                  conv.unread == userId ? "bg-gray1" : ""
+                }`}
+                onClick={() => {
+                  dispatch(messengerActions.showWindow());
+                  dispatch(getConversation(conv.convId));
+                  closeHandler();
+                }}
+              >
+                <div className="post-avatar">
+                  <img src={conv.profilepicture} alt="" />
+                </div>
+                <div>
+                  <span>{conv.name}</span>
+                  <span className="notification-timestamp">
+                    <span className="message-preview">
+                      {conv.latestMessage || "Just Added!"}
+                    </span>
+                    <div className="latestMessageFadeOut" />
+                    <span className="message-popup-timestamp">
+                      <Moment fromNow>{conv.updatedAt}</Moment>
+                    </span>
                   </span>
-                  <div className="latestMessageFadeOut" />
-                  <span className="message-popup-timestamp">
-                    <Moment fromNow>{conv.updatedAt}</Moment>
-                  </span>
-                </span>
+                </div>
               </div>
-            </div>
-          ))}
+            ))
+          ) : (
+            <>
+              <SkeletonConversation />
+              <SkeletonConversation />
+            </>
+          )}
         </div>
         <div className="nav-bot py-05 text-center med">
           <Link onClick={closeHandler} to="/messenger">

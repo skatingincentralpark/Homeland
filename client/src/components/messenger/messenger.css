@@ -1,14 +1,16 @@
 .messenger {
-  height: 100vh;
+  height: 99.5vh;
   display: flex;
   padding-top: 56px;
   background-color: white;
+  overflow: hidden;
 }
 
 .chatMenu {
   flex: 0;
   border-right: 1px solid lightgray;
-  max-width: 25rem;
+  max-width: none;
+  min-width: none;
 }
 .chatMenuInput {
   width: 90%;
@@ -19,7 +21,6 @@
   color: gray;
   outline: none;
 }
-
 .chatBox {
   flex: 5.5;
 }
@@ -130,6 +131,10 @@
 }
 
 @media only screen and (min-width: 900px) {
+  .chatMenu {
+    max-width: 25rem;
+    min-width: 25rem;
+  }
   .messenger-mob-display-none {
     display: flex !important;
   }

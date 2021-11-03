@@ -513,7 +513,7 @@ POST-HEADER
     display: flex;
     align-items: center;
     font-weight: 600;
-    padding: 0.4em 0.8em 0.4em 0.4em;
+    padding: 0.15em 0.8em 0.15em 0.4em;
     border-radius: 5em;
   }
   .header-right-container img {
@@ -895,7 +895,8 @@ header {
   width: 100%;
   z-index: 97;
   background-color: white;
-  box-shadow: 0 0.1rem 4rem var(--box-shadow2);
+  /* box-shadow: 0 0.1rem 4rem var(--box-shadow2); */
+  border-bottom: 1px solid lightgray;
 }
 .header-inner {
   padding: 0.75em 1em;
@@ -1319,6 +1320,9 @@ SPACING
 .align-items-center {
   align-items: center;
 }
+.align-items-center {
+  align-items: center;
+}
 /* position */
 .center {
   position: fixed;
@@ -1329,11 +1333,9 @@ SPACING
 .relative {
   position: relative;
 }
-.fixed-centered {
-  position: fixed;
-  transform: translate(-50%, -50%);
-  top: 50%;
-  left: 50%;
+.justify-space-between {
+  display: flex;
+  justify-content: space-between;
 }
 /* text */
 .text-center {

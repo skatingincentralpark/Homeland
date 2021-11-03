@@ -137,7 +137,6 @@ const ChatWindow = ({ socket }) => {
               <button
                 onClick={() => {
                   dispatch(messengerActions.hideWindow());
-                  dispatch(messengerActions.clearConversation());
                 }}
               >
                 &#10005;

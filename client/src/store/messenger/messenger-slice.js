@@ -27,7 +27,6 @@ function getConversations(state, action) {
 function getDisplayedConversations(state, action) {
   Object.assign(state, {
     displayedConversations: action.payload,
-    loading: false,
   });
 }
 function messengerLoading(state, action) {
@@ -38,7 +37,6 @@ function messengerLoading(state, action) {
 function getUnreadCount(state, action) {
   Object.assign(state, {
     unreadCount: action.payload,
-    loading: false,
   });
 }
 function getConversation(state, action) {

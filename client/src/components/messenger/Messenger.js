@@ -7,14 +7,12 @@ import {
   getNextBatchMsgs,
 } from "../../store/messenger/messenger-actions";
 import { useSelector, useDispatch } from "react-redux";
-import { messengerActions } from "../../store/messenger/messenger-slice";
 
 import Conversation from "./Conversation";
-import Friend from "./Friend";
 import Message from "./Message";
 import TextArea from "../layout/TextArea";
-import ChatOnline from "./ChatOnline";
 import Hourglass from "../layout/Hourglass";
+import SkeletonConversation1 from "../skeleton/SkeletonConversation1";
 
 import "./messenger.css";
 
@@ -82,96 +80,96 @@ const Messenger = ({ socket }) => {
 
   return (
     <>
-      {!messenger.loading && !auth.loading && (
-        <div className="messenger">
-          <div className="chatMenu">
-            <div className="p-1 item-header-title messenger-mob-display-none">
-              <b>Messages</b>
-            </div>
-            <div className="chatMenuWrapper">
-              {!messenger.loading &&
-                messenger.displayedConversations.map((c) => (
-                  <div
-                    key={c._id}
-                    onClick={() => {
-                      dispatch(getConversation(c.convId));
-                    }}
-                  >
-                    <Conversation
-                      conversation={c}
-                      currentUser={currentId}
-                      onlineUserArr={onlineUserArr}
-                    />
-                  </div>
-                ))}
-            </div>
+      <div className="messenger">
+        <div className="chatMenu">
+          <div className="p-1 item-header-title messenger-mob-display-none">
+            <b>Messages</b>
           </div>
-          <div className="chatBox">
-            <div className="chatBoxWrapper">
-              {messenger.conversation ? (
-                <>
-                  <div
-                    className="chatBoxTop"
-                    id="chatBoxTop"
-                    style={{
-                      height: "70rem",
-                      overflow: "auto",
-                      display: "flex",
-                      flexDirection: "column-reverse",
-                    }}
-                  >
-                    <InfiniteScroll
-                      dataLength={messenger.messages.length} //This is important field to render the next data
-                      next={getNextBatchMsgsHandler}
-                      hasMore={messenger.hasMore}
-                      loader={<Hourglass />}
-                      style={{
-                        display: "flex",
-                        flexDirection: "column-reverse",
-                      }} //To put endMessage and loader to the top.
-                      inverse={true}
-                      scrollThreshold="0px"
-                      scrollableTarget="chatBoxTop"
-                      endMessage=""
-                    >
-                      {messenger.messages.map((m) => (
-                        <div ref={scrollRef} key={m._id}>
-                          <Message
-                            message={m}
-                            own={m.sender === currentId}
-                            profilepicture={
-                              m.sender === currentId
-                                ? auth.user.payload.profilepicture
-                                : messenger.conversation.members.find(
-                                    (m) => m._id !== currentId
-                                  ).profilepicture
-                            }
-                          />
-                        </div>
-                      ))}
-                    </InfiniteScroll>
-                  </div>
-                  <div className="chatBoxBottom">
-                    <TextArea
-                      placeholder="Write something..."
-                      setText={setText}
-                      value={text}
-                    />
-                    <button
-                      onClick={onSubmit}
-                      className="link-button text-form"
-                    >
-                      Post
-                    </button>
-                  </div>
-                </>
-              ) : (
-                <></>
-              )}
-            </div>
+          <div className="chatMenuWrapper">
+            {!messenger.loading && messenger.displayedConversations.length ? (
+              messenger.displayedConversations.map((c) => (
+                <div
+                  key={c._id}
+                  onClick={() => {
+                    dispatch(getConversation(c.convId));
+                  }}
+                >
+                  <Conversation
+                    conversation={c}
+                    currentUser={currentId}
+                    onlineUserArr={onlineUserArr}
+                  />
+                </div>
+              ))
+            ) : (
+              <>
+                <SkeletonConversation1 />
+              </>
+            )}
           </div>
         </div>
-      )}
+        <div className="chatBox">
+          <div className="chatBoxWrapper">
+            {messenger.conversation ? (
+              <>
+                <div
+                  className="chatBoxTop"
+                  id="chatBoxTop"
+                  style={{
+                    height: "70rem",
+                    overflow: "auto",
+                    display: "flex",
+                    flexDirection: "column-reverse",
+                  }}
+                >
+                  <InfiniteScroll
+                    dataLength={messenger.messages.length} //This is important field to render the next data
+                    next={getNextBatchMsgsHandler}
+                    hasMore={messenger.hasMore}
+                    loader={<Hourglass />}
+                    style={{
+                      display: "flex",
+                      flexDirection: "column-reverse",
+                    }} //To put endMessage and loader to the top.
+                    inverse={true}
+                    scrollThreshold="0px"
+                    scrollableTarget="chatBoxTop"
+                    endMessage=""
+                  >
+                    {messenger.messages.map((m) => (
+                      <div ref={scrollRef} key={m._id}>
+                        <Message
+                          message={m}
+                          own={m.sender === currentId}
+                          profilepicture={
+                            m.sender === currentId
+                              ? auth.user.payload.profilepicture
+                              : messenger.conversation.members.find(
+                                  (m) => m._id !== currentId
+                                ).profilepicture
+                          }
+                        />
+                      </div>
+                    ))}
+                  </InfiniteScroll>
+                </div>
+                <div className="chatBoxBottom">
+                  <TextArea
+                    placeholder="Write something..."
+                    setText={setText}
+                    value={text}
+                  />
+                  <button onClick={onSubmit} className="link-button text-form">
+                    Post
+                  </button>
+                </div>
+              </>
+            ) : (
+              <></>
+            )}
+          </div>
+        </div>
+      </div>
     </>
   );
 };

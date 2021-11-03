@@ -12,7 +12,7 @@ const Conversation = ({ conversation, currentUser, onlineUserArr }) => {
   // }, [conversation.members]);
 
   return (
-    <div className="notification-item align-items-center relative p-0 mb-1 overflow-x-hidden">
+    <div className="notification-item align-items-center relative p-05 overflow-x-hidden">
       <div className="header-right-container">
         <div className="chatOnlineImgContainer">
           <div className="post-avatar med-avatar">
