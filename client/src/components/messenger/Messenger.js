@@ -10,6 +10,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { messengerActions } from "../../store/messenger/messenger-slice";
 
 import Conversation from "./Conversation";
+import Friend from "./Friend";
 import Message from "./Message";
 import TextArea from "../layout/TextArea";
 import ChatOnline from "./ChatOnline";
@@ -22,6 +23,7 @@ const Messenger = ({ socket }) => {
   const auth = useSelector((state) => state.auth);
   const messenger = useSelector((state) => state.messenger);
   const [text, setText] = useState("");
+  const [onlineUserArr, setOnlineUserArr] = useState([]);
   const scrollRef = useRef();
 
   let currentId;
@@ -57,6 +59,10 @@ const Messenger = ({ socket }) => {
     setText("");
   };
 
+  useEffect(() => {
+    setOnlineUserArr(messenger.onlineUsers.map((user) => user.userId));
+  }, [messenger.onlineUsers]);
+
   const getNextBatchMsgsHandler = () => {
     if (messenger.messages.length) {
       const msgArr = messenger.messages.map((msg) => msg._id);
@@ -74,30 +80,28 @@ const Messenger = ({ socket }) => {
     }
   };
 
-  // scroll into view
-  // useEffect(() => {
-  //   scrollRef.current?.scrollIntoView({ behavior: "smooth" });
-  // }, [messenger.messages]);
-
   return (
     <>
       {!messenger.loading && !auth.loading && (
         <div className="messenger">
           <div className="chatMenu">
+            <div className="p-1 item-header-title messenger-mob-display-none">
+              <b>Messages</b>
+            </div>
             <div className="chatMenuWrapper">
-              <input
-                placeholder="Search for friends"
-                className="chatMenuInput"
-              />
               {!messenger.loading &&
-                messenger.conversations.map((c) => (
+                messenger.displayedConversations.map((c) => (
                   <div
                     key={c._id}
                     onClick={() => {
-                      dispatch(getConversation(c._id));
+                      dispatch(getConversation(c.convId));
                     }}
                   >
-                    <Conversation conversation={c} currentUser={currentId} />
+                    <Conversation
+                      conversation={c}
+                      currentUser={currentId}
+                      onlineUserArr={onlineUserArr}
+                    />
                   </div>
                 ))}
             </div>
@@ -162,20 +166,8 @@ const Messenger = ({ socket }) => {
                   </div>
                 </>
               ) : (
-                <span className="noConvoText">
-                  Open a conversation to start a chat
-                </span>
+                <></>
               )}
-            </div>
-          </div>
-          <div className="chatOnline">
-            <div className="chatOnlineWrapper">
-              <ChatOnline
-                onlineUsers={messenger.onlineUsers}
-                friends={auth.user.payload.friends}
-                currentId={currentId}
-                getConversation={getConversation}
-              />
             </div>
           </div>
         </div>

@@ -41,30 +41,6 @@ router.post("/", auth, async (req, res) => {
   }
 });
 
-// // @route   GET api/messages/conversationId
-// // @desc    Get messages for a conversation
-// // @access  Private
-// router.get("/:conversationId", auth, async (req, res) => {
-//   try {
-//     const messages = await Message.find({
-//       conversationId: req.params.conversationId,
-//     });
-
-//     const conversation = await Conversation.findById(
-//       req.params.conversationId
-//     ).populate("members", ["name", "profilepicture", "friends"]);
-
-//     if (req.user.id == conversation.unread) {
-//       conversation.unread = null;
-//       await conversation.save();
-//     }
-
-//     res.status(200).json({ messages, conversation });
-//   } catch (err) {
-//     res.status(500).send(err.message);
-//   }
-// });
-
 // @route   GET api/messages/:conversationId
 // @desc    Get messages for a conversation (first batch)
 // @access  Private

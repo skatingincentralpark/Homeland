@@ -93,7 +93,9 @@ const Navbar = ({ socket }) => {
                           alt="user avatar"
                         />
                       </div>
-                      <span>{user?.payload.name.split(" ")[0]}</span>
+                      <span className="mob-display-none">
+                        {user?.payload.name.split(" ")[0]}
+                      </span>
                     </Link>
 
                     <button className="bell" onClick={toggleMessengerHandler}>

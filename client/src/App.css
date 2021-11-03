@@ -486,7 +486,7 @@ POST-HEADER
   display: flex;
   align-items: center;
   font-weight: 600;
-  padding: 0.4em 0.8em 0.4em 0.4em;
+  padding: 0;
   border-radius: 5em;
 }
 .header-right-container:hover {
@@ -497,8 +497,33 @@ POST-HEADER
   filter: brightness(0.95);
 }
 .header-right-container img {
-  width: 2em;
+  width: 2.5em;
+  margin: 0;
   border: 1px solid lightgray;
+}
+.mob-display-none {
+  display: none;
+}
+@media only screen and (min-width: 900px) {
+  .header-right-container img {
+    width: 2em;
+    border: 1px solid lightgray;
+  }
+  .header-right-container {
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    padding: 0.4em 0.8em 0.4em 0.4em;
+    border-radius: 5em;
+  }
+  .header-right-container img {
+    width: 2.5em;
+    margin-right: 0.5em;
+    border: 1px solid lightgray;
+  }
+  .mob-display-none {
+    display: inline;
+  }
 }
 .post-popup button {
   font-size: 1rem;

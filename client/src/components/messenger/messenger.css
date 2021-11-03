@@ -6,7 +6,9 @@
 }
 
 .chatMenu {
-  flex: 3.5;
+  flex: 0;
+  border-right: 1px solid lightgray;
+  max-width: 25rem;
 }
 .chatMenuInput {
   width: 90%;
@@ -75,6 +77,7 @@
   width: fit-content;
   position: relative;
   max-width: 30rem;
+  line-break: anywhere;
 }
 
 .messageBottom {
@@ -112,4 +115,29 @@
   position: absolute;
   top: 0.2em;
   right: 0.5em;
+}
+.messenger-mob-display-none {
+  display: none !important;
+}
+
+/* Adjustments */
+.chatMenuWrapper .post-avatar img {
+  margin-right: 0;
+}
+.chatMenuWrapper .post-avatar.med-avatar img {
+  width: 4em;
+  height: 4em;
+}
+
+@media only screen and (min-width: 900px) {
+  .messenger-mob-display-none {
+    display: flex !important;
+  }
+  .chatMenuWrapper .post-avatar img {
+    margin-right: 0.75em;
+  }
+  .chatMenuWrapper .post-avatar.med-avatar img {
+    width: 3em;
+    height: 3em;
+  }
 }

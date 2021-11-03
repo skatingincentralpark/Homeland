@@ -37,7 +37,7 @@ const MessengerPopup = ({ closeHandler }) => {
                 <span>{conv.name}</span>
                 <span className="notification-timestamp">
                   <span className="message-preview">
-                    {conv.latestMessage || "Send a Message ..."}
+                    {conv.latestMessage || "Just Added!"}
                   </span>
                   <div className="latestMessageFadeOut" />
                   <span className="message-popup-timestamp">

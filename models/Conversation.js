@@ -9,7 +9,7 @@ const ConversationSchema = new Schema(
         ref: "user",
       },
     ],
-    latestMessage: { type: String, required: true, default: "" },
+    latestMessage: { type: String, default: null },
     unread: { type: Schema.Types.ObjectId },
   },
   { timestamps: true }

@@ -6,6 +6,7 @@ const checkObjectId = require("../../middleware/checkObjectId");
 const User = require("../../models/User");
 const FriendRequest = require("../../models/FriendRequest");
 const Notification = require("../../models/Notification");
+const Conversation = require("../../models/Conversation");
 
 // @route   GET api/friend-request
 // @desc    Get friend requests for a single user
@@ -138,6 +139,13 @@ router.put(
       await currentUser.save();
 
       await FriendRequest.deleteOne({ _id: req.params.request_id });
+
+      // Create New Conversation
+      const newConversation = new Conversation({
+        members: [req.user.id, friendRequest.sender],
+      });
+
+      await newConversation.save();
 
       // Notification
       await Notification.deleteOne({ id: req.params.request_id });

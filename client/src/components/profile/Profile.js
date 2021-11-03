@@ -203,7 +203,7 @@ const Profile = (props) => {
                 dataLength={posts.length} //This is important field to render the next data
                 next={getNextBatch}
                 hasMore={true}
-                loader={<h4>Loading...</h4>}
+                loader={<></>}
                 scrollThreshold="20px"
                 endMessage={<p></p>}
               >
