@@ -35,7 +35,16 @@ function userLoaded(state, action) {
     user: action.payload,
   });
 }
-
+function loadingTrue(state, action) {
+  Object.assign(state, {
+    loading: true,
+  });
+}
+function loadingFalse(state, action) {
+  Object.assign(state, {
+    loading: false,
+  });
+}
 // @@ AUTH REDUCERS
 const authSlice = createSlice({
   name: "auth",
@@ -50,6 +59,8 @@ const authSlice = createSlice({
     loginFail: authError,
     authError: authError,
     accountDeleted: authError,
+    loadingTrue,
+    loadingFalse,
   },
 });
 

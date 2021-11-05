@@ -20,7 +20,6 @@ function getProfile(state, action) {
 }
 function getPhotos(state, action) {
   Object.assign(state, {
-    ...state,
     photos: action.payload,
   });
 }

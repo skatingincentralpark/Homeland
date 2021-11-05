@@ -17,6 +17,7 @@ const Newsfeed = () => {
 
   const { posts, loading } = useSelector((state) => state.post);
   const auth = useSelector((state) => state.auth);
+  const ui = useSelector((state) => state.ui);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -27,10 +28,10 @@ const Newsfeed = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (auth.user) {
+    if (auth.user && !auth.loading && !ui.loading) {
       setProfileExists(auth.user.payload.profile);
     }
-  }, [auth, posts]);
+  }, [auth.user]);
 
   // @@     LAZY LOAD
   const getNextBatch = () => {

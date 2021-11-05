@@ -1,5 +1,6 @@
 import axios from "axios";
 
+import { loadUser } from "../auth/auth-actions";
 import { profileActions } from "./profile-slice";
 import { authActions } from "../auth/auth-slice";
 import { uiActions } from "../ui/ui-slice";
@@ -94,6 +95,7 @@ export const createProfile =
 
       const res = await axios.post("/api/profile", formData, config);
 
+      dispatch(loadUser());
       dispatch(profileActions.getProfile(res.data));
 
       dispatch(
@@ -101,22 +103,20 @@ export const createProfile =
       );
 
       if (!edit) {
-        history.push(`/profile/${userId}`);
+        history.push(`/newsfeed`);
       }
+
       dispatch(uiActions.loadingFalse());
     } catch (err) {
       dispatch(uiActions.loadingFalse());
       // If error, dispatch an alert for every error in the array
-      const errors = err.response.data.errors;
+      console.log(err);
 
-      if (errors) {
-        errors.forEach((error) => dispatch(setAlert(error.msg, "danger")));
-      }
+      dispatch(setAlert(err, "danger"));
 
       dispatch(
         profileActions.profileError({
-          msg: err.response.statusText,
-          status: err.response.status,
+          msg: err,
         })
       );
     }

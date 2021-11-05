@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { Link, Redirect } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -9,11 +10,12 @@ import {
 } from "../../store/profile/profile-actions";
 import { loadUser } from "../../store/auth/auth-actions";
 
-const CreateProfile = ({ history }) => {
+const CreateProfile = () => {
   const { user, loading } = useSelector((state) => state.auth);
   const { profile } = useSelector((state) => state.profile);
-
   const dispatch = useDispatch();
+
+  let history = useHistory();
 
   const highschool = useRef();
   const college = useRef();
