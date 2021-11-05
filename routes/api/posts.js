@@ -290,6 +290,11 @@ router.put("/unlike/:id", [auth, checkObjectId("id")], async (req, res) => {
       status: "LIKE",
     });
 
+    if (!notification) {
+      await post.save();
+      return res.json(post.likes);
+    }
+
     // Get name for notification body (finds name that isn't post author)
     let name;
     if (post.likes.length > 0) {

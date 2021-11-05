@@ -20,36 +20,46 @@ const MessengerPopup = ({ closeHandler }) => {
         <div className="nav-top notification-title">Messages</div>
         <div className="nav-mid m-0">
           {!messenger.loading ? (
-            messenger.displayedConversations.map((conv) => (
-              <div
-                key={conv._id}
-                to={`/profile`}
-                className={`notification-item align-items-center relative ${
-                  conv.unread == userId ? "bg-gray1" : ""
-                }`}
-                onClick={() => {
-                  dispatch(messengerActions.showWindow());
-                  dispatch(getConversation(conv.convId));
-                  closeHandler();
-                }}
-              >
-                <div className="post-avatar">
-                  <img src={conv.profilepicture} alt="" />
-                </div>
-                <div>
-                  <span>{conv.name}</span>
-                  <span className="notification-timestamp">
-                    <span className="message-preview">
-                      {conv.latestMessage || "Just Added!"}
-                    </span>
-                    <div className="latestMessageFadeOut" />
-                    <span className="message-popup-timestamp">
-                      <Moment fromNow>{conv.updatedAt}</Moment>
-                    </span>
+            <>
+              {messenger.displayedConversations.length ? (
+                messenger.displayedConversations.map((conv) => (
+                  <div
+                    key={conv._id}
+                    to={`/profile`}
+                    className={`notification-item align-items-center relative ${
+                      conv.unread == userId ? "bg-gray1" : ""
+                    }`}
+                    onClick={() => {
+                      dispatch(messengerActions.showWindow());
+                      dispatch(getConversation(conv.convId));
+                      closeHandler();
+                    }}
+                  >
+                    <div className="post-avatar">
+                      <img src={conv.profilepicture} alt="" />
+                    </div>
+                    <div>
+                      <span>{conv.name}</span>
+                      <span className="notification-timestamp">
+                        <span className="message-preview">
+                          {conv.latestMessage || "Just Added!"}
+                        </span>
+                        <div className="latestMessageFadeOut" />
+                        <span className="message-popup-timestamp">
+                          <Moment fromNow>{conv.updatedAt}</Moment>
+                        </span>
+                      </span>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <>
+                  <span className="p-1 gray grayscale">
+                    Currently empty &#128561;
                   </span>
-                </div>
-              </div>
-            ))
+                </>
+              )}
+            </>
           ) : (
             <>
               <SkeletonConversation />

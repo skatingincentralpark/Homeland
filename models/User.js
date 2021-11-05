@@ -25,7 +25,7 @@ const UserSchema = new mongoose.Schema({
     {
       user: {
         type: Schema.Types.ObjectId,
-        ref: "user",
+        ref: "users",
       },
       name: {
         type: String,

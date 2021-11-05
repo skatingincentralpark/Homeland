@@ -7,6 +7,8 @@ const { body, validationResult } = require("express-validator");
 const Profile = require("../../models/Profile");
 const User = require("../../models/User");
 const Post = require("../../models/Post");
+const Message = require("../../models/Message");
+const Conversation = require("../../models/Conversation");
 
 // @route   GET api/profile/me
 // @desc    Get current user's profile
@@ -130,6 +132,29 @@ router.get("/user/:user_id", checkObjectId("user_id"), async (req, res) => {
 // @access  Private
 router.delete("/", auth, async (req, res) => {
   try {
+    // delete user from other user's friend's list
+    const userFriends = await User.findOne(
+      { _id: req.user.id },
+      { "friends.user": true }
+    );
+    userFriends?.friends.map(async (friend) => {
+      await User.updateOne(
+        { _id: friend.user },
+        { $pull: { friends: { user: req.user.id } } }
+      );
+    });
+
+    // delete messages
+    // find conversations
+    const conversations = await Conversation.find({
+      members: { $in: [req.user.id] },
+    });
+    conversations.map(async (conv, i) => {
+      await Message.deleteMany({
+        conversationId: conv._id,
+      });
+    });
+
     await Promise.all([
       // Remove user posts
       Post.deleteMany({ user: req.user.id }),
@@ -137,11 +162,36 @@ router.delete("/", auth, async (req, res) => {
       Profile.findOneAndRemove({ user: req.user.id }),
       // Remove user
       User.findOneAndRemove({ _id: req.user.id }),
+      // delete conversations
+      Conversation.deleteMany({
+        members: { $in: [req.user.id] },
+      }),
+      // delete notifications
+      Notification.deleteMany({
+        $or: [{ receivedby: req.user.id }, { sender: req.user.id }],
+      }),
+      // delete friend requests
+      FriendRequest.deleteMany({
+        $or: [{ receiver: req.user.id }, { sender: req.user.id }],
+      }),
+      // delete user's comments & likes
+      Post.updateMany(
+        {
+          comments: { $elemMatch: { user: req.user.id } },
+        },
+        { $pull: { comments: { user: req.user.id } } }
+      ),
+      Post.updateMany(
+        {
+          likes: { $elemMatch: { user: req.user.id } },
+        },
+        { $pull: { likes: { user: req.user.id } } }
+      ),
     ]);
 
     res.json({ msg: "User deleted" });
   } catch (err) {
-    console.err(err.message);
+    console.error(err.message);
     res.status(500).send("Server Error");
   }
 });
