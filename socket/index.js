@@ -36,6 +36,14 @@ io.on("connection", (socket) => {
     }
   });
 
+  // send and get friend request
+  socket.on("updateFriendRequest", (receiverdId) => {
+    const user = getUser(receiverdId);
+    if (user) {
+      io.to(user.socketId).emit("getFriendRequests");
+    }
+  });
+
   // when disconnect
   socket.on("disconnect", () => {
     console.log("A user disconnected");

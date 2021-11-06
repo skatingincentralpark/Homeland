@@ -3,6 +3,9 @@ import { Link } from "react-router-dom";
 import Image from "react-graceful-image";
 
 const FriendsList = ({ loading, profile, id }) => {
+  // @@    TO-DO:
+  //       Replace profile state with auth state for friends
+  //       So after friend request response, will update the list
   const {
     user: { friends },
   } = profile;

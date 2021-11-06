@@ -25,7 +25,7 @@ import SkeletonProfile from "../skeleton/SkeletonProfile";
 import ProfileLayout from "./ProfileLayout";
 
 const Profile = (props) => {
-  const { computedMatch: match } = props;
+  const { computedMatch: match, socket } = props;
 
   const dispatch = useDispatch();
   const { profile, loading, photos } = useSelector((state) => state.profile);
@@ -123,6 +123,7 @@ const Profile = (props) => {
             profile={profile}
             match={match}
             friendRequest={friendRequest}
+            socket={socket}
           />
           <div className="profile-bottom">
             <div className="profile-left">
@@ -192,6 +193,7 @@ const Profile = (props) => {
                     loading={loading}
                     id={match.params.id}
                     profile={profile}
+                    auth={auth}
                   />
                   <PhotosList photoPosts={photos} id={match.params.id} />
                 </>

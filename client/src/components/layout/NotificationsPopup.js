@@ -9,9 +9,18 @@ import {
 } from "../../store/friendRequest/friendRequest-actions";
 
 const NotificationsPopup = (props) => {
-  const { notification, closeHandler } = props;
+  const { notification, closeHandler, socket } = props;
 
   const dispatch = useDispatch();
+
+  const acceptFriendRequestHandler = async (senderId, notificationId) => {
+    await dispatch(acceptFriendRequest(notificationId));
+    socket.current.emit("updateFriendRequest", senderId);
+  };
+  const declineFriendRequestHandler = async (senderId, notificationId) => {
+    await dispatch(declineFriendRequest(notificationId));
+    socket.current.emit("updateFriendRequest", senderId);
+  };
 
   return (
     <div className="header-popup">
@@ -65,7 +74,10 @@ const NotificationsPopup = (props) => {
                 <div className="notification-btn-container">
                   <button
                     onClick={() => {
-                      dispatch(acceptFriendRequest(notification.id));
+                      acceptFriendRequestHandler(
+                        notification.sender,
+                        notification.id
+                      );
                     }}
                     className="link-button mx-05 w-100 bg-gray1"
                   >
@@ -73,7 +85,10 @@ const NotificationsPopup = (props) => {
                   </button>
                   <button
                     onClick={() => {
-                      dispatch(declineFriendRequest(notification.id));
+                      declineFriendRequestHandler(
+                        notification.sender,
+                        notification.id
+                      );
                     }}
                     className="link-button mx-05 w-100 bg-gray1"
                   >

@@ -7,8 +7,6 @@ import ProfileTop from "./ProfileTop";
 
 const ProfileLayout = ({ children }) => {
   const { loading } = useSelector((state) => state.profile);
-  // let { id } = useParams();
-  // console.log(id);
   const location = useLocation();
 
   console.log(location);

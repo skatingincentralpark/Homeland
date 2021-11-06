@@ -99,7 +99,6 @@ const MessengerOverlay = ({ socket }) => {
   useEffect(() => {
     // @@      ADD CURRENT USER
     if (!!socket.current && !!currentId) {
-      console.log("adding user");
       socket.current.emit("addUser", currentId);
       socket.current.on("getUsers", (users) => {
         dispatch(messengerActions.setOnlineUsers(users));

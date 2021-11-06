@@ -43,7 +43,8 @@ export const cancelFriendRequest = (requestId) => async (dispatch) => {
   try {
     await axios.delete(`/api/friend-request/cancel/${requestId}`);
 
-    dispatch(friendRequestActions.removeFriendRequest(requestId));
+    await dispatch(friendRequestActions.removeFriendRequest(requestId));
+    dispatch(loadUser());
   } catch (err) {
     dispatch(
       friendRequestActions.friendRequestError({
@@ -59,8 +60,8 @@ export const acceptFriendRequest = (requestId) => async (dispatch) => {
   try {
     await axios.put(`/api/friend-request/${requestId}`);
 
-    dispatch(friendRequestActions.acceptFriendRequest(requestId));
-    dispatch(notificationActions.removeNotification(requestId));
+    await dispatch(friendRequestActions.acceptFriendRequest(requestId));
+    await dispatch(notificationActions.removeNotification(requestId));
     dispatch(loadUser());
   } catch (err) {
     dispatch(
@@ -77,8 +78,9 @@ export const declineFriendRequest = (requestId) => async (dispatch) => {
   try {
     await axios.delete(`/api/friend-request/decline/${requestId}`);
 
-    dispatch(friendRequestActions.declineFriendRequest(requestId));
-    dispatch(notificationActions.removeNotification(requestId));
+    await dispatch(friendRequestActions.declineFriendRequest(requestId));
+    await dispatch(notificationActions.removeNotification(requestId));
+    dispatch(loadUser());
   } catch (err) {
     dispatch(
       friendRequestActions.friendRequestError({

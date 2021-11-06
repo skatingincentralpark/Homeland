@@ -2,22 +2,49 @@ import React, { useEffect } from "react";
 import Image from "react-graceful-image";
 import { Link, NavLink } from "react-router-dom";
 
-import { useDispatch, useSelector } from "react-redux";
 import {
   sendFriendRequest,
   cancelFriendRequest,
   declineFriendRequest,
   acceptFriendRequest,
 } from "../../store/friendRequest/friendRequest-actions";
+import { useDispatch, useSelector } from "react-redux";
+import { getProfileByIdNoLoading } from "../../store/profile/profile-actions";
 
 const ProfileTop = (props) => {
-  const { match } = props;
+  const { match, socket } = props;
 
   const { profile } = useSelector((state) => state.profile);
   const auth = useSelector((state) => state.auth);
   const friendRequest = useSelector((state) => state.friendRequest);
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getProfileByIdNoLoading(match.params.id));
+  }, [dispatch, auth.user]);
+
+  useEffect(() => {
+    if (!!socket.current) {
+      socket.current.on("getFriendRequests", async () => {
+        dispatch(getProfileByIdNoLoading(match.params.id));
+      });
+    }
+  }, [socket.current]);
+
+  const addFriend = async () => {
+    await dispatch(sendFriendRequest(match.params.id));
+    socket.current.emit("updateFriendRequest", match.params.id);
+  };
+
+  const cancelFriendRequst = async () => {
+    const request = friendRequest.friendRequests.find(
+      (request) => request.receiver === match.params.id
+    );
+    await dispatch(cancelFriendRequest(request._id));
+
+    socket.current.emit("updateFriendRequest", match.params.id);
+  };
 
   return (
     <div className="profile-top">
@@ -27,11 +54,6 @@ const ProfileTop = (props) => {
         auth.user.payload._id === profile.user._id ? (
           <Link to="/edit-user">
             <img src={profile.user.profilepicture} />
-            {/* {profile.user.profilepicture ? (
-              <img src={profile.user.profilepicture} />
-            ) : (
-              <div className="skeleton bigavatar" />
-            )} */}
           </Link>
         ) : (
           <Image src={profile.user.profilepicture} />
@@ -55,12 +77,7 @@ const ProfileTop = (props) => {
               <button
                 disabled={friendRequest.loading}
                 className="link-button addFriend mt-05"
-                onClick={() => {
-                  const request = friendRequest.friendRequests.find(
-                    (request) => request.receiver === match.params.id
-                  );
-                  dispatch(cancelFriendRequest(request._id));
-                }}
+                onClick={cancelFriendRequst}
               >
                 Cancel Request
               </button>
@@ -105,9 +122,7 @@ const ProfileTop = (props) => {
                       friendRequest.loading || !auth.user.payload.profile
                     }
                     className="link-button addFriend mt-05"
-                    onClick={() => {
-                      dispatch(sendFriendRequest(match.params.id));
-                    }}
+                    onClick={addFriend}
                   >
                     Add Friend
                   </button>

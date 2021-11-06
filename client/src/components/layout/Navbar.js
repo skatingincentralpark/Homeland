@@ -202,6 +202,7 @@ const Navbar = ({ socket }) => {
               <NotificationsPopup
                 notification={notification}
                 closeHandler={closeHandler}
+                socket={socket}
               />
             )}
             {toggleMessenger && <MessengerPopup closeHandler={closeHandler} />}

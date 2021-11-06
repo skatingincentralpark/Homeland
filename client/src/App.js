@@ -27,6 +27,7 @@ import MessengerOverlay from "./components/messengerOverlay/MessengerOverlay";
 import { useDispatch, useSelector } from "react-redux";
 import { loadUser } from "./store/auth/auth-actions";
 import { getNotifications } from "./store/notification/notification-actions";
+import { getFriendRequests } from "./store/friendRequest/friendRequest-actions";
 
 // Utils
 import setAuthToken from "./utils/setAuthToken";
@@ -37,7 +38,7 @@ if (localStorage.token) {
   setAuthToken(localStorage.token);
 }
 
-const App = ({ history }) => {
+const App = () => {
   const dispatch = useDispatch();
   const socket = useRef();
   const [socketReady, setSocketReady] = useState(false);
@@ -62,13 +63,24 @@ const App = ({ history }) => {
     dispatch(getNotifications());
   }, [dispatch]);
 
-  // Initialising Socket
+  // @@      INITIALIZING SOCKET
   useEffect(() => {
     if (isAuthenticated) {
       socket.current = io("ws://localhost:8900");
       setSocketReady(true);
     }
   }, [isAuthenticated]);
+
+  // @@      ON GET FRIEND REQUEST
+  useEffect(() => {
+    if (!!socket.current) {
+      socket.current.on("getFriendRequests", async () => {
+        await dispatch(getNotifications());
+        await dispatch(getFriendRequests());
+        dispatch(loadUser());
+      });
+    }
+  }, [socket.current]);
 
   return (
     <Router>
@@ -94,7 +106,12 @@ const App = ({ history }) => {
           />
           <PrivateRoute exact path="/edit-user" component={EditUser} />
           <PrivateRoute exact path="/edit-profile" component={EditProfile} />
-          <PrivateRoute exact path="/profile/:id" component={Profile} />
+          <PrivateRoute
+            exact
+            path="/profile/:id"
+            component={Profile}
+            socket={socket}
+          />
           <PrivateRoute exact path="/profile/:id/friends" component={Friends} />
           <PrivateRoute exact path="/profile/:id/photos" component={Photos} />
           <PrivateRoute

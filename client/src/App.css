@@ -863,6 +863,7 @@ FRIENDS ITEM
 .name-container {
   font-weight: 600;
   display: none;
+  line-height: 1.4rem;
 }
 
 @media only screen and (min-width: 900px) {
