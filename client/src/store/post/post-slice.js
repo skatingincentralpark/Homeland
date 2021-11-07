@@ -29,6 +29,13 @@ function getPost(state, action) {
     loading: false,
   });
 }
+function updatePost(state, action) {
+  const postIndex = state.posts.findIndex(
+    (post) => post._id === action.payload._id
+  );
+
+  state.posts.splice(postIndex, 1, action.payload);
+}
 function addPost(state, action) {
   Object.assign(state, {
     posts: [action.payload, ...state.posts],
@@ -99,6 +106,7 @@ const postSlice = createSlice({
     getPosts,
     getPostsNext,
     getPost,
+    updatePost,
     addPost,
     deletePost,
     postError,

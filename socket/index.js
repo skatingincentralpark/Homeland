@@ -46,6 +46,11 @@ io.on("connection", (socket) => {
     io.emit("removePostUpdate", postId);
   });
 
+  // update posts
+  socket.on("updatePost", (postId) => {
+    io.emit("updatePost", postId);
+  });
+
   // send and get friend request
   socket.on("updateFriendRequest", (receiverdId) => {
     const user = getUser(receiverdId);

@@ -75,6 +75,22 @@ export const getPost = (id) => async (dispatch) => {
   }
 };
 
+// @@   Update a post
+export const updatePost = (id) => async (dispatch) => {
+  try {
+    const res = await axios.get(`/api/posts/${id}`);
+
+    dispatch(postActions.updatePost(res.data));
+  } catch (err) {
+    dispatch(
+      postActions.postError({
+        msg: err.response.statusText,
+        status: err.response.status,
+      })
+    );
+  }
+};
+
 // @@   Get posts (1st batch)
 export const getPosts = () => async (dispatch) => {
   try {
@@ -142,10 +158,13 @@ export const getPostsByUserNext =
   };
 
 // @@   Add like
-export const addLike = (id) => async (dispatch) => {
+export const addLike = (postId, socket) => async (dispatch) => {
   try {
-    const res = await axios.put(`/api/posts/like/${id}`);
-    dispatch(postActions.updateLikes({ id, likes: res.data }));
+    const res = await axios.put(`/api/posts/like/${postId}`);
+    dispatch(postActions.updateLikes({ postId, likes: res.data }));
+
+    // emit socket for all online users
+    socket.current.emit("updatePost", postId);
   } catch (err) {
     dispatch(
       postActions.postError({
@@ -157,10 +176,13 @@ export const addLike = (id) => async (dispatch) => {
 };
 
 // Remove like
-export const removeLike = (id) => async (dispatch) => {
+export const removeLike = (postId, socket) => async (dispatch) => {
   try {
-    const res = await axios.put(`/api/posts/unlike/${id}`);
-    dispatch(postActions.updateLikes({ id, likes: res.data }));
+    const res = await axios.put(`/api/posts/unlike/${postId}`);
+    dispatch(postActions.updateLikes({ postId, likes: res.data }));
+
+    // emit socket for all online users
+    socket.current.emit("updatePost", postId);
   } catch (err) {
     dispatch(
       postActions.postError({
@@ -193,7 +215,7 @@ export const deletePost = (id) => async (dispatch) => {
 };
 
 // Add comment
-export const addComment = (postId, formData) => async (dispatch) => {
+export const addComment = (postId, formData, socket) => async (dispatch) => {
   const config = {
     headers: {
       "Content-Type": "application/json",
@@ -208,6 +230,9 @@ export const addComment = (postId, formData) => async (dispatch) => {
     );
 
     dispatch(postActions.addComment({ comments: res.data, postId }));
+
+    // emit socket for all online users
+    socket.current.emit("updatePost", postId);
 
     dispatch(setAlert("Comment added", "success"));
   } catch (err) {

@@ -40,6 +40,10 @@ const CommentItem = (props) => {
     }
   }, []);
 
+  const deleteCommentHandler = () => {
+    dispatch(deleteComment(props.postId, _id));
+  };
+
   return (
     <div className="comment">
       <div className="post-avatar">
@@ -65,18 +69,14 @@ const CommentItem = (props) => {
             <div className={likesClass}>15 &#128077;</div>
           </div>
           <div className="relative">
-            <button
-              ref={buttonRef}
-              onClick={togglePopupHandler}
-              className="extra-options-btn"
-            >
+            <button onClick={togglePopupHandler} className="extra-options-btn">
               <img src={Ellipsis} alt="" />
             </button>
             {togglePopup && (
-              <div className="post-popup">
+              <div className="post-popup" ref={buttonRef}>
                 <button
                   className="button-to-link"
-                  onClick={(e) => dispatch(deleteComment(props.postId, _id))}
+                  onClick={deleteCommentHandler}
                 >
                   Delete Comment
                 </button>

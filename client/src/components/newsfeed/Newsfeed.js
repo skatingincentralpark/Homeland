@@ -3,7 +3,11 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { Link } from "react-router-dom";
 
 import { useSelector, useDispatch } from "react-redux";
-import { getPosts, getPostsNext } from "../../store/post/post-actions";
+import {
+  getPosts,
+  getPostsNext,
+  updatePost,
+} from "../../store/post/post-actions";
 import { profileActions } from "../../store/profile/profile-slice";
 import { postActions } from "../../store/post/post-slice";
 import { friendRequestActions } from "../../store/friendRequest/friendRequest-slice";
@@ -49,6 +53,21 @@ const Newsfeed = ({ socket }) => {
 
     return () => {
       socket.current.off("removePostUpdate", removePostHandler);
+    };
+  }, [socket.current]);
+
+  // @@      ON UPDATE POST
+  useEffect(() => {
+    const updatePostHandler = async (postId) => {
+      dispatch(updatePost(postId));
+    };
+
+    if (!!socket.current) {
+      socket.current.on("updatePost", updatePostHandler);
+    }
+
+    return () => {
+      socket.current.off("updatePost", updatePostHandler);
     };
   }, [socket.current]);
 

@@ -6,14 +6,14 @@ import { addComment } from "../../store/post/post-actions";
 
 import TextArea from "../layout/TextArea";
 
-const NewCommentForm = ({ postId, profilepicture }) => {
+const NewCommentForm = ({ postId, profilepicture, socket }) => {
   const [text, setText] = useState("");
   const dispatch = useDispatch();
 
   const onSubmit = (e) => {
     e.preventDefault();
     const formData = nl2br(text);
-    dispatch(addComment(postId, formData));
+    dispatch(addComment(postId, formData, socket));
     setText("");
   };
 

@@ -10,7 +10,12 @@ import Comments from "./Comments";
 import Ellipsis from "../../static/svg/ellipsis.svg";
 
 import { useSelector, useDispatch } from "react-redux";
-import { addLike, deletePost, removeLike } from "../../store/post/post-actions";
+import {
+  addLike,
+  deletePost,
+  removeLike,
+  updatePost,
+} from "../../store/post/post-actions";
 
 import SkeletonImage from "../skeleton/SkeletonImage";
 
@@ -46,12 +51,18 @@ const PostItem = (props) => {
     setTogglePopup((prev) => !prev);
   };
 
+  useEffect(() => {
+    if (toggleComments) {
+      dispatch(updatePost(_id));
+    }
+  }, [toggleComments, dispatch]);
+
   const addLikeHandler = () => {
-    dispatch(addLike(_id));
+    dispatch(addLike(_id, socket));
     setUserLiked(true);
   };
   const removeLikeHandler = () => {
-    dispatch(removeLike(_id));
+    dispatch(removeLike(_id, socket));
     setUserLiked(false);
   };
 
@@ -184,6 +195,7 @@ const PostItem = (props) => {
             <NewCommentForm
               postId={_id}
               profilepicture={auth.user.payload.profilepicture}
+              socket={socket}
             />
             <Comments comments={comments} postId={_id} />
           </>
