@@ -8,7 +8,7 @@ import setAuthToken from "../../utils/setAuthToken";
 
 // Add post
 export const addPost =
-  ({ text, postImage }) =>
+  ({ text, postImage, socket }) =>
   async (dispatch) => {
     dispatch(uiActions.loadingTrue());
     try {
@@ -41,6 +41,9 @@ export const addPost =
       const res = await axios.post("/api/posts", body, config);
 
       dispatch(postActions.addPost(res.data));
+
+      // emit socket for all online users
+      socket.current.emit("createPost", res.data);
 
       dispatch(setAlert("Post created", "success"));
       dispatch(uiActions.loadingFalse());

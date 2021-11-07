@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import Moment from "react-moment";
 import Linkify from "react-linkify";
@@ -31,6 +31,8 @@ const PostItem = (props) => {
     comments,
     date,
   } = props.post;
+
+  const { socket } = props;
 
   const [userLiked, setUserLiked] = useState(false);
   const [toggleComments, setToggleComments] = useState(false);
@@ -87,6 +89,11 @@ const PostItem = (props) => {
     }
   }, [text]);
 
+  const deletePostHandler = () => {
+    dispatch(deletePost(_id));
+    socket.current.emit("removePost", _id);
+  };
+
   return (
     <div className="post">
       {/* Post Header */}
@@ -118,10 +125,7 @@ const PostItem = (props) => {
               </button>
             )}
             {togglePopup && (
-              <div
-                onClick={(e) => dispatch(deletePost(_id))}
-                className="post-popup"
-              >
+              <div onClick={deletePostHandler} className="post-popup">
                 <button className="button-to-link">Delete Post</button>
               </div>
             )}

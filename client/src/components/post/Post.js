@@ -8,7 +8,7 @@ import { profileActions } from "../../store/profile/profile-slice";
 
 import SkeletonPostItem from "../skeleton/SkeletonPostItem";
 
-const Post = ({ computedMatch: match }) => {
+const Post = ({ computedMatch: match, socket }) => {
   const dispatch = useDispatch();
 
   const { post, loading } = useSelector((state) => state.post);
@@ -26,7 +26,7 @@ const Post = ({ computedMatch: match }) => {
       {loading || post === null ? (
         <SkeletonPostItem />
       ) : (
-        <PostItem post={post} />
+        <PostItem post={post} socket={socket} />
       )}
     </main>
   );

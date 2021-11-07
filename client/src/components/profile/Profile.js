@@ -79,6 +79,42 @@ const Profile = (props) => {
     }
   }
 
+  // @@      ON GET NEW POST
+  //         If user is on the post author's profile when received, then update posts
+  useEffect(() => {
+    const addPostHandler = async (post) => {
+      if (
+        post.user === match.params.id &&
+        auth.user.payload._id !== match.params.id
+      ) {
+        dispatch(postActions.addPost(post));
+      }
+    };
+
+    if (!!socket.current) {
+      socket.current.on("getPosts", addPostHandler);
+    }
+
+    return () => {
+      socket.current.off("getPosts", addPostHandler);
+    };
+  }, [socket.current]);
+
+  // @@      ON REMOVE POST
+  useEffect(() => {
+    const removePostHandler = async (postId) => {
+      dispatch(postActions.deletePost(postId));
+    };
+
+    if (!!socket.current) {
+      socket.current.on("removePostUpdate", removePostHandler);
+    }
+
+    return () => {
+      socket.current.off("removePostUpdate", removePostHandler);
+    };
+  }, [socket.current]);
+
   if (loading)
     return (
       <main className="profile pt-5 mx-1">
@@ -200,7 +236,10 @@ const Profile = (props) => {
               )}
             </div>
             <div className="profile-right">
-              <NewPostForm profilepicture={profile.user.profilepicture} />
+              <NewPostForm
+                profilepicture={profile.user.profilepicture}
+                socket={socket}
+              />
               <InfiniteScroll
                 dataLength={posts.length} //This is important field to render the next data
                 next={getNextBatch}
@@ -210,7 +249,7 @@ const Profile = (props) => {
                 endMessage={<p></p>}
               >
                 {posts.map((post) => (
-                  <PostItem key={post._id} post={post} />
+                  <PostItem key={post._id} post={post} socket={socket} />
                 ))}
               </InfiniteScroll>
               {posts.length === 0 && (

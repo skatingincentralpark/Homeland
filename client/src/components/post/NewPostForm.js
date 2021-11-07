@@ -10,6 +10,7 @@ import TextArea from "../layout/TextArea";
 
 const NewPostForm = (props) => {
   const dispatch = useDispatch();
+  const { socket } = props;
 
   const { loading } = useSelector((state) => state.ui);
 
@@ -19,7 +20,7 @@ const NewPostForm = (props) => {
   const onSubmit = (e) => {
     e.preventDefault();
     const convertText = nl2br(text);
-    dispatch(addPost({ text: convertText, postImage: postImage }));
+    dispatch(addPost({ text: convertText, postImage: postImage, socket }));
     setText("");
     setPostImage("");
   };

@@ -97,7 +97,12 @@ const App = () => {
           <Route exact path="/" component={Landing} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/register" component={Register} />
-          <PrivateRoute exact path="/newsfeed" component={Newsfeed} />
+          <PrivateRoute
+            exact
+            path="/newsfeed"
+            component={Newsfeed}
+            socket={socket}
+          />
           <PrivateRoute exact path="/newsfeed/:id" component={Post} />
           <PrivateRoute
             exact

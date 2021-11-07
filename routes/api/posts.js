@@ -60,7 +60,7 @@ router.post("/", [auth], async (req, res) => {
 // @access  Private
 router.get("/", auth, async (req, res) => {
   try {
-    const posts = await Post.find().limit(3).sort({ date: -1 });
+    const posts = await Post.find().limit(6).sort({ date: -1 });
     res.json(posts);
   } catch (err) {
     console.error(err.message);

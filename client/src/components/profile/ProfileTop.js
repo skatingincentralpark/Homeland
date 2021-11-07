@@ -24,14 +24,6 @@ const ProfileTop = (props) => {
     dispatch(getProfileByIdNoLoading(match.params.id));
   }, [dispatch, auth.user]);
 
-  useEffect(() => {
-    if (!!socket.current) {
-      socket.current.on("getFriendRequests", async () => {
-        dispatch(getProfileByIdNoLoading(match.params.id));
-      });
-    }
-  }, [socket.current]);
-
   const addFriend = async () => {
     await dispatch(sendFriendRequest(match.params.id));
     socket.current.emit("updateFriendRequest", match.params.id);
@@ -43,7 +35,7 @@ const ProfileTop = (props) => {
     );
     await dispatch(cancelFriendRequest(request._id));
 
-    socket.current.emit("updateFriendRequest", match.params.id);
+    socket.current?.emit("updateFriendRequest", match.params.id);
   };
 
   return (
@@ -93,22 +85,30 @@ const ProfileTop = (props) => {
                     <span>Respond to their friend request</span>
                     <div>
                       <button
-                        onClick={() => {
+                        onClick={async () => {
                           const request = friendRequest.friendRequests.find(
                             (request) => request.sender === match.params.id
                           );
-                          dispatch(acceptFriendRequest(request._id));
+                          await dispatch(acceptFriendRequest(request._id));
+                          socket.current.emit(
+                            "updateFriendRequest",
+                            request.sender
+                          );
                         }}
                         className="link-button acceptDecline bg-white"
                       >
                         Confirm
                       </button>
                       <button
-                        onClick={() => {
+                        onClick={async () => {
                           const request = friendRequest.friendRequests.find(
                             (request) => request.sender === match.params.id
                           );
-                          dispatch(declineFriendRequest(request._id));
+                          await dispatch(declineFriendRequest(request._id));
+                          socket.current.emit(
+                            "updateFriendRequest",
+                            request.sender
+                          );
                         }}
                         className="link-button acceptDecline bg-white"
                       >

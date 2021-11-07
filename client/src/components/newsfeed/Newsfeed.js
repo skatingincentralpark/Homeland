@@ -12,13 +12,45 @@ import PostItem from "../post/PostItem";
 import NewPostForm from "../post/NewPostForm";
 import SkeletonPostItem from "../skeleton/SkeletonPostItem";
 
-const Newsfeed = () => {
+const Newsfeed = ({ socket }) => {
   const [profileExists, setProfileExists] = useState(true);
 
   const { posts, loading } = useSelector((state) => state.post);
   const auth = useSelector((state) => state.auth);
   const ui = useSelector((state) => state.ui);
   const dispatch = useDispatch();
+
+  // @@      ON GET NEW POST
+  useEffect(() => {
+    const addPostHandler = async (post) => {
+      if (post.user !== auth.user.payload._id) {
+        dispatch(postActions.addPost(post));
+      }
+    };
+
+    if (!!socket.current) {
+      socket.current.on("getPosts", addPostHandler);
+    }
+
+    return () => {
+      socket.current.off("getPosts", addPostHandler);
+    };
+  }, [socket.current]);
+
+  // @@      ON REMOVE POST
+  useEffect(() => {
+    const removePostHandler = async (postId) => {
+      dispatch(postActions.deletePost(postId));
+    };
+
+    if (!!socket.current) {
+      socket.current.on("removePostUpdate", removePostHandler);
+    }
+
+    return () => {
+      socket.current.off("removePostUpdate", removePostHandler);
+    };
+  }, [socket.current]);
 
   useEffect(() => {
     dispatch(getPosts());
@@ -62,7 +94,10 @@ const Newsfeed = () => {
       )}
       {/* Text Input */}
       {auth.user && (
-        <NewPostForm profilepicture={auth.user.payload.profilepicture} />
+        <NewPostForm
+          profilepicture={auth.user.payload.profilepicture}
+          socket={socket}
+        />
       )}
       {/* Posts */}
       {loading ? (
@@ -81,7 +116,7 @@ const Newsfeed = () => {
           endMessage={<p></p>}
         >
           {posts.map((post) => (
-            <PostItem key={post._id} post={post} />
+            <PostItem key={post._id} post={post} socket={socket} />
           ))}
         </InfiniteScroll>
       )}
