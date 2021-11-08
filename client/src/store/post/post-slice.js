@@ -55,9 +55,13 @@ function postError(state, action) {
   });
 }
 function updateLikes(state, action) {
+  if (state.post?._id === action.payload.postId) {
+    state.post.likes = action.payload.likes;
+  }
+
   Object.assign(state, {
     posts: state.posts.map((post) =>
-      post._id === action.payload.id
+      post._id === action.payload.postId
         ? { ...post, likes: action.payload.likes }
         : post
     ),
@@ -65,6 +69,10 @@ function updateLikes(state, action) {
   });
 }
 function addComment(state, action) {
+  if (state.post?._id === action.payload.postId) {
+    state.post.comments = action.payload.comments;
+  }
+
   Object.assign(state, {
     posts: state.posts.map((post) =>
       post._id === action.payload.postId
@@ -75,6 +83,10 @@ function addComment(state, action) {
   });
 }
 function removeComment(state, action) {
+  if (state.post?._id === action.payload.postId) {
+    state.post.comments = action.payload.comments;
+  }
+
   Object.assign(state, {
     posts: state.posts.map((post) =>
       post._id === action.payload.postId

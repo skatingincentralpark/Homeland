@@ -9,8 +9,6 @@ const ProfileLayout = ({ children }) => {
   const { loading } = useSelector((state) => state.profile);
   const location = useLocation();
 
-  console.log(location);
-
   return (
     <>
       {!loading && <ProfileTop />}

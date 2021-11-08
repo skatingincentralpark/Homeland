@@ -64,6 +64,7 @@ export const getPost = (id) => async (dispatch) => {
   try {
     const res = await axios.get(`/api/posts/${id}`);
 
+    dispatch(postActions.clearPost());
     dispatch(postActions.getPost(res.data));
   } catch (err) {
     dispatch(
@@ -236,10 +237,10 @@ export const addComment = (postId, formData, socket) => async (dispatch) => {
 
     dispatch(setAlert("Comment added", "success"));
   } catch (err) {
+    console.log(err);
     dispatch(
       postActions.postError({
-        msg: err.response.statusText,
-        status: err.response.status,
+        msg: err.response,
       })
     );
   }

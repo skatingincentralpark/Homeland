@@ -109,8 +109,6 @@ export const createProfile =
       dispatch(uiActions.loadingFalse());
     } catch (err) {
       dispatch(uiActions.loadingFalse());
-      // If error, dispatch an alert for every error in the array
-      console.log(err);
 
       dispatch(setAlert(err, "danger"));
 

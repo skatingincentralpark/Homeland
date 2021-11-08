@@ -27,8 +27,9 @@ const NewCommentForm = ({ postId, profilepicture, socket }) => {
           setText={setText}
           value={text}
           placeholder="Create a comment..."
+          onSubmit={onSubmit}
+          buttonText="Submit"
         />
-        <button className="link-button text-form">Post</button>
       </form>
     </div>
   );

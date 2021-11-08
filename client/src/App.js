@@ -103,7 +103,12 @@ const App = () => {
             component={Newsfeed}
             socket={socket}
           />
-          <PrivateRoute exact path="/newsfeed/:id" component={Post} />
+          <PrivateRoute
+            exact
+            path="/newsfeed/:id"
+            component={Post}
+            socket={socket}
+          />
           <PrivateRoute
             exact
             path="/create-profile"
