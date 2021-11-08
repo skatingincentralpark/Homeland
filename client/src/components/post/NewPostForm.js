@@ -33,10 +33,12 @@ const NewPostForm = (props) => {
             <Image src={props.profilepicture} />
           </div>
           <form>
-            <TextArea setText={setText} value={text} />
-            <button onClick={onSubmit} className="link-button text-form">
-              Post
-            </button>
+            <TextArea
+              setText={setText}
+              value={text}
+              buttonText="Post"
+              onSubmit={onSubmit}
+            />
           </form>
         </div>
         <hr />

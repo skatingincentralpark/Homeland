@@ -566,7 +566,7 @@ MESSENGER POPUP
   background: linear-gradient(
     90deg,
     rgba(139, 139, 139, 0) 0%,
-    rgba(255, 255, 255, 1) 35%
+    rgba(255, 255, 255, 1) 15%
   );
   right: 0em;
   position: absolute;
@@ -588,9 +588,6 @@ MESSENGER POPUP
 /*------------------------------------------------------
 POST-CONTENT
 ------------------------------------------------------*/
-.post-content {
-  padding-bottom: 1em;
-}
 .post-content a {
   color: blue;
   text-decoration: underline;
@@ -600,37 +597,29 @@ POST-CONTENT
 }
 .post-content-likes {
   color: gray;
-}
-.post-content-interactions-container {
-  padding: 1em 1em 0 1em;
-}
-.post-content-interactions-container button {
   background-color: white;
   border: none;
   padding: 0 0 0.25em 0;
 }
-.post-content-interactions-container button:hover {
+.post-content-likes:hover {
   cursor: pointer;
 }
+.post-content-interactions-container {
+  padding: 1em 1em 0 1em;
+}
 .post-content-interactions {
-  margin: 1em 0 0 0;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  border-radius: 0.5rem;
+  display: flex;
+  gap: 1em;
+  padding: 0.5em 0;
+  border-top: 1px solid var(--gray2);
+}
+.post-content-interactions.showComments {
+  border-bottom: 1px solid var(--gray2);
 }
 .post-content-interactions button {
-  background-color: var(--gray1);
-  border: 1px solid rgb(220, 220, 220);
-  color: rgb(100, 100, 100);
-  padding: 0.4em;
-  font-weight: 600;
-  margin: 0;
-}
-.post-content-interactions button:hover {
-  filter: brightness(0.95);
-}
-.post-content-interactions button:active {
-  filter: brightness(0.85);
+  width: 50%;
+  color: gray;
+  border-radius: 0.5rem;
 }
 /*------------------------------------------------------
 POST-FOOTER
@@ -887,6 +876,26 @@ ALL FRIENDS
 }
 
 /*------------------------------------------------------
+PHOTOS
+------------------------------------------------------*/
+.profile-photos-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1em;
+}
+.profile-photos-container img {
+  width: 100%;
+  border-radius: 1em;
+}
+
+@media only screen and (min-width: 900px) {
+  .profile-photos-container {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 0.5em;
+  }
+}
+
+/*------------------------------------------------------
 HEADER
 ------------------------------------------------------*/
 header {
@@ -918,7 +927,11 @@ header {
   height: 100%;
 }
 .header-logo img:hover {
-  filter: opacity(0.7);
+  filter: opacity(0.8);
+}
+.header-logo img:active {
+  /* filter: opacity(0.7); */
+  filter: invert(1);
 }
 .header-right button {
   background-color: rgba(0, 0, 0, 0);
@@ -1341,6 +1354,9 @@ SPACING
 /* text */
 .text-center {
   text-align: center;
+}
+.line-break-anywhere {
+  line-break: anywhere;
 }
 /* z-index */
 .z-99 {

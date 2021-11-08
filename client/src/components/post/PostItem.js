@@ -105,6 +105,10 @@ const PostItem = (props) => {
     socket.current.emit("removePost", _id);
   };
 
+  const postContentInteractionsClasses = toggleComments
+    ? "post-content-interactions showComments"
+    : "post-content-interactions";
+
   return (
     <div className="post">
       {/* Post Header */}
@@ -145,7 +149,7 @@ const PostItem = (props) => {
       </div>
       {/* Post Content */}
       <div className="post-content">
-        <div className="px-1 pt-1">
+        <div className="px-1 pt-1 line-break-anywhere">
           {text.map((txt, i) =>
             txt.type === "br" ? (
               <br key={i} />
@@ -173,18 +177,28 @@ const PostItem = (props) => {
               &#128077; {likes.length} {likes.length === 1 ? "Like" : "Likes"}
             </button>
           )}
-          <div className="post-content-interactions">
+          <div className={postContentInteractionsClasses}>
             {!userLiked ? (
-              <button onClick={addLikeHandler} className="btn-like">
+              <button
+                onClick={addLikeHandler}
+                className="link-button inline bg-white"
+              >
                 Like
               </button>
             ) : (
-              <button onClick={removeLikeHandler} className="btn-like">
+              <button
+                onClick={removeLikeHandler}
+                className="link-button inline bg-white"
+              >
                 Unlike
               </button>
             )}
-            <button onClick={toggleCommentsHandler}>Comment</button>
-            <button className="btn-share">Share</button>
+            <button
+              className="link-button inline bg-white"
+              onClick={toggleCommentsHandler}
+            >
+              Comment
+            </button>
           </div>
         </div>
       </div>

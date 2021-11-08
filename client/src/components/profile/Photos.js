@@ -39,25 +39,26 @@ const Friends = (props) => {
             match={match}
             friendRequest={friendRequest}
           />
-
-          <div className="profile-item-container m-auto maxw-70">
-            <div className="profile-item-container-inner p-2">
-              <div className="profile-item-header pb-1-5">
-                <span className="item-header-title">Photos</span>
-              </div>
-              {!photos.length && (
-                <span className="gray grayscale">
-                  Currently empty &#128561;
-                </span>
-              )}
-              <div className="grid-6">
-                {photos.map((photoPost) => (
-                  <div key={photoPost._id}>
-                    <Link to={`/newsfeed/${photoPost._id}`}>
-                      <Image src={photoPost.image} />
-                    </Link>
-                  </div>
-                ))}
+          <div className="px-1">
+            <div className="profile-item-container m-auto maxw-70">
+              <div className="profile-item-container-inner p-2">
+                <div className="profile-item-header pb-1-5">
+                  <span className="item-header-title">Photos</span>
+                </div>
+                {!photos.length && (
+                  <span className="gray grayscale">
+                    Currently empty &#128561;
+                  </span>
+                )}
+                <div className="profile-photos-container">
+                  {photos.map((photoPost) => (
+                    <div key={photoPost._id}>
+                      <Link to={`/newsfeed/${photoPost._id}`}>
+                        <Image src={photoPost.image} />
+                      </Link>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>

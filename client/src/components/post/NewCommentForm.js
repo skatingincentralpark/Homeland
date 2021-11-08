@@ -18,7 +18,7 @@ const NewCommentForm = ({ postId, profilepicture, socket }) => {
   };
 
   return (
-    <div className="text-input text-input-top pt-0">
+    <div className="text-input text-input-top">
       <div className="post-avatar">
         <img src={profilepicture} alt="user avatar" />
       </div>

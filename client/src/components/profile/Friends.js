@@ -41,20 +41,22 @@ const Friends = (props) => {
             match={match}
             friendRequest={friendRequest}
           />
-          <div className="profile-item-container m-auto maxw-70">
-            <div className="profile-item-container-inner p-2">
-              <div className="profile-item-header pb-1-5">
-                <span className="item-header-title">Friends</span>
-              </div>
-              {!loading && !profile.user.friends.length && (
-                <span className="gray grayscale mt-05 block">
-                  Currently empty &#128539;
-                </span>
-              )}
-              <div className="profile-friends grid-6">
-                {profile.user.friends.map((friend) => (
-                  <FriendItem key={friend._id} friend={friend} />
-                ))}
+          <div className="px-1">
+            <div className="profile-item-container m-auto maxw-70">
+              <div className="profile-item-container-inner p-2">
+                <div className="profile-item-header pb-1-5">
+                  <span className="item-header-title">Friends</span>
+                </div>
+                {!loading && !profile.user.friends.length && (
+                  <span className="gray grayscale mt-05 block">
+                    Currently empty &#128539;
+                  </span>
+                )}
+                <div className="profile-friends profile-photos-container">
+                  {profile.user.friends.map((friend) => (
+                    <FriendItem key={friend._id} friend={friend} />
+                  ))}
+                </div>
               </div>
             </div>
           </div>
