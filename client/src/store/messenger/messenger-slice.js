@@ -112,10 +112,10 @@ function updateConversations(state, action) {
 
   Object.assign(state, {
     conversations: [
+      updatedConv,
       ...state.conversations.filter(
         (conv) => conv._id !== action.payload.conversationId
       ),
-      updatedConv,
     ],
     loading: false,
   });

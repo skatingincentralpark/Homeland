@@ -79,7 +79,7 @@ body {
   --font1: 1.8rem;
   --font2: 1.4rem;
 
-  --border-radius: 1.25em;
+  --border-radius: 8px;
 }
 
 *,
@@ -148,7 +148,7 @@ a:hover {
 h1 {
   font-size: 2.4rem;
   line-height: 2.7rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
 h2 {
   font-size: 1.8rem;
@@ -216,7 +216,7 @@ TEXT INPUT
   padding: calc(0.5em + 1.5px) 1.25em;
 }
 .textarea {
-  border-radius: 1.25em;
+  border-radius: var(--border-radius);
   padding: 0.6em 1em;
 }
 .text-input textarea {
@@ -314,7 +314,7 @@ textarea {
   font-family: Helvetica, sans-serif;
   border-radius: var(--border-radius);
   outline: none;
-  border: 1px solid #ccc;
+  border: 1px solid rgb(230, 230, 230);
   resize: none;
 }
 .form-group input,
@@ -1135,6 +1135,9 @@ REGISTER / LOGIN
     padding: 2em;
     height: auto;
   }
+  .registerlogin.smaller {
+    max-width: 40em;
+  }
   .register {
     display: grid;
     grid-template-columns: repeat(1, 3fr 5fr);
@@ -1161,6 +1164,7 @@ EDIT USER FORM
 }
 .edit-user .registerlogin-right {
   width: 100%;
+  padding-bottom: 2rem;
 }
 @media only screen and (min-width: 900px) {
   .edit-user {
@@ -1177,6 +1181,7 @@ EDIT USER FORM
   }
   .edit-user .registerlogin-right {
     width: 100%;
+    padding: 0;
   }
 }
 

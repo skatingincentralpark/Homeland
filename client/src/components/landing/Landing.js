@@ -4,12 +4,14 @@ import { Link, Redirect } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const Landing = () => {
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const { isAuthenticated, loading } = useSelector((state) => state.auth);
 
   // Redirect if authenticated
   if (isAuthenticated) {
     return <Redirect to="/newsfeed" />;
   }
+
+  if (loading) return <></>;
 
   return (
     <main className="registerlogin-container">

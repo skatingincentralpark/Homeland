@@ -29,7 +29,9 @@ router.get("/:userId", auth, async (req, res) => {
   try {
     const conversations = await Conversation.find({
       members: { $in: [req.params.userId] },
-    }).populate("members", ["name", "profilepicture", "friends"]);
+    })
+      .populate("members", ["name", "profilepicture", "friends"])
+      .sort({ updatedAt: -1 });
 
     res.status(200).json(conversations);
   } catch (err) {

@@ -7,6 +7,8 @@ import {
   getCurrentProfile,
 } from "../../store/profile/profile-actions";
 
+import Hourglass from "../layout/Hourglass";
+
 const initialState = {
   highschool: "",
   college: "",
@@ -62,12 +64,17 @@ const EditProfile = ({ history }) => {
     return <Redirect to="/create-profile" />;
   }
 
-  if (loading) return <h1 className="p-1 mt-2">Loading...</h1>;
+  if (loading)
+    return (
+      <div className="center">
+        <Hourglass />
+      </div>
+    );
 
   return (
     <main className="registerlogin-container">
       {profile && !loading && (
-        <div className="registerlogin maxw-40">
+        <div className="registerlogin smaller">
           <div>
             <h1 className="large text-primary">Edit Your Profile</h1>
             <p className="lead mb-2">

@@ -59,7 +59,7 @@ const CreateProfile = () => {
 
   return (
     <main className="registerlogin-container">
-      <div className="registerlogin maxw-40">
+      <div className="registerlogin smaller">
         <div>
           <h1 className="large text-primary">Create Your Profile</h1>
           <p className="lead mb-2">
