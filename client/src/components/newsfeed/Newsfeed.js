@@ -8,8 +8,9 @@ import {
   getPostsNext,
   updatePost,
 } from "../../store/post/post-actions";
-import { profileActions } from "../../store/profile/profile-slice";
 import { postActions } from "../../store/post/post-slice";
+import { profileActions } from "../../store/profile/profile-slice";
+import { getNotifications } from "../../store/notification/notification-actions";
 import { friendRequestActions } from "../../store/friendRequest/friendRequest-slice";
 
 import PostItem from "../post/PostItem";
@@ -60,6 +61,7 @@ const Newsfeed = ({ socket }) => {
   useEffect(() => {
     const updatePostHandler = async (postId) => {
       dispatch(updatePost(postId));
+      dispatch(getNotifications());
     };
 
     if (!!socket.current) {

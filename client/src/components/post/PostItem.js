@@ -59,7 +59,6 @@ const PostItem = (props) => {
 
   const addLikeHandler = () => {
     dispatch(addLike(_id, socket));
-    console.log(_id);
     setUserLiked(true);
   };
   const removeLikeHandler = () => {

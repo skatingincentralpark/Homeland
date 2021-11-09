@@ -599,7 +599,7 @@ POST-CONTENT
   color: gray;
   background-color: white;
   border: none;
-  padding: 0 0 0.25em 0;
+  padding: 0 0 0.5em 0;
 }
 .post-content-likes:hover {
   cursor: pointer;

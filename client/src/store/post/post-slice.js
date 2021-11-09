@@ -30,6 +30,10 @@ function getPost(state, action) {
   });
 }
 function updatePost(state, action) {
+  if (state.post?._id === action.payload._id) {
+    state.post = action.payload;
+  }
+
   const postIndex = state.posts.findIndex(
     (post) => post._id === action.payload._id
   );
