@@ -158,10 +158,8 @@ const Messenger = ({ socket }) => {
                     placeholder="Write something..."
                     setText={setText}
                     value={text}
+                    buttonText="Send"
                   />
-                  <button onClick={onSubmit} className="link-button text-form">
-                    Post
-                  </button>
                 </div>
               </>
             ) : (

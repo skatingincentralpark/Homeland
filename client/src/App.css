@@ -565,7 +565,7 @@ MESSENGER POPUP
 .latestMessageFadeOut {
   background: linear-gradient(
     90deg,
-    rgba(139, 139, 139, 0) 0%,
+    rgba(255, 255, 255, 0) 0%,
     rgba(255, 255, 255, 1) 15%
   );
   right: 0em;

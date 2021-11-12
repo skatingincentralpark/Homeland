@@ -147,7 +147,7 @@ const EditProfile = ({ history }) => {
                   placeholder="A short bio of yourself"
                   name="bio"
                   maxLength="300"
-                  rows="1"
+                  rows="4"
                 ></textarea>
               </div>
               <button className="link-button w-100 mb-1 invert">Submit</button>
