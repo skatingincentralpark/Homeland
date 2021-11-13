@@ -39,6 +39,16 @@ function getUnreadCount(state, action) {
     unreadCount: action.payload,
   });
 }
+function hasMoreMessages(state, action) {
+  Object.assign(state, {
+    hasMore: true,
+  });
+}
+function hasNoMoreMessages(state, action) {
+  Object.assign(state, {
+    hasMore: false,
+  });
+}
 function getConversation(state, action) {
   const convIndex = state.conversations.findIndex(
     (conv) => conv._id == action.payload.conversationId
@@ -196,6 +206,8 @@ const messengerSlice = createSlice({
     messengerLoading,
     showWindow,
     hideWindow,
+    hasMoreMessages,
+    hasNoMoreMessages,
     updateConversations,
     updateConversationsUnread,
     sendMessage,

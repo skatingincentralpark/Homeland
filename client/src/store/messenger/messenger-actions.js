@@ -20,10 +20,15 @@ export const getConversations = (userId) => async (dispatch) => {
 
 export const getConversation = (conversationId) => async (dispatch) => {
   dispatch(uiActions.loadingTrue());
+  dispatch(messengerActions.hasMoreMessages());
   try {
     const res = await axios.get(`/api/messages/${conversationId}`);
 
     const { messages, conversation } = res.data;
+
+    if (!messages.length) {
+      dispatch(messengerActions.hasNoMoreMessages());
+    }
 
     dispatch(
       messengerActions.getConversation({

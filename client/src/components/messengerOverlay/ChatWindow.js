@@ -16,6 +16,7 @@ import SkeletonText from "../skeleton/SkeletonText";
 
 const ChatWindow = ({ socket }) => {
   const dispatch = useDispatch();
+  const ui = useSelector((state) => state.ui);
   const auth = useSelector((state) => state.auth);
   const messenger = useSelector((state) => state.messenger);
   const scrollRef = useRef();
@@ -36,14 +37,10 @@ const ChatWindow = ({ socket }) => {
   useEffect(() => {
     if (!messenger.loading && recipient) {
       const arr = messenger.onlineUsers.map((user) => user.userId);
-      console.log(arr);
-      console.log(recipient._id);
       if (arr.find((id) => recipient._id === id)) {
         setIsOnline(true);
-        console.log(isOnline);
       } else {
         setIsOnline(false);
-        console.log(isOnline);
       }
     }
   }, [messenger.onlineUsers, messenger.loading, recipient]);
@@ -109,17 +106,20 @@ const ChatWindow = ({ socket }) => {
 
               <div className="post-information">
                 <span className="post-author">
-                  {recipient?.name || (
-                    <SkeletonText
-                      height="125"
-                      width="8"
-                      color="bg-gray"
-                      wrapperClasses="mb-05"
-                    />
-                  )}
+                  {!recipient?.name ||
+                    (ui.loading ? (
+                      <SkeletonText
+                        height="125"
+                        width="8"
+                        color="bg-gray"
+                        wrapperClasses="mb-05"
+                      />
+                    ) : (
+                      recipient.name
+                    ))}
                 </span>
                 <span className="post-date p-0">
-                  {recipient?.name ? (
+                  {!ui.loading ? (
                     isOnline ? (
                       "Online"
                     ) : (
@@ -133,7 +133,6 @@ const ChatWindow = ({ socket }) => {
             </div>
 
             <div className="chatWindowControls">
-              {/* <button>&#8212;</button> */}
               <button
                 onClick={() => {
                   dispatch(messengerActions.hideWindow());
@@ -154,7 +153,7 @@ const ChatWindow = ({ socket }) => {
             flexDirection: "column-reverse",
           }}
         >
-          {messenger.conversation && !messenger.loading && (
+          {messenger.conversation && !messenger.loading && !ui.loading && (
             <InfiniteScroll
               dataLength={messenger.messages.length} //This is important field to render the next data
               next={getNextBatchMsgsHandler}

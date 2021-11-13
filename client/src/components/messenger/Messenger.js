@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
+import Div100vh from "react-div-100vh";
 
 import {
   getConversation,
@@ -79,7 +80,7 @@ const Messenger = ({ socket }) => {
   };
 
   return (
-    <>
+    <Div100vh>
       <div className="messenger">
         <div className="chatMenu">
           <div className="p-1 item-header-title messenger-mob-display-none">
@@ -168,7 +169,7 @@ const Messenger = ({ socket }) => {
           </div>
         </div>
       </div>
-    </>
+    </Div100vh>
   );
 };
 

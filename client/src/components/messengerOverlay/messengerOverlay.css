@@ -1,15 +1,16 @@
 .messenger-overlay {
 }
 .chatWindow {
-  z-index: 99;
+  z-index: 96;
   position: fixed;
   bottom: 0;
-  right: 1em;
+  right: 0;
   background: white;
   border: 1px solid lightgray;
   overflow: auto;
   border-radius: 1em 1em 0 0;
-  max-width: 27rem;
+  max-width: 100%;
+  width: 100%;
 }
 .chatWindowHeader {
   border-bottom: 1px solid lightgray;
@@ -42,4 +43,18 @@
 }
 .chatWindowControls button:active {
   filter: brightness(0.95);
+}
+
+@media only screen and (min-width: 496px) {
+  .chatWindow {
+    z-index: 96;
+    position: fixed;
+    bottom: 0;
+    right: 1em;
+    background: white;
+    border: 1px solid lightgray;
+    overflow: auto;
+    border-radius: 1em 1em 0 0;
+    max-width: 27rem;
+  }
 }
