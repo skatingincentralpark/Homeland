@@ -37,20 +37,12 @@ const Login = () => {
 
   return (
     <>
-      {/* <header>
-        <div className="header-inner">
-          <div />
-          <div className="header-logo">
-            <Link to="/">
-              <img src={Logo} alt="logo" className="svg" />
-            </Link>
-          </div>
-        </div>
-      </header> */}
       <main className="registerlogin-container">
         <div className="registerlogin register">
-          <SkeletonImage2 />
-          <div>
+          <div className="thumbnail-large">
+            <SkeletonImage2 />
+          </div>
+          <div className="registerlogin-right">
             <h1 className="large text-primary">Sign In</h1>
             <p className="lead">To experience Homeland</p>
             <form

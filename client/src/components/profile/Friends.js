@@ -43,7 +43,7 @@ const Friends = (props) => {
           />
           <div className="px-1">
             <div className="profile-item-container m-auto maxw-70">
-              <div className="profile-item-container-inner p-2">
+              <div className="profile-item-container-inner desktop-p-2">
                 <div className="profile-item-header pb-1-5">
                   <span className="item-header-title">Friends</span>
                 </div>
