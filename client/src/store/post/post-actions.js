@@ -25,7 +25,7 @@ export const addPost =
           "https://api.cloudinary.com/v1_1/dkgzyvlpc/image/upload",
           formData
         );
-        console.log(res);
+
         image = res.data.url;
         setAuthToken(token);
       }

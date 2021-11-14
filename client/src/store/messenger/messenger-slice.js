@@ -51,7 +51,7 @@ function hasNoMoreMessages(state, action) {
 }
 function getConversation(state, action) {
   const convIndex = state.conversations.findIndex(
-    (conv) => conv._id == action.payload.conversationId
+    (conv) => conv._id === action.payload.conversationId
   );
 
   state.conversations.splice(convIndex, 1, action.payload.conversation);
@@ -102,7 +102,7 @@ function getNextBatchMsgs(state, action) {
 }
 function receiveMessage(state, action) {
   const updatedConvItem = state.conversations.find(
-    (conv) => conv._id == action.payload.conversationId
+    (conv) => conv._id === action.payload.conversationId
   );
 
   Object.assign(state, {
@@ -113,7 +113,7 @@ function receiveMessage(state, action) {
 }
 function updateConversations(state, action) {
   const updatedConv = state.conversations.find(
-    (conv) => conv._id == action.payload.conversationId
+    (conv) => conv._id === action.payload.conversationId
   );
 
   updatedConv.latestMessage = action.payload.text;
@@ -132,7 +132,7 @@ function updateConversations(state, action) {
 }
 function updateConversationsUnread(state, action) {
   const updatedConv = state.conversations.find(
-    (conv) => conv._id == action.payload.conversationId
+    (conv) => conv._id === action.payload.conversationId
   );
 
   updatedConv.latestMessage = action.payload.text;

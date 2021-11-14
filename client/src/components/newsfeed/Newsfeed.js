@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { Link } from "react-router-dom";
 
@@ -17,7 +17,7 @@ import PostItem from "../post/PostItem";
 import NewPostForm from "../post/NewPostForm";
 import SkeletonPostItem from "../skeleton/SkeletonPostItem";
 
-const Newsfeed = ({ socket }) => {
+const Newsfeed = ({ socket, socketReady }) => {
   const [profileExists, setProfileExists] = useState(true);
 
   const { posts, loading } = useSelector((state) => state.post);
@@ -25,22 +25,33 @@ const Newsfeed = ({ socket }) => {
   const ui = useSelector((state) => state.ui);
   const dispatch = useDispatch();
 
+  let currentId;
+  if (!auth.loading) {
+    currentId = auth.user.payload._id;
+  }
+
   // @@      ON GET NEW POST
-  useEffect(() => {
-    const addPostHandler = async (post) => {
-      if (post.user !== auth.user.payload._id) {
+  const addPostHandler = useCallback(
+    async (post) => {
+      if (currentId !== post.user) {
         dispatch(postActions.addPost(post));
       }
-    };
+    },
+    [currentId, dispatch]
+  );
 
-    if (!!socket.current) {
+  useEffect(() => {
+    let socketCurrent = null;
+
+    if (socketReady) {
       socket.current.on("getPosts", addPostHandler);
+      socketCurrent = socket.current;
     }
 
     return () => {
-      socket.current.off("getPosts", addPostHandler);
+      if (socketReady) socketCurrent.off("getPosts", addPostHandler);
     };
-  }, [socket.current]);
+  }, [socket, dispatch, socketReady, addPostHandler]);
 
   // @@      ON REMOVE POST
   useEffect(() => {
@@ -48,14 +59,17 @@ const Newsfeed = ({ socket }) => {
       dispatch(postActions.deletePost(postId));
     };
 
-    if (!!socket.current) {
+    let socketCurrent = null;
+
+    if (socketReady) {
       socket.current.on("removePostUpdate", removePostHandler);
+      socketCurrent = socket.current;
     }
 
     return () => {
-      socket.current.off("removePostUpdate", removePostHandler);
+      if (socketReady) socketCurrent.off("removePostUpdate", removePostHandler);
     };
-  }, [socket.current]);
+  }, [socket, dispatch, socketReady]);
 
   // @@      ON UPDATE POST
   useEffect(() => {
@@ -64,14 +78,17 @@ const Newsfeed = ({ socket }) => {
       dispatch(getNotifications());
     };
 
-    if (!!socket.current) {
+    let socketCurrent = null;
+
+    if (socketReady) {
+      socketCurrent = socket.current;
       socket.current.on("updatePost", updatePostHandler);
     }
 
     return () => {
-      socket.current.off("updatePost", updatePostHandler);
+      if (socketReady) socketCurrent.off("updatePost", updatePostHandler);
     };
-  }, [socket.current]);
+  }, [socket, dispatch, socketReady]);
 
   useEffect(() => {
     dispatch(getPosts());
@@ -84,7 +101,7 @@ const Newsfeed = ({ socket }) => {
     if (auth.user && !auth.loading && !ui.loading) {
       setProfileExists(auth.user.payload.profile);
     }
-  }, [auth.user]);
+  }, [auth.user, auth.loading, ui.loading]);
 
   // @@     LAZY LOAD
   const getNextBatch = () => {

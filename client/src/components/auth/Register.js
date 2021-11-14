@@ -7,7 +7,6 @@ import { register, logout } from "../../store/auth/auth-actions";
 
 import Camera from "../../static/svg/camera.svg";
 import SkeletonImage2 from "../skeleton/SkeletonImage2";
-import Logo from "../../static/svg/logo.svg";
 
 const Register = () => {
   const [image, setImage] = useState("");

@@ -1,16 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Moment from "react-moment";
 
-const Conversation = ({ conversation, currentUser, onlineUserArr }) => {
-  // const [user, setUser] = useState(null);
-
-  // useEffect(() => {
-  //   const otherUser = conversation.members.filter((m) => m._id !== currentUser);
-  //   setUser(otherUser[0]);
-
-  //   console.log(conversation);
-  // }, [conversation.members]);
-
+const Conversation = ({ conversation, onlineUserArr }) => {
   return (
     <div className="notification-item align-items-center relative p-05 overflow-x-hidden">
       <div className="header-right-container">

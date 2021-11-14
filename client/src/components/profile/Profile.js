@@ -1,11 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import { Link, Redirect } from "react-router-dom";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 import { useDispatch, useSelector } from "react-redux";
 import {
   getProfileById,
-  getProfileByIdNoLoading,
   notFound,
   getPhotos,
 } from "../../store/profile/profile-actions";
@@ -22,10 +21,9 @@ import FriendsList from "./FriendsList";
 import PostItem from "../post/PostItem";
 import NewPostForm from "../post/NewPostForm";
 import SkeletonProfile from "../skeleton/SkeletonProfile";
-import ProfileLayout from "./ProfileLayout";
 
 const Profile = (props) => {
-  const { computedMatch: match, socket } = props;
+  const { computedMatch: match, socket, socketReady } = props;
 
   const dispatch = useDispatch();
   const { profile, loading, photos } = useSelector((state) => state.profile);
@@ -43,6 +41,11 @@ const Profile = (props) => {
     dispatch(getPhotos(match.params.id));
     dispatch(getFriendRequests());
   }, [dispatch, match.params.id]);
+
+  let currentId;
+  if (!auth.loading) {
+    currentId = auth.user.payload._id;
+  }
 
   // Lazy load
   const getNextBatch = () => {
@@ -81,24 +84,27 @@ const Profile = (props) => {
 
   // @@      ON GET NEW POST
   //         If user is on the post author's profile when received, then update posts
-  useEffect(() => {
-    const addPostHandler = async (post) => {
-      if (
-        post.user === match.params.id &&
-        auth.user.payload._id !== match.params.id
-      ) {
+  const addPostHandler = useCallback(
+    async (post) => {
+      if (post.user === match.params.id && currentId !== match.params.id) {
         dispatch(postActions.addPost(post));
       }
-    };
+    },
+    [currentId, match.params.id, dispatch]
+  );
 
-    if (!!socket.current) {
+  useEffect(() => {
+    let socketCurrent = null;
+
+    if (socketReady) {
       socket.current.on("getPosts", addPostHandler);
+      socketCurrent = socket.current;
     }
 
     return () => {
-      socket.current.off("getPosts", addPostHandler);
+      if (socketReady) socketCurrent.off("getPosts", addPostHandler);
     };
-  }, [socket.current]);
+  }, [socket, socketReady, dispatch, match.params.id, addPostHandler]);
 
   // @@      ON REMOVE POST
   useEffect(() => {
@@ -106,14 +112,17 @@ const Profile = (props) => {
       dispatch(postActions.deletePost(postId));
     };
 
-    if (!!socket.current) {
+    let socketCurrent = null;
+
+    if (socketReady) {
       socket.current.on("removePostUpdate", removePostHandler);
+      socketCurrent = socket.current;
     }
 
     return () => {
-      socket.current.off("removePostUpdate", removePostHandler);
+      if (socketReady) socketCurrent.off("removePostUpdate", removePostHandler);
     };
-  }, [socket.current]);
+  }, [socket, dispatch, socketReady]);
 
   if (loading)
     return (
@@ -122,12 +131,7 @@ const Profile = (props) => {
       </main>
     );
 
-  if (
-    auth.user &&
-    !profile &&
-    !loading &&
-    auth.user.payload._id === match.params.id
-  )
+  if (auth.user && !profile && !loading && currentId === match.params.id)
     return (
       <main className="profile pt-5">
         <div className="post mb-1 m-auto px-1 mt-2 bg-gradient maxw-40">
@@ -211,7 +215,7 @@ const Profile = (props) => {
                   </div>
                   {auth.isAuthenticated &&
                     auth.loading === false &&
-                    auth.user.payload._id === profile.user._id && (
+                    currentId === profile.user._id && (
                       <>
                         <Link to="/edit-profile" className="link-button mb-05">
                           Edit Profile

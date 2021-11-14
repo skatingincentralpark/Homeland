@@ -39,7 +39,7 @@ const EditProfile = ({ history }) => {
       }
       setFormData(profileData);
     }
-  }, [dispatch]);
+  }, [dispatch, loading, profile]);
 
   const {
     highschool,

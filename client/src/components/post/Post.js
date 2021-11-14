@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 
 import PostItem from "./PostItem";
 
@@ -11,11 +11,16 @@ import { getNotifications } from "../../store/notification/notification-actions"
 
 import SkeletonPostItem from "../skeleton/SkeletonPostItem";
 
-const Post = ({ computedMatch: match, socket }) => {
+const Post = ({ computedMatch: match, socket, socketReady }) => {
   const dispatch = useDispatch();
 
   const { post, loading } = useSelector((state) => state.post);
   const auth = useSelector((state) => state.auth);
+
+  let currentId;
+  if (!auth.loading) {
+    currentId = auth.user.payload._id;
+  }
 
   useEffect(() => {
     dispatch(profileActions.clearProfile());
@@ -26,21 +31,27 @@ const Post = ({ computedMatch: match, socket }) => {
   }, [dispatch, match.params.id]);
 
   // @@      ON GET NEW POST
-  useEffect(() => {
-    const addPostHandler = async (post) => {
-      if (post.user !== auth.user.payload._id) {
+  const addPostHandler = useCallback(
+    async (post) => {
+      if (currentId !== post.user) {
         dispatch(postActions.addPost(post));
       }
-    };
+    },
+    [currentId, dispatch]
+  );
 
-    if (!!socket.current) {
+  useEffect(() => {
+    let socketCurrent = null; // <-- variable to hold ref value
+
+    if (socketReady) {
       socket.current.on("getPosts", addPostHandler);
+      socketCurrent = socket.current; // <-- save ref value
     }
 
     return () => {
-      socket.current.off("getPosts", addPostHandler);
+      if (socketReady) socketCurrent.off("getPosts", addPostHandler);
     };
-  }, [socket.current]);
+  }, [socket, dispatch, socketReady, addPostHandler]);
 
   // @@      ON REMOVE POST
   useEffect(() => {
@@ -48,14 +59,17 @@ const Post = ({ computedMatch: match, socket }) => {
       dispatch(postActions.deletePost(postId));
     };
 
-    if (!!socket.current) {
+    let socketCurrent = null; // <-- variable to hold ref value
+
+    if (socketReady) {
       socket.current.on("removePostUpdate", removePostHandler);
+      socketCurrent = socket.current; // <-- save ref value
     }
 
     return () => {
-      socket.current.off("removePostUpdate", removePostHandler);
+      if (socketReady) socketCurrent.off("removePostUpdate", removePostHandler);
     };
-  }, [socket.current]);
+  }, [socket, dispatch, socketReady]);
 
   // @@      ON UPDATE POST
   useEffect(() => {
@@ -64,14 +78,17 @@ const Post = ({ computedMatch: match, socket }) => {
       dispatch(getNotifications());
     };
 
-    if (!!socket.current) {
+    let socketCurrent = null; // <-- variable to hold ref value
+
+    if (socketReady) {
+      socketCurrent = socket.current; // <-- save ref value
       socket.current.on("updatePost", updatePostHandler);
     }
 
     return () => {
-      socket.current.off("updatePost", updatePostHandler);
+      if (socketReady) socketCurrent.off("updatePost", updatePostHandler);
     };
-  }, [socket.current]);
+  }, [socket, dispatch, socketReady]);
 
   return (
     <main className="single-post">

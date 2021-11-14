@@ -2,11 +2,7 @@ import React, { useEffect } from "react";
 import { Redirect } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getProfileById,
-  getProfileByIdNoLoading,
-  notFound,
-} from "../../store/profile/profile-actions";
+import { getProfileById, notFound } from "../../store/profile/profile-actions";
 import { getFriendRequests } from "../../store/friendRequest/friendRequest-actions";
 
 import FriendItem from "./FriendItem";

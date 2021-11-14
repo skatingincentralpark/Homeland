@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useCallback } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Div100vh from "react-div-100vh";
 
@@ -26,10 +26,8 @@ const Messenger = ({ socket }) => {
   const scrollRef = useRef();
 
   let currentId;
-  let friends;
   if (!auth.loading) {
     currentId = auth.user.payload._id;
-    friends = auth.user.payload.friends;
   }
 
   // submit
@@ -160,6 +158,7 @@ const Messenger = ({ socket }) => {
                     setText={setText}
                     value={text}
                     buttonText="Send"
+                    onSubmit={onSubmit}
                   />
                 </div>
               </>

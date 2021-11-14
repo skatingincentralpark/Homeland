@@ -24,13 +24,18 @@ const ChatWindow = ({ socket }) => {
   const [recipient, setRecipient] = useState("");
   const [isOnline, setIsOnline] = useState(null);
 
+  let currentId;
+  if (!auth.loading) {
+    currentId = auth.user?.payload._id;
+  }
+
   useEffect(() => {
     const recipient = messenger.conversation?.members.find(
       (m) => m._id !== currentId
     );
 
     setRecipient(recipient);
-  }, [messenger.conversation]);
+  }, [messenger.conversation, currentId]);
 
   // @@     CHECK IF RECIPIENT IS ONLINE
   // @@     CURRENT TO DO !!!
@@ -44,11 +49,6 @@ const ChatWindow = ({ socket }) => {
       }
     }
   }, [messenger.onlineUsers, messenger.loading, recipient]);
-
-  let currentId;
-  if (!auth.loading) {
-    currentId = auth.user?.payload._id;
-  }
 
   // @@     SUBMIT
   const onSubmit = (e) => {

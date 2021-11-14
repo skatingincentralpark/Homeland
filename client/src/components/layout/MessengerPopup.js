@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import Moment from "react-moment";
 
@@ -27,7 +27,7 @@ const MessengerPopup = ({ closeHandler }) => {
                     key={conv._id}
                     to={`/profile`}
                     className={`notification-item align-items-center relative ${
-                      conv.unread == userId ? "bg-gray1" : ""
+                      conv.unread === userId ? "bg-gray1" : ""
                     }`}
                     onClick={() => {
                       dispatch(messengerActions.showWindow());

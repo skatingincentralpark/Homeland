@@ -22,7 +22,7 @@ const ProfileTop = (props) => {
 
   useEffect(() => {
     dispatch(getProfileByIdNoLoading(match.params.id));
-  }, [dispatch, auth.user]);
+  }, [dispatch, auth.user, match.params.id]);
 
   const addFriend = async () => {
     await dispatch(sendFriendRequest(match.params.id));
@@ -45,7 +45,7 @@ const ProfileTop = (props) => {
         auth.loading === false &&
         auth.user.payload._id === profile.user._id ? (
           <Link to="/edit-user">
-            <img src={profile.user.profilepicture} />
+            <img src={profile.user.profilepicture} alt="user profile avatar" />
           </Link>
         ) : (
           <Image src={profile.user.profilepicture} />

@@ -55,7 +55,7 @@ const PostItem = (props) => {
     if (toggleComments) {
       dispatch(updatePost(_id));
     }
-  }, [toggleComments, dispatch]);
+  }, [toggleComments, dispatch, _id]);
 
   const addLikeHandler = () => {
     dispatch(addLike(_id, socket));
@@ -83,22 +83,17 @@ const PostItem = (props) => {
   const detectURLs = useCallback((message) => {
     var urlRegex = /(((https?:\/\/)|(www\.))[^\s]+)/g;
     if (message.match(urlRegex)) {
-      console.log(message);
       setLink(message);
     }
   }, []);
 
   useEffect(() => {
-    if (text) {
-      text.map((txt) => {
-        if (txt.type === "br") {
-          return;
-        } else {
-          detectURLs(txt);
-        }
-      });
-    }
-  }, [text]);
+    text.forEach((txt) => {
+      if (txt.type !== "br") {
+        detectURLs(txt);
+      }
+    });
+  }, [text, detectURLs]);
 
   const deletePostHandler = () => {
     dispatch(deletePost(_id));

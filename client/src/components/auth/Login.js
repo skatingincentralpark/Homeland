@@ -6,7 +6,6 @@ import { login, logout } from "../../store/auth/auth-actions";
 import { getNotifications } from "../../store/notification/notification-actions";
 
 import SkeletonImage2 from "../skeleton/SkeletonImage2";
-import Logo from "../../static/svg/logo.svg";
 
 const Login = () => {
   const email = useRef();
@@ -14,7 +13,6 @@ const Login = () => {
 
   const dispatch = useDispatch();
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-  // const loading = useSelector((state) => state.auth.loading);
 
   useEffect(() => {
     dispatch(logout());
@@ -26,9 +24,6 @@ const Login = () => {
     await dispatch(login(email.current.value, password.current.value));
     dispatch(getNotifications());
   };
-
-  // Loading
-  // if (loading) return <h1 className="p-1 mt-2">Loading...</h1>;
 
   // Redirect if authenticated
   if (isAuthenticated) {

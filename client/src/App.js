@@ -80,7 +80,7 @@ const App = () => {
         dispatch(loadUser());
       });
     }
-  }, [socket.current]);
+  }, [dispatch]);
 
   return (
     <Router>
@@ -102,12 +102,14 @@ const App = () => {
             path="/newsfeed"
             component={Newsfeed}
             socket={socket}
+            socketReady={socketReady}
           />
           <PrivateRoute
             exact
             path="/newsfeed/:id"
             component={Post}
             socket={socket}
+            socketReady={socketReady}
           />
           <PrivateRoute
             exact
@@ -120,6 +122,7 @@ const App = () => {
             exact
             path="/profile/:id"
             component={Profile}
+            socketReady={socketReady}
             socket={socket}
           />
           <PrivateRoute exact path="/profile/:id/friends" component={Friends} />

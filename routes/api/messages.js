@@ -52,8 +52,6 @@ router.get("/:conversationId", auth, async (req, res) => {
       .limit(12)
       .sort({ createdAt: -1 });
 
-    // const messages = messages1.reverse();
-
     const conversation = await Conversation.findById(
       req.params.conversationId
     ).populate("members", ["name", "profilepicture", "friends"]);
@@ -81,10 +79,6 @@ router.get("/next/:conversationId/:msgId", auth, async (req, res) => {
       .limit(3)
       .sort({ createdAt: -1 });
 
-    // const messages = messages1.reverse();
-
-    console.log(req.params.msgId);
-    console.log(messages);
     res.status(200).json(messages);
   } catch (err) {
     res.status(500).send(err.message);

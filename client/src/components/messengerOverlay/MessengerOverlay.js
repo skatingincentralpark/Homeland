@@ -25,7 +25,7 @@ const MessengerOverlay = ({ socket }) => {
     if (!auth.loading && auth.isAuthenticated && auth.user) {
       dispatch(getConversations(currentId));
     }
-  }, [auth.user, dispatch]);
+  }, [auth.user, auth.isAuthenticated, auth.loading, currentId, dispatch]);
 
   useEffect(() => {
     // @@      DISPLAY MESSENGER POPUP ITEMS
@@ -44,7 +44,7 @@ const MessengerOverlay = ({ socket }) => {
 
         if (
           messenger.conversation?._id !== conv._id &&
-          conv.unread == currentId
+          conv.unread === currentId
         ) {
           count++;
         }
@@ -54,7 +54,12 @@ const MessengerOverlay = ({ socket }) => {
       dispatch(messengerActions.getDisplayedConversations(arr));
       dispatch(messengerActions.getUnreadCount(count));
     }
-  }, [messenger.conversations, currentId]);
+  }, [
+    messenger.conversations,
+    currentId,
+    dispatch,
+    messenger.conversation?._id,
+  ]);
 
   useEffect(() => {
     // @@      ARRIVAL MESSAGE
@@ -63,7 +68,7 @@ const MessengerOverlay = ({ socket }) => {
         dispatch(messengerActions.setArrivalMessage(data));
       });
     }
-  }, [socket.current]);
+  }, [dispatch, socket]);
 
   useEffect(() => {
     // @@      ON ARRIVAL MESSAGE
@@ -94,7 +99,7 @@ const MessengerOverlay = ({ socket }) => {
         dispatch(messengerActions.clearArrivalMessage());
       }
     }
-  }, [messenger.arrivalMessage]);
+  }, [messenger.arrivalMessage, dispatch, messenger.conversation?.members]);
 
   useEffect(() => {
     // @@      ADD CURRENT USER
@@ -104,7 +109,7 @@ const MessengerOverlay = ({ socket }) => {
         dispatch(messengerActions.setOnlineUsers(users));
       });
     }
-  }, [socket.current, currentId]);
+  }, [dispatch, socket, currentId]);
 
   useEffect(() => {
     if (!!socket.current) {

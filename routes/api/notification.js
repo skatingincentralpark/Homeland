@@ -17,7 +17,7 @@ router.get("/", auth, async (req, res) => {
 
     res.json(notifications);
   } catch (err) {
-    console.log(err);
+    console.err(err);
     return res.status(500).json({ error: "Something went wrong" });
   }
 });
@@ -46,7 +46,7 @@ router.put("/", auth, async (req, res) => {
 
     res.json(notifications);
   } catch (err) {
-    console.log(err);
+    console.err(err);
     return res.status(500).json({ error: "Something went wrong" });
   }
 });
