@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import Image from "react-graceful-image";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { useLocation } from "react-router-dom";
 
 import {
   sendMessage,
@@ -23,6 +24,7 @@ const ChatWindow = ({ socket }) => {
   const [text, setText] = useState("");
   const [recipient, setRecipient] = useState("");
   const [isOnline, setIsOnline] = useState(null);
+  const location = useLocation();
 
   let currentId;
   if (!auth.loading) {
@@ -70,9 +72,7 @@ const ChatWindow = ({ socket }) => {
       createdAt: Date.now(),
     };
 
-    socket.current.emit("sendMessage", message);
-
-    dispatch(sendMessage(message));
+    dispatch(sendMessage({ message, socket }));
     setText("");
   };
 
@@ -90,6 +90,13 @@ const ChatWindow = ({ socket }) => {
           msgId: lastMsgId,
         })
       );
+    }
+  };
+
+  const closeWindowHandler = () => {
+    dispatch(messengerActions.hideWindow());
+    if (location.pathname !== "/messenger") {
+      dispatch(messengerActions.clearConversation());
     }
   };
 
@@ -133,13 +140,7 @@ const ChatWindow = ({ socket }) => {
             </div>
 
             <div className="chatWindowControls">
-              <button
-                onClick={() => {
-                  dispatch(messengerActions.hideWindow());
-                }}
-              >
-                &#10005;
-              </button>
+              <button onClick={closeWindowHandler}>&#10005;</button>
             </div>
           </div>
         </div>

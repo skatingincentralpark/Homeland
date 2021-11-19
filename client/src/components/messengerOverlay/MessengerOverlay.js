@@ -10,7 +10,7 @@ import { messengerActions } from "../../store/messenger/messenger-slice";
 import ChatWindow from "./ChatWindow";
 import "./messengerOverlay.css";
 
-const MessengerOverlay = ({ socket }) => {
+const MessengerOverlay = ({ socket, socketReady }) => {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
   const messenger = useSelector((state) => state.messenger);
@@ -62,13 +62,14 @@ const MessengerOverlay = ({ socket }) => {
   ]);
 
   useEffect(() => {
-    // @@      ARRIVAL MESSAGE
-    if (!!socket.current) {
+    // @@      ON GET MESSAGE
+    if (socketReady) {
+      console.log("getting msgs");
       socket.current.on("getMessage", (data) => {
         dispatch(messengerActions.setArrivalMessage(data));
       });
     }
-  }, [dispatch, socket]);
+  }, [dispatch, socket, socketReady]);
 
   useEffect(() => {
     // @@      ON ARRIVAL MESSAGE
@@ -87,6 +88,7 @@ const MessengerOverlay = ({ socket }) => {
             receiverId: messenger.arrivalMessage.receiverId,
           })
         );
+        dispatch(messengerActions.clearArrivalMessage());
       } else {
         // @@      User does not have conversation NOT open
         dispatch(
@@ -103,13 +105,13 @@ const MessengerOverlay = ({ socket }) => {
 
   useEffect(() => {
     // @@      ADD CURRENT USER
-    if (!!socket.current && !!currentId) {
+    if (socketReady && currentId) {
       socket.current.emit("addUser", currentId);
       socket.current.on("getUsers", (users) => {
         dispatch(messengerActions.setOnlineUsers(users));
       });
     }
-  }, [dispatch, socket, currentId]);
+  }, [dispatch, socket, currentId, socketReady]);
 
   useEffect(() => {
     if (!!socket.current) {

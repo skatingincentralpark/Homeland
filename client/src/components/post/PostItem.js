@@ -206,7 +206,7 @@ const PostItem = (props) => {
               profilepicture={auth.user.payload.profilepicture}
               socket={socket}
             />
-            <Comments comments={comments} postId={_id} />
+            <Comments comments={comments} postId={_id} socket={socket} />
           </>
         </div>
       )}

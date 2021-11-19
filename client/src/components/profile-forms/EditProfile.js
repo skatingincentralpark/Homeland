@@ -28,7 +28,9 @@ const EditProfile = ({ history }) => {
   const [formData, setFormData] = useState(initialState);
 
   useEffect(() => {
-    dispatch(getCurrentProfile());
+    if (!profile) {
+      dispatch(getCurrentProfile());
+    }
 
     if (!loading && profile) {
       const profileData = { ...initialState };

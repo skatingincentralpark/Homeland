@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import CommentItem from "./CommentItem";
 
 const Comments = (props) => {
+  const { socket } = props;
   const [comments, setComments] = useState([]);
   const [counter, setCounter] = useState(1);
   const [idOfMenuOpen, setIdOfMenuOpen] = useState(null);
@@ -30,6 +31,7 @@ const Comments = (props) => {
             isUsersComment={props.isUsersComment}
             setIdOfMenuOpen={setIdOfMenuOpen}
             idOfMenuOpen={idOfMenuOpen}
+            socket={socket}
           />
         ))}
       {!!comments.length && (

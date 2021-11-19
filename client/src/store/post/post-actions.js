@@ -247,18 +247,22 @@ export const addComment = (postId, formData, socket) => async (dispatch) => {
 };
 
 // Delete comment
-export const deleteComment = (postId, commentId) => async (dispatch) => {
-  try {
-    const res = await axios.delete(
-      `/api/posts/comments/${postId}/${commentId}`
-    );
+export const deleteComment =
+  (postId, commentId, socket) => async (dispatch) => {
+    try {
+      const res = await axios.delete(
+        `/api/posts/comments/${postId}/${commentId}`
+      );
 
-    dispatch(postActions.removeComment({ postId, comments: res.data }));
-    dispatch(setAlert("Comment Removed", "success"));
-  } catch (err) {
-    postActions.postError({
-      msg: err.response.statusText,
-      status: err.response.status,
-    });
-  }
-};
+      // emit socket for all online users
+      socket.current.emit("updatePost", postId);
+
+      dispatch(postActions.removeComment({ postId, comments: res.data }));
+      dispatch(setAlert("Comment Removed", "success"));
+    } catch (err) {
+      postActions.postError({
+        msg: err.response.statusText,
+        status: err.response.status,
+      });
+    }
+  };

@@ -67,20 +67,25 @@ export const getNextBatchMsgs =
     }
   };
 
-export const sendMessage = (message) => async (dispatch) => {
-  try {
-    const res = await axios.post(`/api/messages`, message);
-    const { conversation, savedMessage } = res.data;
-    dispatch(messengerActions.sendMessage({ conversation, savedMessage }));
-  } catch (err) {
-    dispatch(
-      messengerActions.messengerError({
-        msg: err.response.statusText,
-        status: err.response.status,
-      })
-    );
-  }
-};
+export const sendMessage =
+  ({ message, socket }) =>
+  async (dispatch) => {
+    try {
+      const res = await axios.post(`/api/messages`, message);
+      const { conversation, savedMessage } = res.data;
+
+      socket.current.emit("sendMessage", savedMessage);
+
+      dispatch(messengerActions.sendMessage({ conversation, savedMessage }));
+    } catch (err) {
+      dispatch(
+        messengerActions.messengerError({
+          msg: err.response.statusText,
+          status: err.response.status,
+        })
+      );
+    }
+  };
 
 export const updateConversationsUnread =
   ({ text, receiverId, conversationId }) =>

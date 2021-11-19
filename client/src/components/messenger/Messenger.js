@@ -7,6 +7,7 @@ import {
   sendMessage,
   getNextBatchMsgs,
 } from "../../store/messenger/messenger-actions";
+import { messengerActions } from "../../store/messenger/messenger-slice";
 import { useSelector, useDispatch } from "react-redux";
 
 import Conversation from "./Conversation";
@@ -50,9 +51,7 @@ const Messenger = ({ socket }) => {
       createdAt: Date.now(),
     };
 
-    socket.current.emit("sendMessage", message);
-
-    dispatch(sendMessage(message));
+    dispatch(sendMessage({ message, socket }));
     setText("");
   };
 
@@ -76,6 +75,15 @@ const Messenger = ({ socket }) => {
       );
     }
   };
+
+  // Clear conv when user navigates away (unless popup is open)
+  useEffect(() => {
+    return () => {
+      if (!messenger.showWindow) {
+        dispatch(messengerActions.clearConversation());
+      }
+    };
+  }, [dispatch, messenger.showWindow]);
 
   return (
     <Div100vh>

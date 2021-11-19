@@ -5,14 +5,16 @@ import { useClickOutside } from "../../hooks/clickOutside";
 
 import Ellipsis from "../../static/svg/ellipsis.svg";
 
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { deleteComment } from "../../store/post/post-actions";
 
 const CommentItem = (props) => {
+  const { socket } = props;
   const { _id, user, name, date, text, profilepicture } = props.comment;
 
   const [togglePopup, setTogglePopup] = useState(false);
 
+  const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
   const togglePopupHandler = () => {
@@ -41,7 +43,7 @@ const CommentItem = (props) => {
   }, []);
 
   const deleteCommentHandler = () => {
-    dispatch(deleteComment(props.postId, _id));
+    dispatch(deleteComment(props.postId, _id, socket));
   };
 
   return (
@@ -69,18 +71,25 @@ const CommentItem = (props) => {
             <div className={likesClass}>15 &#128077;</div>
           </div>
           <div className="relative">
-            <button onClick={togglePopupHandler} className="extra-options-btn">
-              <img src={Ellipsis} alt="" />
-            </button>
-            {togglePopup && (
-              <div className="post-popup" ref={buttonRef}>
+            {user === auth.user.payload._id && (
+              <>
                 <button
-                  className="button-to-link"
-                  onClick={deleteCommentHandler}
+                  onClick={togglePopupHandler}
+                  className="extra-options-btn"
                 >
-                  Delete Comment
+                  <img src={Ellipsis} alt="" />
                 </button>
-              </div>
+                {togglePopup && (
+                  <div className="post-popup" ref={buttonRef}>
+                    <button
+                      className="button-to-link"
+                      onClick={deleteCommentHandler}
+                    >
+                      Delete Comment
+                    </button>
+                  </div>
+                )}
+              </>
             )}
           </div>
         </div>

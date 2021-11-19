@@ -9,6 +9,9 @@ const MessageSchema = new Schema(
     sender: {
       type: Schema.Types.ObjectId,
     },
+    receiverId: {
+      type: Schema.Types.ObjectId,
+    },
     text: {
       type: String,
     },

@@ -76,7 +76,7 @@ router.get("/next/:conversationId/:msgId", auth, async (req, res) => {
       conversationId: req.params.conversationId,
       _id: { $lt: req.params.msgId },
     })
-      .limit(3)
+      .limit(8)
       .sort({ createdAt: -1 });
 
     res.status(200).json(messages);
