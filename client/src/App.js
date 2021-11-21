@@ -66,7 +66,7 @@ const App = () => {
   // @@      INITIALIZING SOCKET
   useEffect(() => {
     if (isAuthenticated) {
-      socket.current = io("ws://localhost:8900");
+      socket.current = io();
       setSocketReady(true);
     }
   }, [isAuthenticated]);
