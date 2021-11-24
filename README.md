@@ -30,11 +30,11 @@ A social media web app made using the MERN stack, with SocketIO & Cloudinary int
 
    ```json
    {
-     "mongoURI": YOUR_MONGO_URI,
-     "jwtSecret": YOUR_SECRET_TOKEN,
-     "cloudName": YOUR_CLOUD_NAME,
-     "apiKey": YOUR_API_SECRET,
-     "apiSecret": YOUR_API_SECRET
+     "mongoURI": "YOUR_MONGO_URI",
+     "jwtSecret": "YOUR_SECRET_TOKEN",
+     "cloudName": "YOUR_CLOUD_NAME",
+     "apiKey": "YOUR_API_SECRET",
+     "apiSecret": "YOUR_API_SECRET"
    }
    ```
 
