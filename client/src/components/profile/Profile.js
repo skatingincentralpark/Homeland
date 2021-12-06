@@ -49,7 +49,9 @@ const Profile = (props) => {
 
   // Lazy load
   const getNextBatch = () => {
-    if (posts.length) {
+    if (posts.length === 1) {
+      return;
+    } else if (posts.length) {
       const lastPostId = posts.reduce((prev, curr) => {
         return prev._id < curr._id ? prev._id : curr._id;
       });

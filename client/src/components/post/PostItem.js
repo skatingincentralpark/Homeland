@@ -20,6 +20,14 @@ import {
 import SkeletonImage from "../skeleton/SkeletonImage";
 
 const PostItem = (props) => {
+  const customFetcher = async (url) => {
+    const response = await fetch(
+      `https://rlp-proxy.herokuapp.com/v2?url=${url}`
+    );
+    const json = await response.json();
+    return json.metadata;
+  };
+
   const [isUsersPost, setIsUsersPost] = useState(false);
 
   const dispatch = useDispatch();
@@ -154,7 +162,12 @@ const PostItem = (props) => {
           )}
         </div>
         {link && (
-          <LinkPreview className="m-1 mb-0 w-auto" url={link} width="100%" />
+          <LinkPreview
+            className="m-1 mb-0 w-auto"
+            url={link}
+            width="100%"
+            fetcher={customFetcher}
+          />
         )}
         {image && (
           <div className="post-content-image pt-1">

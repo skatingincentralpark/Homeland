@@ -109,6 +109,7 @@ const Newsfeed = ({ socket, socketReady }) => {
       const lastPostId = posts.reduce((prev, curr) => {
         return prev._id < curr._id ? prev._id : curr._id;
       });
+
       dispatch(getPostsNext(lastPostId));
     }
   };
