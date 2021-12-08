@@ -14,7 +14,7 @@ const Landing = () => {
   if (loading) return <></>;
 
   return (
-    <main className="registerlogin-container">
+    <main className="landing-container">
       <div className="test-landing">
         <h1 className="landing-logo">
           Homeland
@@ -33,6 +33,15 @@ const Landing = () => {
               </li>
               <li>
                 Photo uploads /w <b>Cloudinary</b>
+              </li>
+              <li>
+                Live updates /w <b>Socket.IO</b>
+              </li>
+              <li>
+                URL previews /w <b>React Link Preview</b>
+              </li>
+              <li>
+                State management /w <b>Redux</b>
               </li>
               <li>
                 Super fast /w <b>React</b>

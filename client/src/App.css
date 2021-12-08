@@ -352,6 +352,10 @@ UI (button to link etc.)
 /*------------------------------------------------------
 LANDING
 ------------------------------------------------------*/
+.landing-container {
+  height: 100vh;
+  background: white;
+}
 .test-landing {
   width: 100%;
   position: fixed;
@@ -377,12 +381,12 @@ LANDING
 .landing-logo {
   width: 100%;
   padding: 2.5rem 1rem;
-  background: linear-gradient(270deg, #b6ff00, rgb(139, 255, 210));
+  /* background: linear-gradient(270deg, #b6ff00, rgb(139, 255, 210));
   background-size: 400% 400%;
 
   -webkit-animation: LandingLogoAnimate 5s ease infinite;
   -moz-animation: LandingLogoAnimate 5s ease infinite;
-  animation: LandingLogoAnimate 5s ease infinite;
+  animation: LandingLogoAnimate 5s ease infinite; */
 }
 .landing-bottom {
   padding: 0rem 1rem 2rem 1rem;
