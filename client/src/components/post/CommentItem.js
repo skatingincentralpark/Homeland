@@ -68,7 +68,7 @@ const CommentItem = (props) => {
                 )
               )}
             </div>
-            <div className={likesClass}>15 &#128077;</div>
+            {/* <div className={likesClass}>15 &#128077;</div> */}
           </div>
           <div className="relative">
             {user === auth.user.payload._id && (

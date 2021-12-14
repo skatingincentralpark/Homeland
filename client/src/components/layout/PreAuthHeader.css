@@ -1,0 +1,22 @@
+.pre-auth-header {
+  width: 100%;
+  padding-top: 3rem;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 2em;
+}
+
+.pre-auth-header h1 {
+  font-weight: 400;
+}
+
+.pre-auth-header img {
+  height: 2em;
+}
+
+/* @media only screen and (min-width: 900px) {
+  .pre-auth-header {
+    padding-top: 2rem;
+  }
+} */

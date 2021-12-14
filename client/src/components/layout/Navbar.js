@@ -62,7 +62,11 @@ const Navbar = ({ socket }) => {
     closeHandler();
   };
 
-  if (location.pathname === "/") {
+  if (
+    location.pathname === "/" ||
+    location.pathname === "/login" ||
+    location.pathname === "/register"
+  ) {
     return <> </>;
   }
 

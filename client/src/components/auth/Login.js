@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { login, logout } from "../../store/auth/auth-actions";
 import { getNotifications } from "../../store/notification/notification-actions";
 
-import SkeletonImage2 from "../skeleton/SkeletonImage2";
+import PreAuthHeader from "../layout/PreAuthHeader";
 
 const Login = () => {
   const email = useRef();
@@ -31,61 +31,49 @@ const Login = () => {
   }
 
   return (
-    <>
-      <main className="registerlogin-container">
-        <div className="registerlogin register">
-          <div className="thumbnail-large">
-            <SkeletonImage2 />
+    <main className="px-1-5">
+      <PreAuthHeader heading="Sign in to Homeland" />
+      <div className="pre-auth-container">
+        <form className="form" action="create-profile.html" onSubmit={onSubmit}>
+          <div className="form-group">
+            <input
+              type="email"
+              placeholder="Email Address"
+              name="email"
+              required
+              ref={email}
+            />
           </div>
-          <div className="registerlogin-right">
-            <h1 className="large text-primary">Sign In</h1>
-            <p className="lead">To experience Homeland</p>
-            <form
-              className="form"
-              action="create-profile.html"
-              onSubmit={onSubmit}
-            >
-              <div className="form-group">
-                <input
-                  type="email"
-                  placeholder="Email Address"
-                  name="email"
-                  required
-                  ref={email}
-                />
-              </div>
-              <div className="form-group">
-                <input
-                  type="password"
-                  placeholder="Password"
-                  name="password"
-                  minLength="6"
-                  required
-                  ref={password}
-                />
-              </div>
+          <div className="form-group">
+            <input
+              type="password"
+              placeholder="Password"
+              name="password"
+              minLength="6"
+              required
+              ref={password}
+            />
+          </div>
 
-              <input
-                type="submit"
-                className="link-button w-100 mb-2"
-                value="Login"
-              />
-            </form>
-            <p className="my-1">
-              Don't have an account?{" "}
-              <b>
-                <Link to="/register">Sign up</Link>
-              </b>
-            </p>
-            <small className="gray">
-              By clicking sign in you agree to our Bla, Bla Policy and Blabla
-              Policy. You may receive Bla notifications from us and can opt out
-              at any time.
-            </small>
-          </div>
-        </div>
-      </main>
-    </>
+          <input
+            type="submit"
+            className="link-button w-100 mb-2 btn-success"
+            value="Sign In"
+          />
+        </form>
+        <hr />
+        <Link to="/register" className="link-button w-100 bg-black white mb-05">
+          Create New Account
+        </Link>
+        <Link to="/" className="link-button w-100 btn-neutral">
+          About
+        </Link>
+      </div>
+      <div className="disclaimer">
+        By clicking sign up you agree to our Terms, Data Policy and Cookie
+        Policy.
+      </div>
+    </main>
   );
 };
 

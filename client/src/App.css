@@ -74,7 +74,7 @@ body {
   --light-color: #f4f4f4;
   --caution: #e5ff00;
   --danger-color: #dc3545;
-  --success-color: #28a745;
+  --success-color: #00ad00;
 
   --font1: 1.8rem;
   --font2: 1.4rem;
@@ -88,6 +88,10 @@ body {
   box-sizing: border-box;
 }
 
+hr {
+  margin: 2em 0 !important;
+}
+
 /*------------------------------------------------------
 CONTAINERS
 ------------------------------------------------------*/
@@ -96,11 +100,11 @@ CONTAINERS
   display: block;
   font-size: 1rem;
   text-align: center;
-  font-weight: 600;
+  font-weight: 400;
   background-color: var(--gray1);
   border: none;
   border-radius: var(--border-radius);
-  padding: 0.5em 2em;
+  padding: 0.75em 2em;
 }
 .link-button:hover {
   filter: brightness(0.95);
@@ -109,6 +113,7 @@ CONTAINERS
 }
 .link-button:active {
   filter: brightness(0.85);
+  transform: scale(0.995);
 }
 /* Extra Options (Ellipse) */
 .extra-options-btn {
@@ -129,6 +134,16 @@ CONTAINERS
   background-color: var(--gray1);
   cursor: pointer;
 }
+
+.btn-success {
+  background: var(--success-color);
+  color: white;
+}
+.btn-neutral {
+  background: gray;
+  color: white;
+}
+
 /*------------------------------------------------------
 TYPOGRAPHY
 ------------------------------------------------------*/
@@ -217,6 +232,7 @@ TEXT INPUT
 }
 .textarea {
   border-radius: var(--border-radius);
+  background: var(--gray1);
   padding: 0.6em 1em;
 }
 .text-input textarea {
@@ -289,13 +305,6 @@ NEW POST FORM (WITH IMAGE UPLOADER)
   object-fit: contain;
   display: flex;
 }
-@media only screen and (min-width: 900px) {
-  .thumbnail-large {
-    height: 100%;
-    width: 100%;
-    display: flex;
-  }
-}
 
 /*------------------------------------------------------
 INPUTS
@@ -312,16 +321,16 @@ select {
 .form-group input,
 select,
 textarea {
-  background-color: var(--gray1);
+  background-color: white;
   color: black;
   display: block;
   width: 100%;
-  padding: 0.5em 0.75em;
+  padding: 0.75em 0.75em;
   font-size: 1rem;
   font-family: Helvetica, sans-serif;
   border-radius: var(--border-radius);
   outline: none;
-  border: 1px solid rgb(230, 230, 230);
+  border: 1px solid rgb(200, 200, 200);
   resize: none;
 }
 .form-group input,
@@ -347,103 +356,6 @@ UI (button to link etc.)
 .button-to-link:hover {
   text-decoration: underline;
   cursor: pointer;
-}
-
-/*------------------------------------------------------
-LANDING
-------------------------------------------------------*/
-.landing-container {
-  height: 100vh;
-  background: white;
-}
-.test-landing {
-  width: 100%;
-  position: fixed;
-  bottom: 0;
-}
-.test-landing h1 {
-  font-size: 5rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
-}
-.test-landing sup {
-  font-size: 3rem;
-  font-weight: 600;
-}
-.test-landing h2 {
-  font-size: 2rem;
-  font-weight: 600;
-  line-height: 2.4rem;
-}
-.landing-buttons {
-  width: 20rem;
-}
-.landing-logo {
-  width: 100%;
-  padding: 2.5rem 1rem;
-  /* background: linear-gradient(270deg, #b6ff00, rgb(139, 255, 210));
-  background-size: 400% 400%;
-
-  -webkit-animation: LandingLogoAnimate 5s ease infinite;
-  -moz-animation: LandingLogoAnimate 5s ease infinite;
-  animation: LandingLogoAnimate 5s ease infinite; */
-}
-.landing-bottom {
-  padding: 0rem 1rem 2rem 1rem;
-}
-
-@media only screen and (min-width: 900px) {
-  .test-landing h1 {
-    font-size: 12rem;
-    font-weight: 600;
-    margin-bottom: 2rem;
-  }
-  .test-landing h2 {
-    font-size: 4rem;
-    font-weight: 600;
-    line-height: 4rem;
-  }
-  .landing-logo {
-    width: 100%;
-    padding: 5rem 3rem;
-  }
-  .landing-bottom {
-    padding: 0rem 3rem 2rem 3rem;
-  }
-}
-
-@-webkit-keyframes LandingLogoAnimate {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-@-moz-keyframes LandingLogoAnimate {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-@keyframes LandingLogoAnimate {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
 }
 
 /*------------------------------------------------------
@@ -509,6 +421,7 @@ POST-HEADER
 }
 .header-right-container:active {
   filter: brightness(0.95);
+  transform: scale(0.95);
 }
 .header-right-container img {
   width: 2.5em;
@@ -944,8 +857,8 @@ header {
   filter: opacity(0.8);
 }
 .header-logo img:active {
-  /* filter: opacity(0.7); */
-  filter: invert(1);
+  filter: opacity(0.7);
+  transform: scale(0.98);
 }
 .header-right button {
   background-color: rgba(0, 0, 0, 0);
@@ -957,8 +870,9 @@ header {
 .header-right button:hover img {
   filter: brightness(0.95);
 }
-.header-right button:active img {
+.header-right button:active {
   filter: brightness(0.85);
+  transform: scale(0.95);
 }
 .header-right img {
   height: 100%;
@@ -1102,6 +1016,40 @@ NAVIGATION
 }
 .unread {
   background-color: var(--gray2);
+}
+
+/*------------------------------------------------------
+LANDING
+------------------------------------------------------*/
+.pre-auth-container {
+  padding: 1.5em;
+  margin: 2em auto 0 auto;
+  height: auto;
+  max-width: 30em;
+  text-align: center;
+  border-radius: 1em;
+  background-color: white;
+  box-shadow: 0 0.4rem 1rem var(--box-shadow);
+}
+.disclaimer {
+  margin: 0 auto;
+  padding: 2em 0;
+  max-width: 30em;
+  text-align: center;
+}
+.profile-pic-preview {
+  height: 12.5rem;
+  width: 12.5rem;
+  display: flex;
+  border-radius: 50%;
+  margin: 0 auto 1.5em auto;
+}
+.profile-pic-preview img {
+  border-radius: 50%;
+  width: 100%;
+  display: flex;
+  object-fit: cover;
+  border: 1px solid rgb(200, 200, 200);
 }
 
 /*------------------------------------------------------
@@ -1305,6 +1253,9 @@ SPACING
 }
 .px-1 {
   padding: 0 1em;
+}
+.px-1-5 {
+  padding: 0 1.5em;
 }
 .py-05 {
   padding: 0.5em 0;
