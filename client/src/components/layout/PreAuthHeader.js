@@ -12,7 +12,7 @@ const PreAuthHeader = ({ heading }) => {
         <img src={Logo} alt="logo" className="svg" />
       </Link>
 
-      <h1>{heading}</h1>
+      <h1 className="font-weight-300">{heading}</h1>
     </div>
   );
 };

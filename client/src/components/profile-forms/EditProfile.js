@@ -74,97 +74,102 @@ const EditProfile = ({ history }) => {
     );
 
   return (
-    <main className="registerlogin-container">
+    <main className="px-3 pt-7-5">
       {profile && !loading && (
-        <div className="registerlogin smaller">
-          <div>
-            <h1 className="large text-primary">Edit Your Profile</h1>
-            <p className="lead mb-2">
-              Let's get some information to make your profile stand out
-            </p>
-            <form onSubmit={onSubmit} className="form">
-              <div className="form-group">
-                <input
-                  onChange={onChange}
-                  value={highschool}
-                  type="text"
-                  placeholder="Highschool"
-                  name="highschool"
-                />
-              </div>
-              <div className="form-group">
-                <input
-                  onChange={onChange}
-                  value={college}
-                  type="text"
-                  placeholder="College"
-                  name="college"
-                />
-              </div>
-              <div className="form-group">
-                <input
-                  onChange={onChange}
-                  value={job}
-                  type="text"
-                  placeholder="Job"
-                  name="job"
-                />
-              </div>
-              <div className="form-group">
-                <input
-                  onChange={onChange}
-                  value={location}
-                  type="text"
-                  placeholder="Location"
-                  name="location"
-                />
-              </div>
-              <div className="form-group">
-                <select
-                  onChange={onChange}
-                  value={relationshipstatus}
-                  name="relationshipstatus"
-                >
-                  <option value="">Select Relationship Status</option>
-                  <option value="Single">Single</option>
-                  <option value="In a relationship">In a relationship</option>
-                  <option value="Married">Married</option>
-                  <option value="Its complicated">It's complicated</option>
-                  <option value="Other">Other</option>
-                </select>
-              </div>
-              <div className="form-group">
-                <input
-                  onChange={onChange}
-                  value={interests}
-                  type="text"
-                  placeholder="Interests"
-                  name="interests"
-                />
-              </div>
-              <div className="form-group mb-2">
-                <textarea
-                  onChange={onChange}
-                  value={bio}
-                  placeholder="A short bio of yourself"
-                  name="bio"
-                  maxLength="300"
-                  rows="4"
-                ></textarea>
-              </div>
-              <button className="link-button w-100 mb-1 invert">Submit</button>
-              {!auth.loading && (
-                <Link
-                  className="link-button"
-                  to={`/profile/${auth.user.payload._id}`}
-                >
-                  Go Back
-                </Link>
-              )}
-            </form>
-          </div>
+        <div className="pre-auth-container">
+          <form onSubmit={onSubmit} className="form">
+            <div className="form-group">
+              <label htmlFor="highschool">Highschool</label>
+              <input
+                onChange={onChange}
+                value={highschool}
+                type="text"
+                placeholder="Highschool"
+                name="highschool"
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="college">College</label>
+              <input
+                onChange={onChange}
+                value={college}
+                type="text"
+                placeholder="College"
+                name="college"
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="job">Job</label>
+              <input
+                onChange={onChange}
+                value={job}
+                type="text"
+                placeholder="Job"
+                name="job"
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="location">Location</label>
+              <input
+                onChange={onChange}
+                value={location}
+                type="text"
+                placeholder="Location"
+                name="location"
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="relationshipstatus">Relationship Status</label>
+              <select
+                onChange={onChange}
+                value={relationshipstatus}
+                name="relationshipstatus"
+              >
+                <option value="">Select Relationship Status</option>
+                <option value="Single">Single</option>
+                <option value="In a relationship">In a relationship</option>
+                <option value="Married">Married</option>
+                <option value="Its complicated">It's complicated</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            <div className="form-group">
+              <label htmlFor="interests">Interests</label>
+              <input
+                onChange={onChange}
+                value={interests}
+                type="text"
+                placeholder="Interests"
+                name="interests"
+              />
+            </div>
+            <div className="form-group mb-2">
+              <label htmlFor="bio">Short Bio</label>
+              <textarea
+                onChange={onChange}
+                value={bio}
+                placeholder="A short bio of yourself"
+                name="bio"
+                maxLength="300"
+                rows="4"
+              ></textarea>
+            </div>
+            <button className="link-button w-100 mb-2 btn-success">
+              Update
+            </button>
+          </form>
+          <hr />
+          {!auth.loading && (
+            <Link
+              className="link-button w-100 bg-black white mb-05"
+              to={`/profile/${auth.user.payload._id}`}
+            >
+              Go Back
+            </Link>
+          )}
         </div>
       )}
+      <div className="disclaimer"></div>
     </main>
   );
 };

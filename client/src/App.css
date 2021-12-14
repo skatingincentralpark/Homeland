@@ -88,10 +88,6 @@ body {
   box-sizing: border-box;
 }
 
-hr {
-  margin: 2em 0 !important;
-}
-
 /*------------------------------------------------------
 CONTAINERS
 ------------------------------------------------------*/
@@ -161,7 +157,7 @@ a:hover {
   text-decoration: underline;
 }
 h1 {
-  font-size: 2.4rem;
+  font-size: 2.2rem;
   line-height: 2.7rem;
   margin-bottom: 1rem;
 }
@@ -332,6 +328,7 @@ textarea {
   outline: none;
   border: 1px solid rgb(200, 200, 200);
   resize: none;
+  margin-top: 0.5em;
 }
 .form-group input,
 select {
@@ -341,6 +338,10 @@ select {
 select:focus,
 textarea:focus {
   filter: brightness(0.95);
+}
+.form-group label {
+  font-size: 0.8rem;
+  color: gray;
 }
 .form-group {
   margin-bottom: 1em;
@@ -1023,7 +1024,7 @@ LANDING
 ------------------------------------------------------*/
 .pre-auth-container {
   padding: 1.5em;
-  margin: 2em auto 0 auto;
+  margin: 1em auto 0 auto;
   height: auto;
   max-width: 30em;
   text-align: center;
@@ -1031,9 +1032,12 @@ LANDING
   background-color: white;
   box-shadow: 0 0.4rem 1rem var(--box-shadow);
 }
+.pre-auth-container hr {
+  margin: 2em 0 !important;
+}
 .disclaimer {
   margin: 0 auto;
-  padding: 2em 0;
+  padding: 4em 0;
   max-width: 30em;
   text-align: center;
 }
@@ -1257,6 +1261,9 @@ SPACING
 .px-1-5 {
   padding: 0 1.5em;
 }
+.px-3 {
+  padding: 0 3em;
+}
 .py-05 {
   padding: 0.5em 0;
 }
@@ -1274,6 +1281,9 @@ SPACING
 }
 .pt-5 {
   padding-top: 5em;
+}
+.pt-7-5 {
+  padding-top: 7.5em;
 }
 .pb-1 {
   padding-bottom: 1em;

@@ -18,7 +18,7 @@ const Landing = () => {
   return (
     <>
       <PreAuthHeader heading="Welcome to Homeland" />
-      <main className="px-1-5">
+      <main className="px-3">
         <div className="pre-auth-container">
           <p>
             Homeland is a fullstack (MERN) social-media application. Please sign

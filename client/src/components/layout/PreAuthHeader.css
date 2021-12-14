@@ -8,15 +8,9 @@
 }
 
 .pre-auth-header h1 {
-  font-weight: 400;
+  font-weight: 300;
 }
 
 .pre-auth-header img {
   height: 2em;
 }
-
-/* @media only screen and (min-width: 900px) {
-  .pre-auth-header {
-    padding-top: 2rem;
-  }
-} */

@@ -5,6 +5,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { edit } from "../../store/auth/auth-actions";
 import { deleteAccount } from "../../store/profile/profile-actions";
 
+import Camera from "../../static/svg/camera.svg";
+
 const initialState = {
   name: "",
   email: "",
@@ -12,7 +14,7 @@ const initialState = {
   image: "",
 };
 
-const EditUser = ({ history }) => {
+const EditUser = () => {
   const [image, setImage] = useState("");
   const [formData, setFormData] = useState(initialState);
 
@@ -50,85 +52,85 @@ const EditUser = ({ history }) => {
   };
 
   return (
-    <main className="registerlogin-container">
+    <main className="px-3 pt-7-5">
       {user && !loading && (
-        <div className="registerlogin edit-user maxw-70">
-          <div className="registerlogin-left">
-            <div className="edit-user">
-              <img
-                src={
-                  image
-                    ? URL.createObjectURL(image)
-                    : user.payload.profilepicture
-                }
-                alt=""
+        <div className="pre-auth-container">
+          <div className="profile-pic-preview">
+            <img
+              src={
+                image ? URL.createObjectURL(image) : user.payload.profilepicture
+              }
+              alt=""
+            />
+          </div>
+
+          <form className="form" onSubmit={onSubmit}>
+            <div className="form-group">
+              <input
+                type="text"
+                placeholder="Name"
+                name="name"
+                onChange={onChange}
+                value={name}
               />
             </div>
-          </div>
-          <div className="registerlogin-right">
-            <h1 className="large text-primary">Edit Account</h1>
-            <p className="lead mb-5">
-              <i className="fas fa-user"></i>Change your profile picture, email,
-              and name
-            </p>
-            <form className="form" onSubmit={onSubmit}>
-              <div className="form-group">
-                <input
-                  type="text"
-                  placeholder="Name"
-                  name="name"
-                  onChange={onChange}
-                  value={name}
-                />
-              </div>
-              <div className="form-group">
-                <input
-                  type="email"
-                  placeholder="Email Address"
-                  name="email"
-                  onChange={onChange}
-                  value={email}
-                />
-              </div>
-              <div className="form-group">
-                <input
-                  name="image"
-                  type="file"
-                  onChange={(e) => {
-                    setImage(e.target.files[0]);
-                  }}
-                />
-              </div>
-              <div className="form-group mb-2">
-                <input
-                  type="password"
-                  placeholder="Password"
-                  name="password"
-                  required
-                  value={password}
-                  onChange={onChange}
-                />
-              </div>
+            <div className="form-group">
               <input
-                type="submit"
-                className="link-button w-100 mb-1 invert"
-                value="Update"
+                type="email"
+                placeholder="Email Address"
+                name="email"
+                onChange={onChange}
+                value={email}
               />
-            </form>
-            <Link className="link-button" to={`/profile/${user.payload._id}`}>
-              Go Back
-            </Link>
-            <button
-              className="link-button mt-1 w-100 alert-danger"
-              onClick={() => {
-                dispatch(deleteAccount());
-              }}
-            >
-              Delete Account
+            </div>
+
+            <div className="image-upload mb-1">
+              <input
+                type="file"
+                id="file"
+                accept="image/*"
+                onChange={(e) => {
+                  setImage(e.target.files[0]);
+                }}
+              />
+              <label htmlFor="file">
+                <img src={Camera} alt="" />
+                Add a photo
+              </label>
+            </div>
+
+            <div className="form-group mb-2">
+              <input
+                type="password"
+                placeholder="Password"
+                name="password"
+                required
+                value={password}
+                onChange={onChange}
+              />
+            </div>
+            <button className="link-button w-100 mb-2 btn-success">
+              Update
             </button>
-          </div>
+          </form>
+          <hr />
+          <Link
+            className="link-button w-100 bg-black white mb-05"
+            to={`/profile/${user.payload._id}`}
+          >
+            Go Back
+          </Link>
+          <button
+            className="link-button mt-1 w-100 alert-danger"
+            onClick={() => {
+              dispatch(deleteAccount());
+            }}
+          >
+            Delete Account
+          </button>
         </div>
       )}
+      <div className="disclaimer"></div>
     </main>
   );
 };

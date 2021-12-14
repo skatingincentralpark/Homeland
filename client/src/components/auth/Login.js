@@ -31,7 +31,7 @@ const Login = () => {
   }
 
   return (
-    <main className="px-1-5">
+    <main className="px-3">
       <PreAuthHeader heading="Sign in to Homeland" />
       <div className="pre-auth-container">
         <form className="form" action="create-profile.html" onSubmit={onSubmit}>
@@ -55,11 +55,9 @@ const Login = () => {
             />
           </div>
 
-          <input
-            type="submit"
-            className="link-button w-100 mb-2 btn-success"
-            value="Sign In"
-          />
+          <button className="link-button w-100 mb-2 btn-success">
+            Sign In
+          </button>
         </form>
         <hr />
         <Link to="/register" className="link-button w-100 bg-black white mb-05">

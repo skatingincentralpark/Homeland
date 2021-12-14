@@ -50,7 +50,7 @@ const Register = () => {
 
   return (
     <>
-      <main className="px-1-5">
+      <main className="px-3">
         <PreAuthHeader heading="Create a new account" />
         <div className="pre-auth-container">
           <div className="profile-pic-preview">
@@ -112,11 +112,9 @@ const Register = () => {
                 required
               />
             </div>
-            <input
-              type="submit"
-              className="link-button w-100 mb-2 btn-success"
-              value="Register"
-            />
+            <button className="link-button w-100 mb-2 btn-success">
+              Register
+            </button>
           </form>
           <hr />
           <Link to="/login" className="link-button w-100 bg-black white mb-05">
