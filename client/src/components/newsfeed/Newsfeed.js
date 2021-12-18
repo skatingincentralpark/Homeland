@@ -27,7 +27,7 @@ const Newsfeed = ({ socket, socketReady }) => {
 
   let currentId;
   if (!auth.loading) {
-    currentId = auth.user.payload._id;
+    currentId = auth.user.payload?._id;
   }
 
   // @@      ON GET NEW POST
@@ -98,8 +98,9 @@ const Newsfeed = ({ socket, socketReady }) => {
   }, [dispatch]);
 
   useEffect(() => {
+    setProfileExists(true);
     if (auth.user && !auth.loading && !ui.loading) {
-      setProfileExists(auth.user.payload.profile);
+      setProfileExists(!!auth.user.payload.profile);
     }
   }, [auth.user, auth.loading, ui.loading]);
 
@@ -132,7 +133,7 @@ const Newsfeed = ({ socket, socketReady }) => {
         </div>
       )}
       {/* Text Input */}
-      {auth.user && (
+      {auth.user && profileExists && (
         <NewPostForm
           profilepicture={auth.user.payload.profilepicture}
           socket={socket}

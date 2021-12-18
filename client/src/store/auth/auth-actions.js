@@ -82,6 +82,7 @@ export const edit = ({ name, email, password, image }) => {
 // @@   Register user
 export const register = ({ name, email, password, image }) => {
   return async (dispatch) => {
+    dispatch(uiActions.loadingTrue());
     try {
       let profilepicture;
 
@@ -112,8 +113,10 @@ export const register = ({ name, email, password, image }) => {
 
       dispatch(authActions.registerSuccess(res.data));
 
+      dispatch(uiActions.loadingFalse());
       dispatch(loadUser());
     } catch (err) {
+      dispatch(uiActions.loadingFalse());
       console.log(err.response.data);
 
       const errors = err.response.data.errors;
@@ -130,6 +133,7 @@ export const register = ({ name, email, password, image }) => {
 // @@   Login user
 export const login = (email, password) => {
   return async (dispatch) => {
+    dispatch(uiActions.loadingTrue());
     const config = {
       headers: {
         "Content-Type": "application/json",
@@ -143,8 +147,10 @@ export const login = (email, password) => {
 
       dispatch(authActions.loginSuccess(res.data));
 
+      dispatch(uiActions.loadingFalse());
       dispatch(loadUser());
     } catch (err) {
+      dispatch(uiActions.loadingFalse());
       const errors = err.response.data.errors;
 
       if (errors) {

@@ -15,10 +15,10 @@ const MessengerPopup = ({ closeHandler }) => {
   const userId = auth.user?.payload._id;
 
   return (
-    <div className="header-popup">
+    <div className="header-popup overflow-x-hidden">
       <div className="notification-popup-inner overflow-x-hidden">
         <div className="nav-top notification-title">Messages</div>
-        <div className="nav-mid m-0">
+        <div className="nav-mid mx-0 pb-3">
           {!messenger.loading ? (
             <>
               {messenger.displayedConversations.length ? (
@@ -67,7 +67,7 @@ const MessengerPopup = ({ closeHandler }) => {
             </>
           )}
         </div>
-        <div className="nav-bot py-05 text-center med">
+        <div className="nav-bot py-05 text-center med messenger-nav-bot">
           <Link onClick={closeHandler} to="/messenger">
             See All in Messenger
           </Link>

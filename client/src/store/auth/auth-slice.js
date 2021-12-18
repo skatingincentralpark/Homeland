@@ -28,10 +28,19 @@ function authSuccess(state, action) {
     loading: false,
   });
 }
+function registerSuccess(state, action) {
+  localStorage.setItem("token", action.payload.token);
+  Object.assign(state, {
+    token: action.payload.token,
+    isAuthenticated: true,
+    loading: true,
+  });
+}
 function loginSuccess(state, action) {
   localStorage.setItem("token", action.payload.token);
   Object.assign(state, {
     token: action.payload.token,
+    loading: false,
   });
 }
 function userLoaded(state, action) {
@@ -58,7 +67,7 @@ const authSlice = createSlice({
   reducers: {
     userLoaded: userLoaded,
     updateSuccess: authSuccess,
-    registerSuccess: authSuccess,
+    registerSuccess: registerSuccess,
     loginSuccess: loginSuccess,
     registerFail: authError,
     logout: authError,

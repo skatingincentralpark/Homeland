@@ -13,7 +13,9 @@ const Landing = () => {
     return <Redirect to="/newsfeed" />;
   }
 
-  if (loading) return <></>;
+  if (loading) {
+    return <></>;
+  }
 
   return (
     <>

@@ -83,6 +83,7 @@ export const createProfile =
   (formData, history, edit = false, userId) =>
   async (dispatch) => {
     dispatch(uiActions.loadingTrue());
+
     try {
       // Create config object, send POST request, which creates/edits a profile
       // Sends all the fields to mongo (company, website, location, etc.)
@@ -110,11 +111,11 @@ export const createProfile =
     } catch (err) {
       dispatch(uiActions.loadingFalse());
 
-      dispatch(setAlert(err, "danger"));
+      dispatch(setAlert(err.message, "danger"));
 
       dispatch(
         profileActions.profileError({
-          msg: err,
+          msg: err.message,
         })
       );
     }
@@ -134,7 +135,7 @@ export const deleteAccount = () => async (dispatch) => {
       dispatch(profileActions.clearProfile());
       dispatch(authActions.accountDeleted());
 
-      dispatch(setAlert("Your account has been permanently deleted"));
+      dispatch(setAlert("Your account has been permanently deleted", "danger"));
     } catch (err) {
       dispatch(
         profileActions.profileError({

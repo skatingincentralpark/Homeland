@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, Redirect } from "react-router-dom";
 
+import { setAlert } from "../../store/alert/alert-actions";
 import { useSelector, useDispatch } from "react-redux";
 import {
   createProfile,
@@ -59,6 +60,12 @@ const EditProfile = ({ history }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
+
+    if (interests === "") {
+      dispatch(setAlert("Please fill in interests field", "danger"));
+      return;
+    }
+
     dispatch(createProfile(formData, history, true));
   };
 
